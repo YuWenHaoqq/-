@@ -14,7 +14,7 @@ import javax.transaction.Transactional;
 @SpringBootTest(classes = DormitoryApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 //实现自动回滚
 @Transactional
-class DormitoryApplicationTests {
+public class DormitoryApplicationTests {
 	@Before
 	public void init() throws Exception {
 		System.out.println("开始测试---");

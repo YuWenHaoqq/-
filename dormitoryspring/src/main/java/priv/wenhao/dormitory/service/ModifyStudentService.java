@@ -19,5 +19,5 @@ public interface ModifyStudentService {
 	* Author:yu wenhao
 	* date:2019/12/18
 	*/
-	public ResultVo addStudent(UserMessageQuery userMessageQuery, StudentQuery studentQuery, ResultVo resultVo);
+	public void addStudent(UserMessageQuery userMessageQuery, StudentQuery studentQuery, ResultVo resultVo)throws Exception;
 }

@@ -25,8 +25,8 @@ public class ModifyStudentController {
 	 */
 	@ApiOperation(value = "新增学生", httpMethod = "POST")
 	@PostMapping("/addStudent")
-	public ResultVo addStudent(@ModelAttribute @RequestParam(required = true) StudentQuery studentQuery,
-							   @ModelAttribute UserMessageQuery userMessageQuery) {
+	public ResultVo addStudent(@ModelAttribute StudentQuery studentQuery,
+							   @ModelAttribute UserMessageQuery userMessageQuery) throws Exception {
 		ResultVo resultVo = new ResultVo();
 		modifyStudentService.addStudent(userMessageQuery,studentQuery,resultVo);
 		return resultVo;

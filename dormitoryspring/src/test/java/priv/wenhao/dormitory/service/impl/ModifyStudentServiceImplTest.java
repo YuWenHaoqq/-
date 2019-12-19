@@ -2,7 +2,10 @@ package priv.wenhao.dormitory.service.impl;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import priv.wenhao.base.pojo.vo.ResultVo;
 import priv.wenhao.dormitory.DormitoryApplicationTests;
+import priv.wenhao.dormitory.pojo.query.StudentQuery;
+import priv.wenhao.dormitory.pojo.query.UserMessageQuery;
 import priv.wenhao.dormitory.service.ModifyStudentService;
 
 /** 
@@ -25,7 +28,12 @@ public class ModifyStudentServiceImplTest extends DormitoryApplicationTests {
 */ 
 @Test
 public void testAddStudent() throws Exception {
-//	modifyStudentService.addStudent();
+	UserMessageQuery userMessageQuery=new UserMessageQuery();
+	StudentQuery studentQuery=new StudentQuery();
+	ResultVo resultVo=new ResultVo();
+	modifyStudentService.addStudent(userMessageQuery,studentQuery,resultVo);
+	System.out.println(resultVo.getCode());
+	System.out.println(resultVo.getMessage());
 }
 
 

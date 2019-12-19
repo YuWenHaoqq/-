@@ -2,6 +2,8 @@ package priv.wenhao.dormitory.pojo.query;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
+import priv.wenhao.base.pojo.dto.SchoolStudentDto;
 
 import java.util.Date;
 /**
@@ -24,15 +26,24 @@ public class StudentQuery {
 	@ApiModelProperty(value = "密码",required = true)
 	private String stuPassword;
 	@ApiModelProperty(value = "学生出生年月",required = true)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date stuBirthday;
 	@ApiModelProperty(value = "教师工号",required = true)
 	private String teacherId;
 	@ApiModelProperty(value = "寝室表id",required = true)
 	private String dormId;
-	@ApiModelProperty("创建时间")
-	private Date stuCreate;
-	@ApiModelProperty("修改时间")
-	private Date stuModify;
-	@ApiModelProperty("是否删除")
-	private Integer deleted;
+
+	public SchoolStudentDto getSchoolStudentDto(){
+		SchoolStudentDto schoolStudentDto=new SchoolStudentDto();
+		schoolStudentDto.setStuId(this.stuId);
+		schoolStudentDto.setClassId(this.classId);
+		schoolStudentDto.setStuName(this.stuName);
+		schoolStudentDto.setStuSex(this.stuSex);
+		schoolStudentDto.setStuAccount(this.stuAccount);
+		schoolStudentDto.setStuPassword(this.stuPassword);
+		schoolStudentDto.setStuBirthday(this.stuBirthday);
+		schoolStudentDto.setTeacherId(this.teacherId);
+		schoolStudentDto.setDormId(this.dormId);
+		return schoolStudentDto;
+	}
 }

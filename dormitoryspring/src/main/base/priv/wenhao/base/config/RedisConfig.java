@@ -41,7 +41,14 @@ public class RedisConfig {
 	@Value("${spring.redis.timeout}")
 	private long timeout;
 
-	@Bean(name = "FirstTemplate")
+	/***
+	* Description:用于存放登录的token
+	* param:[]
+	* return:io.lettuce.core.api.sync.RedisCommands<java.lang.String,java.lang.String>
+	* Author:yu wenhao
+	* date:2019/12/20
+	*/
+	@Bean(name = "firstTemplate")
 	public RedisCommands<String, String> getFirstTemplate() {
 		RedisURI redisURI = RedisURI.builder()
 				.withHost(host)

@@ -13,6 +13,7 @@ public enum  ExceptionEnum {
 	SUCCESS(0,"请求成功"),
 	QUERYFAILED(1,"查询失败"),
 	INSERTFAILED(2,"新增失败"),
+	LOGINFAILED(3,"登录异常"),
 	UNKNOW(-1,"未知异常,请连续管理员");
 	private int code;
 	private String message;

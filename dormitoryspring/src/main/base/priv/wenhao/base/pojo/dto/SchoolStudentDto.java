@@ -23,9 +23,9 @@ public class SchoolStudentDto {
 	@ApiModelProperty("学生性别")
 	@TableField(value = "stu_sex")
 	private int stuSex;
-	@ApiModelProperty("账号")
-	@TableField(value = "stu_account")
-	private String stuAccount;
+//	@ApiModelProperty("账号")
+//	@TableField(value = "stu_account")
+//	private String stuAccount;
 	@ApiModelProperty("密码")
 	@TableField(value = "stu_password")
 	private String stuPassword;

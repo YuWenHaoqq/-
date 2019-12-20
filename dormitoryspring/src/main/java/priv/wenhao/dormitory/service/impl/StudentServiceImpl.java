@@ -41,7 +41,7 @@ public class StudentServiceImpl implements StudentService {
 	@Override
 	public void login(LoginQuery loginQuery, HttpServletRequest request, ResultVo resultVo) {
 		QueryWrapper<SchoolStudentDto> wrapper = new QueryWrapper<SchoolStudentDto>()
-				.eq("stu_account", loginQuery.getAccount())
+				.eq("stu_id", loginQuery.getAccount())
 				.eq("stu_password", loginQuery.getPassword())
 				.eq("is_deleted", 0);
 		List<SchoolStudentDto> list = schoolStudentMapper.selectList(wrapper);
@@ -52,6 +52,7 @@ public class StudentServiceImpl implements StudentService {
 			userVo.setToken(UUIDUtil.getUUID32());
 			userVo.setUserName(list.get(0).getStuName());
 			resultVo.setMessage("登录成功");
+			resultVo.setData(userVo);
 //			将token添加到redis缓存
 			SetArgs setArgs=SetArgs.Builder.nx().ex(60*60);
 			firstTemplate.set(userVo.getStuId(),userVo.getToken(),setArgs);

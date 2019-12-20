@@ -48,7 +48,7 @@ public class HandleGlobalException {
 	public ResultVo exceptionHandle(HttpServletRequest req, Exception e){
 		ResultVo resultVo=new ResultVo();
 		resultVo.setCode(-1);
-		resultVo.setMessage("未知异常,请联系管理员");
+		resultVo.setMessage("未知异常,请联系后台程序员");
 		return resultVo;
 	}
 }

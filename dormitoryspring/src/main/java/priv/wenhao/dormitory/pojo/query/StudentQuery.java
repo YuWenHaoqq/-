@@ -21,8 +21,8 @@ public class StudentQuery {
 	private String stuName;
 	@ApiModelProperty(value = "学生性别",required = true)
 	private int stuSex;
-	@ApiModelProperty(value = "账号",required = true)
-	private String stuAccount;
+//	@ApiModelProperty(value = "账号",required = true)
+//	private String stuAccount;
 	@ApiModelProperty(value = "密码",required = true)
 	private String stuPassword;
 	@ApiModelProperty(value = "学生出生年月",required = true)
@@ -39,7 +39,6 @@ public class StudentQuery {
 		schoolStudentDto.setClassId(this.classId);
 		schoolStudentDto.setStuName(this.stuName);
 		schoolStudentDto.setStuSex(this.stuSex);
-		schoolStudentDto.setStuAccount(this.stuAccount);
 		schoolStudentDto.setStuPassword(this.stuPassword);
 		schoolStudentDto.setStuBirthday(this.stuBirthday);
 		schoolStudentDto.setTeacherId(this.teacherId);

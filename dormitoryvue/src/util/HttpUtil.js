@@ -94,7 +94,7 @@ export const get = (url, params, config = {}) => {
         params: params,
         ...config
     }).then(response => {
-        return Promise.resolve(response.data)
+        return Promise.resolve(response)
     }).catch(error => {
         return Promise.reject(error)
     })
@@ -108,7 +108,7 @@ export const post = (url, data, config = {}) => {
         data,
         ...config
     }).then(response => {
-        return Promise.resolve(response.data)
+        return Promise.resolve(response)
     }).catch(error => {
         return Promise.reject(error)
     })

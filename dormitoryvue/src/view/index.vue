@@ -53,9 +53,7 @@
                         message:res.message
                     })
                 })
-                .catch(err=>{
-                    // window.console.log("错误"+err)
-                })
+                .catch()
             },
             reset(){
                 this.form.account=''
@@ -93,7 +91,7 @@
         margin-right: 20px;
     }
     .bg {
-        background: url("../../src/assets/img/loginBack.jpg")  no-repeat fixed center;
+        background: url("../assets/image/loginBack.jpg")  no-repeat fixed center;
         background-size: cover;
         width: 100%;
         height: 100%;
@@ -127,7 +125,6 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%,-50%);
-
     }
 
 </style>

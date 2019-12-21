@@ -2,7 +2,7 @@
 module.exports = {
 //    build输出目录
     outputDir: 'dist',
-    //静态资源目录(js,css,img)
+    //静态资源目录(js,css,image)
     assetsDir: 'assets',
 //    是否开启eslint
     lintOnSave: false,

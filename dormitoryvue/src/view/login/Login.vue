@@ -35,7 +35,8 @@
 <script>
     import {aesPost} from "@/util/HttpUtil";
     import {Message} from "element-ui";
-    import {getRsaKey} from '@/util/RsaUtil'
+    import {getRsaKey} from "@/util/RsaUtil";
+    // import {getRsaKey} from '@/util/RsaUtil'
 
     export default {
         name: "Login",
@@ -49,6 +50,7 @@
             }
         },
         created() {
+            // window.console.log(getRsaKey())
             getRsaKey()
         },
         mounted() {

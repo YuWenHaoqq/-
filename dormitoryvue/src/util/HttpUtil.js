@@ -37,8 +37,9 @@ let httpCode = {
 instance.interceptors.request.use(config => {
         config.headers['token'] = sessionStorage.getItem('token') || ''
         config.headers['stuId'] = sessionStorage.getItem('stuId') || ''
-        config.headers['aes']=getResKey()||''
-        config.headers['aes2']=rsaEncryption(getResKey())||''
+        // config.headers['aes']=getResKey()||''
+        config.headers['aes']=rsaEncryption(getResKey())||''
+
         loadingInstance = Loading.service({
             //    发起请求时加载全局loading,请求失败或有响应时会有关闭
             spinner: 'el-icon-loading',
@@ -87,7 +88,7 @@ instance.interceptors.response.use(response => {
         //    根据请求失败的http状态码去给用户响应的提示
         let tips = error.status in httpCode ? httpCode[error.status] : error.message
         Message({
-            message: '请求错误,请刷新重试',
+            message: tips,
             type: "error"
         })
         return Promise.reject(new Error(tips))
@@ -109,6 +110,7 @@ export const get = (url, params, config = {}) => {
 
 //  或者写成下面的这样:Promise.resolve()和Promise.reject()返回的是promise对象,二者都是语法糖
 export const aesPost = (url, data, config = {}) => {
+    window.console.log(getResKey())
     return instance({
         method: 'post',
         url: url,

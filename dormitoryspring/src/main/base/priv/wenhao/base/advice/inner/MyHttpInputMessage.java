@@ -7,6 +7,8 @@ import org.springframework.http.HttpInputMessage;
 import priv.wenhao.base.util.HttpInputMessageUtil;
 import priv.wenhao.base.util.RsaUtil;
 
+import java.util.Base64;
+
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -16,14 +18,13 @@ public class MyHttpInputMessage implements HttpInputMessage {
 
 	public MyHttpInputMessage(HttpInputMessage httpInputMessage) throws Exception {
 		this.headers = httpInputMessage.getHeaders();
-		System.out.println("key:"+headers.getFirst("aes"));
-		String zz=headers.getFirst("aes2");
-		System.out.println(zz);
-//		String key= new String(RsaUtil.decrypt(zz.getBytes(),RsaUtil.privateKey));
-//		System.out.println(key);
+		String key=headers.getFirst("aes");
+		byte[]encrypteds=Base64.getDecoder().decode(key);
+		byte[]dencrypteds=RsaUtil.decrypt(encrypteds,RsaUtil.privateKey);
+		System.out.println(new String(dencrypteds));
+
 		String content=IOUtils.toString(httpInputMessage.getBody(), "UTF-8");
-//		String trueKey= RsaUtil.decrypt(headers.getFirst("aes"),RsaUtil.privateKey);
-		this.body = IOUtils.toInputStream(HttpInputMessageUtil.decryptString(content,headers.getFirst("aes")), "UTF-8");
+		this.body = IOUtils.toInputStream(HttpInputMessageUtil.decryptString(content,new String(dencrypteds)), "UTF-8");
 	}
 
 	@Override

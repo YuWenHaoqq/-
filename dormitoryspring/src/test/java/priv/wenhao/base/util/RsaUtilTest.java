@@ -23,7 +23,7 @@ public class RsaUtilTest {
 	 */
 	@Test
 	public void testGenKeyPair() throws Exception {
-		String data = "eci504h7utb3l9sf";
+		String data = "qmb0jib4bvt4jn6q";
 		KeyPair keyPair = RsaUtil.genKeyPair(1024);
 //		获取公钥,并以base64格式打印出来
 		PublicKey publicKey = keyPair.getPublic();

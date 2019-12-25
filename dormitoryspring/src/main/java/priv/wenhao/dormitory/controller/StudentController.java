@@ -5,6 +5,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import priv.wenhao.base.advice.SecurityParameter;
 import priv.wenhao.base.exception.BussinessException;
 import priv.wenhao.base.pojo.vo.ResultVo;
 import priv.wenhao.dormitory.pojo.query.LoginQuery;
@@ -29,12 +30,11 @@ public class StudentController {
 	*/
 	@ApiOperation(value = "学生登录", httpMethod = "POST")
 	@PostMapping("/login")
+	@SecurityParameter(inDecode = true,outEncode = true)
 	public ResultVo login(@RequestBody LoginQuery loginQuery, HttpServletRequest request) throws Exception {
 		if (Strings.isNullOrEmpty(loginQuery.getAccount())||Strings.isNullOrEmpty(loginQuery.getPassword())){
 			throw new BussinessException(3,"请输入账号或密码");
 		}
-		System.out.println(123);
-//		Thread.sleep(10);
 		ResultVo resultVo = new ResultVo();
 		studentService.login(loginQuery,request,resultVo);
 		return resultVo;

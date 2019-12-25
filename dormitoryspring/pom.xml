@@ -23,12 +23,12 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-<!--        修改为mybatisplus-->
-<!--        <dependency>-->
-<!--            <groupId>org.mybatis.spring.boot</groupId>-->
-<!--            <artifactId>mybatis-spring-boot-starter</artifactId>-->
-<!--            <version>2.1.1</version>-->
-<!--        </dependency>-->
+        <!--        修改为mybatisplus-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.mybatis.spring.boot</groupId>-->
+        <!--            <artifactId>mybatis-spring-boot-starter</artifactId>-->
+        <!--            <version>2.1.1</version>-->
+        <!--        </dependency>-->
         <!--        mybatis-plus-->
         <dependency>
             <groupId>com.baomidou</groupId>
@@ -57,7 +57,7 @@
                 </exclusion>
             </exclusions>
         </dependency>
-<!--        添加swagger-->
+        <!--        添加swagger-->
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
@@ -91,7 +91,7 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-pool2</artifactId>
         </dependency>
-<!--        jackson:将对象转为字符串-->
+        <!--        jackson:将对象转为字符串-->
         <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
@@ -110,7 +110,7 @@
             <artifactId>jackson-annotations</artifactId>
             <version>2.10.0</version>
         </dependency>
-<!--        使用另外的api-->
+        <!--        使用另外的api-->
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-api</artifactId>
@@ -125,13 +125,35 @@
             <version>3.8.1</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/junit/junit -->
-<!--        实现单元测试-->
+        <!--        实现单元测试-->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.12</version>
             <scope>test</scope>
         </dependency>
+        <!--        添加一个基础的方法,增添了common.io包-->
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.6</version>
+        </dependency>
+
+<!--        实现json和对象互转-->
+        <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.8.5</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.62</version>
+        </dependency>
+
+
 
     </dependencies>
 

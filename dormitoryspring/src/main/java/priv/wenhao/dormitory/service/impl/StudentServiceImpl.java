@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import priv.wenhao.base.pojo.dto.SchoolStudentDto;
 import priv.wenhao.base.pojo.vo.ResultVo;
+import priv.wenhao.base.util.RsaUtil;
 import priv.wenhao.base.util.UUIDUtil;
 import priv.wenhao.dormitory.mapper.SchoolStudentMapper;
 import priv.wenhao.dormitory.pojo.query.LoginQuery;
@@ -14,6 +15,7 @@ import priv.wenhao.dormitory.pojo.vo.UserVo;
 import priv.wenhao.dormitory.service.StudentService;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Base64;
 import java.util.List;
 
 /**
@@ -29,7 +31,7 @@ public class StudentServiceImpl implements StudentService {
 	private SchoolStudentMapper schoolStudentMapper;
 
 	@Autowired
-	private RedisCommands<String,String> firstTemplate;
+	private RedisCommands<String, String> firstTemplate;
 
 	/***
 	 * Description:学生端登录
@@ -51,11 +53,12 @@ public class StudentServiceImpl implements StudentService {
 			//			生成token
 			userVo.setToken(UUIDUtil.getUUID32());
 			userVo.setUserName(list.get(0).getStuName());
+//			userVo.setRsa(new String(Base64.getEncoder().encode(RsaUtil.publicKey.getEncoded())));
 			resultVo.setMessage("登录成功");
 			resultVo.setData(userVo);
 //			将token添加到redis缓存
-			SetArgs setArgs=SetArgs.Builder.nx().ex(60*60);
-			firstTemplate.set(userVo.getStuId(),userVo.getToken(),setArgs);
+			SetArgs setArgs = SetArgs.Builder.nx().ex(60 * 60);
+			firstTemplate.set(userVo.getStuId(), userVo.getToken(), setArgs);
 			return;
 		} else {
 			resultVo.setCode(3);

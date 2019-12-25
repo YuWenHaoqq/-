@@ -45,8 +45,8 @@
         },
         methods: {
             submit(){
-                window.console.log(this.form.account)
-                window.console.log(this.form.password)
+                // window.console.log(this.form.account)
+                // window.console.log(this.form.password)
                 post('/api/student/login',this.form).then(res=>{
                     Message({
                         type:"success",

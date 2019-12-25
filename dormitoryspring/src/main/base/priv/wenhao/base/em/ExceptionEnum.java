@@ -15,6 +15,7 @@ public enum  ExceptionEnum {
 	INSERTFAILED(2,"新增失败"),
 	LOGINFAILED(3,"登录错误"),
 	CHECKLOGIN(4,"凭证过期"),
+	AESKEYFAILED(5,"密钥错误"),
 	UNKNOW(-1,"未知异常,请连续管理员");
 	private int code;
 	private String message;

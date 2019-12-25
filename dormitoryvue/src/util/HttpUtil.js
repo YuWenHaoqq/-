@@ -6,6 +6,8 @@
 import axios from 'axios'
 import {Loading, Message} from "element-ui";
 import router from '@/router'
+import {aesValue, getResKey} from "@/util/AesUtil";
+import {rsaEncryption} from "@/util/RsaUtil";
 
 // 加载全局的loading
 let loadingInstance = null
@@ -13,10 +15,12 @@ let loadingInstance = null
 const instance = axios.create({
 //    创建axios实例,在这里设置请求的默认配置
 //    设置超过时间10s
-    timeout: 1000,
+    timeout: 30000,
+    headers:{}
 })
 // 文档中的统一设置post请求头.下面会说到post请求的的几种'Content-Type'
-instance.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
+instance.defaults.headers.post['Content-Type'] = 'application/json;charset=UTF-8 '
+// instance.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
 
 let httpCode = {
     400: '请求参数错误',
@@ -32,6 +36,9 @@ let httpCode = {
 // 添加请求拦截器
 instance.interceptors.request.use(config => {
         config.headers['token'] = sessionStorage.getItem('token') || ''
+        config.headers['stuId'] = sessionStorage.getItem('stuId') || ''
+        config.headers['aes']=getResKey()||''
+        config.headers['aes2']=rsaEncryption(getResKey())||''
         loadingInstance = Loading.service({
             //    发起请求时加载全局loading,请求失败或有响应时会有关闭
             spinner: 'el-icon-loading',
@@ -80,10 +87,10 @@ instance.interceptors.response.use(response => {
         //    根据请求失败的http状态码去给用户响应的提示
         let tips = error.status in httpCode ? httpCode[error.status] : error.message
         Message({
-            message: tips,
+            message: '请求错误,请刷新重试',
             type: "error"
         })
-        return Promise.reject(new Error('请求超时,请刷新重试'))
+        return Promise.reject(new Error(tips))
     })
 
 // 统一封装get请求
@@ -101,7 +108,20 @@ export const get = (url, params, config = {}) => {
 }
 
 //  或者写成下面的这样:Promise.resolve()和Promise.reject()返回的是promise对象,二者都是语法糖
-export const post = (url, data, config = {}) => {
+export const aesPost = (url, data, config = {}) => {
+    return instance({
+        method: 'post',
+        url: url,
+        data:aesValue(data),
+        ...config
+    }).then(response => {
+        return Promise.resolve(response)
+    }).catch(error => {
+        return Promise.reject(error)
+    })
+}
+
+export const simplePost=(url, data, config = {}) => {
     return instance({
         method: 'post',
         url: url,

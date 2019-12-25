@@ -1,55 +1,57 @@
 <template>
-        <div ref="silder" class="home-slider">
-            <div class="main-slider">
-                <img ref="hill" src="@/assets/image/hill.png" class="slider-hill" alt="slider image">
-                <img ref="house" src="@/assets/image/house.png" class="slider-house" alt="slider image">
-                <img ref="sun" src="@/assets/image/sun.png" class="slider-sun" alt="slider image">
-                <img ref="birds1" src="@/assets/image/birds1.png" class="slider-birds1" alt="slider image">
-                <img ref="birds2" src="@/assets/image/birds2.png" class="slider-birds2" alt="slider image">
-            </div>
-            <div ref="form" class="formbg">
-                <el-form>
+    <div ref="silder" class="home-slider">
+        <div class="main-slider">
+            <img ref="hill" src="@/assets/image/hill.png" class="slider-hill" alt="slider image">
+            <img ref="house" src="@/assets/image/house.png" class="slider-house" alt="slider image">
+            <img ref="sun" src="@/assets/image/sun.png" class="slider-sun" alt="slider image">
+            <img ref="birds1" src="@/assets/image/birds1.png" class="slider-birds1" alt="slider image">
+            <img ref="birds2" src="@/assets/image/birds2.png" class="slider-birds2" alt="slider image">
+        </div>
+        <div ref="form" class="formbg">
+            <el-form>
+                <div>
+                    <div class="title">登录</div>
+                    <br>
                     <div>
-                        <div class="title">登录</div>
+                        <el-form-item class="input" label="账号" prop="account">
+                            <el-input v-model='form.account' placeholder="请输入学号" clearable></el-input>
+                        </el-form-item>
                         <br>
-                        <div>
-                            <el-form-item class="input" label="账号" prop="account">
-                                <el-input v-model='form.account' placeholder="请输入学号" clearable></el-input>
-                            </el-form-item>
-                            <br>
-                            <el-form-item class="input" label="密码" prop="password">
-                                <el-input placeholder="请输入密码" v-model='form.password' show-password clearable></el-input>
-                            </el-form-item>
-                            <br>
-                            <div class="submit">
-                                <el-button type="primary" @click="submit">登录</el-button>
-                                <el-button type="warning" @click="reset">清空</el-button>
-                            </div>
+                        <el-form-item class="input" label="密码" prop="password">
+                            <el-input placeholder="请输入密码" v-model='form.password' show-password clearable></el-input>
+                        </el-form-item>
+                        <br>
+                        <div class="submit">
+                            <el-button type="primary" @click="submit">登录</el-button>
+                            <el-button type="warning" @click="reset">清空</el-button>
                         </div>
                     </div>
-                </el-form>
-            </div>
+                </div>
+            </el-form>
         </div>
+    </div>
 </template>
 
 <script>
-    import {post} from "@/util/HttpUtil";
-    import { Message} from "element-ui";    export default {
+    import {aesPost} from "@/util/HttpUtil";
+    import {Message} from "element-ui";
+    import {getRsaKey} from '@/util/RsaUtil'
+
+    export default {
         name: "Login",
-        components:{
-        },
-        data(){
-            return{
+        components: {},
+        data() {
+            return {
                 form: {
                     account: '',
                     password: ''
                 }
             }
         },
+        created() {
+            getRsaKey()
+        },
         mounted() {
-            // window.console.log(this.$refs.hill)
-            // this.$refs.hill.style.bottom=0
-            // document.getElementById('hill').style.bottom=0
             this.animation()
         },
         methods: {
@@ -57,7 +59,7 @@
                 let that = this
                 setTimeout(function () {
                     that.$refs.hill.style.transform = 'translateY(0vh)'
-                },0)
+                }, 0)
                 setTimeout(function () {
                     that.$refs.house.style.transform = 'translateY(0vh)';
                     that.$refs.sun.style.transform = 'translateY(0vh)'
@@ -67,47 +69,52 @@
                     that.$refs.birds1.style.opacity = '1';
                     that.$refs.birds2.style.transform = 'translateX(0)';
                     that.$refs.birds2.style.opacity = '1';
-                },2500)
+                }, 2500)
                 setTimeout(function () {
                     that.$refs.form.style.right = '10%';
                     that.$refs.form.style.opacity = '1';
-                },3000)
+                }, 0)
             },
-            submit(){
-                post('/api/student/login',this.form).then(res=>{
-                    window.console.log(res)
+            submit() {
+                // window.console.log("aa"+getResKey())
+                aesPost('/api/student/login', this.form, {ase: true}).then(res => {
                     Message({
-                        type:"success",
-                        message:res.message
+                        type: "success",
+                        message: res.message
                     })
+                    sessionStorage.setItem('token', res.data.token)
+                    sessionStorage.setItem('stuId', res.data.stuId)
                 })
                     .catch()
             },
-            reset(){
-                this.form.account=''
-                this.form.password=''
+            reset() {
+                this.form.account = ''
+                this.form.password = ''
             }
         }
     }
 </script>
 
 <style scoped>
-    .input{
+    .input {
         color: #409EFF;
         font-size: 22px;
         display: flex;
         justify-content: center;
         width: 350px;
     }
-    .input *:first-child{
+
+    .input *:first-child {
         margin-right: 20px;
     }
-    .title{
+
+    .title {
         color: #DCDFE6;
         font-size: 35px;
         text-align: center;
     }
-    .formbg{
+
+    .formbg {
         z-index: 999;
         width: 20%;
         height: 400px;
@@ -166,7 +173,7 @@
     .slider-birds1 {
         transition: 1s;
         transform: translateX(-20%);
-        opacity:0%;
+        opacity: 0%;
 
         width: 5%;
         position: absolute;
@@ -178,7 +185,7 @@
         transition: 1s;
         transform: translateX(20%);
         width: 5%;
-        opacity:0%;
+        opacity: 0%;
 
         position: absolute;
         left: 30%;

@@ -10,6 +10,7 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestBodyAdvice;
 import priv.wenhao.base.advice.inner.MyHttpInputMessage;
 import priv.wenhao.base.exception.BussinessException;
 
+import javax.crypto.BadPaddingException;
 import java.io.IOException;
 import java.lang.reflect.Type;
 
@@ -40,6 +41,9 @@ public class GlobalDecodeRequestBodyAdvice implements RequestBodyAdvice {
 				return new MyHttpInputMessage(httpInputMessage);
 			}catch (BussinessException e){
 				throw new BussinessException(e.getCode(),e.getMessage());
+			}
+			catch (BadPaddingException e){
+				throw new BussinessException(5,"解密错误");
 			}
 			catch (Exception e) {
 				e.printStackTrace();

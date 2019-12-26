@@ -19,12 +19,10 @@ public class MyHttpInputMessage implements HttpInputMessage {
 	public MyHttpInputMessage(HttpInputMessage httpInputMessage) throws Exception {
 		this.headers = httpInputMessage.getHeaders();
 		String key=headers.getFirst("aes");
-		byte[]encrypteds=Base64.getDecoder().decode(key);
-		byte[]dencrypteds=RsaUtil.decrypt(encrypteds,RsaUtil.privateKey);
-		System.out.println(new String(dencrypteds));
+
 
 		String content=IOUtils.toString(httpInputMessage.getBody(), "UTF-8");
-		this.body = IOUtils.toInputStream(HttpInputMessageUtil.decryptString(content,new String(dencrypteds)), "UTF-8");
+		this.body = IOUtils.toInputStream(HttpInputMessageUtil.decryptString(content,key), "UTF-8");
 	}
 
 	@Override

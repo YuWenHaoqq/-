@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.google.common.base.Strings;
 import priv.wenhao.base.exception.BussinessException;
 
+import java.util.Base64;
 import java.util.Map;
 
 /**
@@ -22,14 +23,19 @@ public class HttpInputMessageUtil {
 	* date:2019/12/25
 	*/
 	public static String decryptString(String body,String key) throws Exception {
-		if (Strings.isNullOrEmpty(key)||key.length()%16!=0){
+
+		byte[]encrypteds= Base64.getDecoder().decode(key);
+		byte[]dencrypteds=RsaUtil.decrypt(encrypteds,RsaUtil.privateKey);
+		String trueKey=new String(dencrypteds);
+		if (Strings.isNullOrEmpty(trueKey)||trueKey.length()%16!=0){
 			throw new BussinessException(5,"aes密钥错误");
 		}
+
 		Map<String,Object> map;
 		JSONObject jsonObject=JSONObject.parseObject(body);
 		map= JSON.toJavaObject(jsonObject,Map.class);
 		for (Map.Entry<String,Object> entry:map.entrySet()){
-			entry.setValue(AesUtil.decrypt(entry.getValue().toString(),key));
+			entry.setValue(AesUtil.decrypt(entry.getValue().toString(),trueKey));
 		}
 		return JSON.toJSONString(map);
 	}
@@ -41,6 +47,10 @@ public class HttpInputMessageUtil {
 	* date:2019/12/25
 	*/
 	public static Object encryptionString(String body,String key)throws Exception{
+		byte[]encrypteds= Base64.getDecoder().decode(key);
+		byte[]dencrypteds=RsaUtil.decrypt(encrypteds,RsaUtil.privateKey);
+		String trueKey=new String(dencrypteds);
+
 		Map<String,Object> map;
 		JSONObject jsonObject=JSONObject.parseObject(body);
 		map=JSON.toJavaObject(jsonObject,Map.class);
@@ -50,7 +60,7 @@ public class HttpInputMessageUtil {
 		JSONObject jsonObject1=JSONObject.parseObject(map.get("data").toString());
 		Map<String,Object> map1=JSON.toJavaObject(jsonObject1,Map.class);
 		for (Map.Entry<String,Object> entry:map1.entrySet()){
-			entry.setValue(AesUtil.encrypt(entry.getValue().toString(),key));
+			entry.setValue(AesUtil.encrypt(entry.getValue().toString(),trueKey));
 		}
 		map.put("data",map1);
 		return map;

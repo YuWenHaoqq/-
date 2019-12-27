@@ -1,8 +1,9 @@
-package priv.wenhao.base.exception;
+package priv.wenhao.base.advice;
 
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
+import priv.wenhao.base.exception.BussinessException;
 import priv.wenhao.base.pojo.vo.ResultVo;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 
 @ControllerAdvice
-public class HandleGlobalException {
+public class HandleGlobalExceptionAdvice {
 	/***
 	* Description:统一异常管理-自定义异常
 	* param:[req, e]

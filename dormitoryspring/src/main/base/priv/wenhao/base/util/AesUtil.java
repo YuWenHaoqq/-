@@ -4,7 +4,6 @@ import org.apache.tomcat.util.codec.binary.Base64;
 
 import javax.crypto.*;
 import javax.crypto.spec.SecretKeySpec;
-import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
 /**

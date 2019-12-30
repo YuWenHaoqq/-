@@ -24,12 +24,8 @@ public class AddressUtilTest {
 		// 测试ip 221.232.245.73 湖北武汉
 		String ip = "47.52.163.119";
 		IPRequestDto address;
-		try {
 			address = AddressUtil.getAddresses("ip=" + ip, "utf-8");
 			System.out.println(address.getData().getRegion());;
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
 //		System.out.println(address);
 		// 输出结果为：中国 湖北省 武汉市
 	}

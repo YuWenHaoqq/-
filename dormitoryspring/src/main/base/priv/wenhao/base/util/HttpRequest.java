@@ -6,7 +6,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.List;
@@ -30,7 +29,7 @@ public class HttpRequest {
 	 * date:2019/12/30
 	 */
 	public static String sendGet(String url, String param, String encoding) {
-		String result = "";
+		StringBuilder result = new StringBuilder();
 		BufferedReader in = null;
 		try {
 			String urlNameString = url + "?" + param;
@@ -59,7 +58,7 @@ public class HttpRequest {
 					connection.getInputStream(), encoding));
 			String line;
 			while ((line = in.readLine()) != null) {
-				result += line;
+				result.append(line);
 			}
 		} catch (IOException e) {
 			log.info(url + ":发送Get请求错误");
@@ -72,8 +71,8 @@ public class HttpRequest {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			return result;
 		}
+		return result.toString();
 	}
 
 	/***
@@ -87,7 +86,7 @@ public class HttpRequest {
 	public static String sendPost(String url, String param, String encoding) {
 		PrintWriter out = null;
 		BufferedReader in = null;
-		String result = "";
+		StringBuilder result = new StringBuilder();
 		try {
 			URL realUrl = new URL(url);
 
@@ -117,7 +116,7 @@ public class HttpRequest {
 					new InputStreamReader(conn.getInputStream(), encoding));
 			String line;
 			while ((line = in.readLine()) != null) {
-				result += line;
+				result.append(line);
 			}
 		} catch (IOException e) {
 			log.info(url + ":发送post请求错误");
@@ -134,7 +133,7 @@ public class HttpRequest {
 				ex.printStackTrace();
 			}
 		}
-		return result;
+		return result.toString();
 	}
 }
 

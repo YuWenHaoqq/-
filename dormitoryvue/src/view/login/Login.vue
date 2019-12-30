@@ -35,8 +35,7 @@
 <script>
     import {aesPost} from "@/util/HttpUtil";
     import {Message} from "element-ui";
-    import {getRsaKey} from "@/util/RsaUtil";
-    // import {getRsaKey} from '@/util/RsaUtil'
+    import {getRSAKey} from "@/util/RSAUtil";
 
     export default {
         name: "Login",
@@ -50,8 +49,7 @@
             }
         },
         created() {
-            // window.console.log(getRsaKey())
-            getRsaKey()
+            // getRSAKey()
         },
         mounted() {
             this.animation()
@@ -78,7 +76,6 @@
                 }, 0)
             },
             submit() {
-                // window.console.log("aa"+getResKey())
                 aesPost('/api/student/login', this.form, {ase: true}).then(res => {
                     Message({
                         type: "success",
@@ -87,7 +84,12 @@
                     sessionStorage.setItem('token', res.data.token)
                     sessionStorage.setItem('stuId', res.data.stuId)
                 })
-                    .catch()
+                    .catch(err=>{
+                        Message({
+                            message:err.message,
+                            type:"error"
+                        })
+                    })
             },
             reset() {
                 this.form.account = ''

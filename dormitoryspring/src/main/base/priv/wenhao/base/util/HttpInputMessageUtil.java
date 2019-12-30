@@ -34,6 +34,7 @@ public class HttpInputMessageUtil {
 		Map<String,Object> map;
 		JSONObject jsonObject=JSONObject.parseObject(body);
 		map= JSON.toJavaObject(jsonObject,Map.class);
+		System.out.println(trueKey);
 		for (Map.Entry<String,Object> entry:map.entrySet()){
 			entry.setValue(AesUtil.decrypt(entry.getValue().toString(),trueKey));
 		}
@@ -50,7 +51,6 @@ public class HttpInputMessageUtil {
 		byte[]encrypteds= Base64.getDecoder().decode(key);
 		byte[]dencrypteds=RsaUtil.decrypt(encrypteds,RsaUtil.privateKey);
 		String trueKey=new String(dencrypteds);
-
 		Map<String,Object> map;
 		JSONObject jsonObject=JSONObject.parseObject(body);
 		map=JSON.toJavaObject(jsonObject,Map.class);

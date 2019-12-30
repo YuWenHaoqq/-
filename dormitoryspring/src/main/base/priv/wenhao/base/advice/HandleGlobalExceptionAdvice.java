@@ -37,19 +37,19 @@ public class HandleGlobalExceptionAdvice {
 		return resultVo;
 	}
 
-//	/***
-//	* Description:统一异常管理-全局异常
-//	* param:[req, e]
-//	* return:priv.wenhao.base.pojo.vo.ResultVo
-//	* Author:yu wenhao
-//	* date:2019/12/17
-//	*/
-//	@ExceptionHandler(value = Exception.class)
-//	@ResponseBody
-//	public ResultVo exceptionHandle(HttpServletRequest req, Exception e){
-//		ResultVo resultVo=new ResultVo();
-//		resultVo.setCode(-1);
-//		resultVo.setMessage("未知异常,请联系后台程序员");
-//		return resultVo;
-//	}
+	/***
+	* Description:统一异常管理-全局异常
+	* param:[req, e]
+	* return:priv.wenhao.base.pojo.vo.ResultVo
+	* Author:yu wenhao
+	* date:2019/12/17
+	*/
+	@ExceptionHandler(value = Exception.class)
+	@ResponseBody
+	public ResultVo exceptionHandle(HttpServletRequest req, Exception e){
+		ResultVo resultVo=new ResultVo();
+		resultVo.setCode(-1);
+		resultVo.setMessage("未知异常,请联系后台程序员");
+		return resultVo;
+	}
 }

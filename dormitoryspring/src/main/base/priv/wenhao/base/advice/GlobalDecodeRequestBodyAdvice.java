@@ -43,6 +43,8 @@ public class GlobalDecodeRequestBodyAdvice implements RequestBodyAdvice {
 				throw new BussinessException(e.getCode(),e.getMessage());
 			}
 			catch (BadPaddingException e){
+				e.printStackTrace();
+//				log.info(e.printStackTrace());
 				throw new BussinessException(5,"解密错误");
 			}
 			catch (Exception e) {

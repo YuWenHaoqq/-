@@ -1,9 +1,11 @@
 package priv.wenhao.base.advice.inner;
 
 
+import com.google.common.base.Strings;
 import org.apache.commons.io.IOUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpInputMessage;
+import priv.wenhao.base.exception.BussinessException;
 import priv.wenhao.base.util.HttpInputMessageUtil;
 import priv.wenhao.base.util.RsaUtil;
 
@@ -19,8 +21,10 @@ public class MyHttpInputMessage implements HttpInputMessage {
 	public MyHttpInputMessage(HttpInputMessage httpInputMessage) throws Exception {
 		this.headers = httpInputMessage.getHeaders();
 		String key=headers.getFirst("aes");
-
-
+		System.out.println("key:"+key);
+		if (Strings.isNullOrEmpty(key)) {
+			throw new BussinessException(5,"请求错误,可以重启浏览器再重试");
+		}
 		String content=IOUtils.toString(httpInputMessage.getBody(), "UTF-8");
 		this.body = IOUtils.toInputStream(HttpInputMessageUtil.decryptString(content,key), "UTF-8");
 	}

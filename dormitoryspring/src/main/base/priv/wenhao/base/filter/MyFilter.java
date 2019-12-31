@@ -21,9 +21,9 @@ public class MyFilter implements Filter {
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
 
+
+
 		filterChain.doFilter(servletRequest, servletResponse);
-
-
 	}
 
 	@Override

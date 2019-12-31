@@ -18,8 +18,9 @@ instance.defaults.headers.post['Content-Type'] = 'application/json;charset=UTF-8
 
 //添加请求拦截器
 instance.interceptors.request.use(config => {
-        config.headers['token'] = sessionStorage.getItem('token') || ''
-        config.headers['stuId'] = sessionStorage.getItem('stuId') || ''
+        config.headers['token'] = rsaEncryption(sessionStorage.getItem('token')) || ''
+        config.headers['id'] = rsaEncryption(sessionStorage.getItem('stuId'))
+            || rsaEncryption(sessionStorage.getItem('teaId'))||''
         config.headers['aes'] = rsaEncryption(sessionStorage.getItem("aes")) || ''
         loadingInstance = Loading.service({
             spinner: 'el-icon-loading',
@@ -73,7 +74,7 @@ export function aesPost(url, data, config = {}) {
         data: aesValue(data),
         ...config
     }).then(res => {
-        window.console.log(res.data)
+        // window.console.log(res.data)
         aesMapDecrypt(res.data)
         return Promise.resolve(res)
     }).catch(err => {

@@ -19,7 +19,6 @@ public class MyHttpInputMessage implements HttpInputMessage {
 	public MyHttpInputMessage(HttpInputMessage httpInputMessage) throws Exception {
 		this.headers = httpInputMessage.getHeaders();
 		String key=headers.getFirst("aes");
-		System.out.println("key:"+key);
 		if (Strings.isNullOrEmpty(key)) {
 			throw new BussinessException(5,"请求错误,可以重启浏览器再重试");
 		}

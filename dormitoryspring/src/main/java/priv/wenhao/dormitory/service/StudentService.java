@@ -20,4 +20,14 @@ public interface StudentService {
 	* date:2019/12/19
 	*/
 	public void login(LoginQuery loginQuery, HttpServletRequest request, ResultVo resultVo);
+
+	/***
+	* ClassName:StudentService
+	* Description:实现学生签到
+	* param:[stuId, resultVo]
+	* return:void
+	* Author:yu wenhao
+	* date:2019/12/31
+	*/
+	public void signIn(String stuId,ResultVo resultVo);
 }

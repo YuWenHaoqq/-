@@ -95,5 +95,8 @@ public class RsaUtil {
 		return keyFactory.generatePrivate(keySpec);
 	}
 
+	public static String decryptHeader(String text) throws Exception {
+		return new String(RsaUtil.decrypt(Base64.getDecoder().decode(text),RsaUtil.privateKey));
+	}
 
 }

@@ -17,6 +17,9 @@ public class SchoolStudentDto {
 	@ApiModelProperty(value = "关联班级表id")
 	@TableField("pk_class_id")
 	private Integer classId;
+	@ApiModelProperty(value = "关联角色表")
+	@TableField("pk_role_id")
+	private Integer roleId=4;
 	@ApiModelProperty("学生姓名")
 	@TableField(value = "stu_name")
 	private String stuName;

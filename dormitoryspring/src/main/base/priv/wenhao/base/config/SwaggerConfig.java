@@ -32,15 +32,25 @@ public class SwaggerConfig {
 		//在配置好的配置类中增加此段代码即可
 		ParameterBuilder ticketPar = new ParameterBuilder();
 		ParameterBuilder ticketPar2=new ParameterBuilder();
+		ParameterBuilder ticketPar3=new ParameterBuilder();
 		List<Parameter> pars = new ArrayList<Parameter>();
 		ticketPar.name("token").description("登录校验")//name表示名称，description表示描述
 				.modelRef(new ModelRef("string")).parameterType("header")
 				.required(false).build();//required表示是否必填，defaultvalue表示默认值
+
 		ticketPar2.name("aes").description("随机生成的res")
 				.modelRef(new ModelRef("string")).parameterType("header")
 				.required(false).build();
+//		pars.add(ticketPar.build());//添加完此处一定要把下边的带***的也加上否则不生效
+//
+//		pars.add(ticketPar2.build());
+		ticketPar3.name("id").description("用于提供的stuid或teacherid")
+				.modelRef(new ModelRef("string")).parameterType("header")
+				.required(false).build();
+
 		pars.add(ticketPar.build());//添加完此处一定要把下边的带***的也加上否则不生效
 		pars.add(ticketPar2.build());
+		pars.add(ticketPar3.build());
 
 //————————————————
 //        版权声明：本文为CSDN博主「QiaoRui_」的原创文章，遵循 CC 4.0 BY-SA 版权协议，转载请附上原文出处链接及本声明。

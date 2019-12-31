@@ -5,17 +5,18 @@ import io.lettuce.core.SetArgs;
 import io.lettuce.core.api.sync.RedisCommands;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import priv.wenhao.base.pojo.dto.SchoolSignHistory;
 import priv.wenhao.base.pojo.dto.SchoolStudentDto;
 import priv.wenhao.base.pojo.vo.ResultVo;
-import priv.wenhao.base.util.RsaUtil;
 import priv.wenhao.base.util.UUIDUtil;
+import priv.wenhao.dormitory.mapper.SchoolSignHistoryMapper;
 import priv.wenhao.dormitory.mapper.SchoolStudentMapper;
 import priv.wenhao.dormitory.pojo.query.LoginQuery;
 import priv.wenhao.dormitory.pojo.vo.UserVo;
 import priv.wenhao.dormitory.service.StudentService;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Base64;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -29,6 +30,9 @@ public class StudentServiceImpl implements StudentService {
 
 	@Autowired
 	private SchoolStudentMapper schoolStudentMapper;
+
+	@Autowired
+	private SchoolSignHistoryMapper schoolSignHistoryMapper;
 
 	@Autowired
 	private RedisCommands<String, String> firstTemplate;
@@ -59,10 +63,43 @@ public class StudentServiceImpl implements StudentService {
 //			将token添加到redis缓存
 			SetArgs setArgs = SetArgs.Builder.nx().ex(60 * 60);
 			firstTemplate.set(userVo.getStuId(), userVo.getToken(), setArgs);
-			return;
 		} else {
 			resultVo.setCode(3);
 			resultVo.setMessage("账号或密码错误");
+		}
+	}
+
+	/***
+	* ClassName:StudentServiceImpl
+	* Description:学生签到
+	* param:[stuId, resultVo]
+	* return:void
+	* Author:yu wenhao
+	* date:2019/12/31
+	*/
+	@Override
+	public void signIn(String stuId, ResultVo resultVo) {
+
+		List<SchoolSignHistory> list = schoolSignHistoryMapper.getSignMessageByStuId(stuId);
+		if (list.size() == 0) {
+			resultVo.setCode(-1);
+			resultVo.setMessage("学生信息缺失,请联系教师添加");
+			return;
+		} else if (list.size() > 1) {
+			resultVo.setCode(-1);
+			resultVo.setMessage("学生信息异常,请联系教师");
+			return;
+		}
+		System.out.println(list.get(0).getContinueSignMonth());
+		list.get(0).setStuId(stuId);
+		list.get(0).setCreateTime(new Date());
+		list.get(0).setDeleted(0);
+		int row = schoolSignHistoryMapper.insert(list.get(0));
+		if (row == 1) {
+			resultVo.setMessage("签到成功");
+		} else {
+			resultVo.setCode(-1);
+			resultVo.setMessage("签到异常");
 		}
 	}
 }

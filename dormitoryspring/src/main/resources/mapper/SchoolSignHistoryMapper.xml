@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="priv.wenhao.dormitory.mapper.SchoolSignHistoryMapper">
+
+<!--    获得登录日志表需要的信息-->
+    <select id="getSignMessageByStuId" resultType="priv.wenhao.base.pojo.dto.SchoolSignHistory">
+        select ss.stu_name as stuName,st.teacher_id as teacherId,ifnull(ssh.continue_sign_month,0)+1 as continueSignMonth
+        from school_student as ss
+        left join school_teacher as st on ss.pk_teacher_id=st.teacher_id
+        left join school_sign_history as ssh on ssh.pk_stu_id=ss.stu_id and date(ssh.sign_history_create)=curdate()-1
+        where  ss.stu_id=#{stuId} and ss.is_deleted=0
+    </select>
+</mapper>

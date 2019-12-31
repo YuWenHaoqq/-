@@ -23,10 +23,7 @@ public class HttpInputMessageUtil {
 	* date:2019/12/25
 	*/
 	public static String decryptString(String body,String key) throws Exception {
-
-		byte[]encrypteds= Base64.getDecoder().decode(key);
-		byte[]dencrypteds=RsaUtil.decrypt(encrypteds,RsaUtil.privateKey);
-		String trueKey=new String(dencrypteds);
+		String trueKey=RsaUtil.decryptHeader(key);
 		if (Strings.isNullOrEmpty(trueKey)||trueKey.length()%16!=0){
 			throw new BussinessException(5,"aes密钥错误");
 		}
@@ -48,9 +45,7 @@ public class HttpInputMessageUtil {
 	* date:2019/12/25
 	*/
 	public static Object encryptionString(String body,String key)throws Exception{
-		byte[]encrypteds= Base64.getDecoder().decode(key);
-		byte[]dencrypteds=RsaUtil.decrypt(encrypteds,RsaUtil.privateKey);
-		String trueKey=new String(dencrypteds);
+		String trueKey=RsaUtil.decryptHeader(key);
 		Map<String,Object> map;
 		JSONObject jsonObject=JSONObject.parseObject(body);
 		map=JSON.toJavaObject(jsonObject,Map.class);

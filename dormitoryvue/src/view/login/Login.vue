@@ -35,7 +35,7 @@
 <script>
     import {aesPost} from "@/util/HttpUtil";
     import {Message} from "element-ui";
-    import {getRSAKey} from "@/util/RSAUtil";
+    import {getRSAKey, rsaEncryption} from "@/util/RSAUtil";
 
     export default {
         name: "Login",
@@ -83,11 +83,16 @@
                     })
                     sessionStorage.setItem('token', res.data.token)
                     sessionStorage.setItem('stuId', res.data.stuId)
+                    window.console.log("token:",sessionStorage.getItem('token'))
+                    window.console.log("token:", rsaEncryption(sessionStorage.getItem('token')))
+                    window.console.log("stuid:", sessionStorage.getItem('stuId'))
+                    window.console.log("stuid:", rsaEncryption(sessionStorage.getItem('stuId')))
+                    window.console.log("aes:", rsaEncryption(sessionStorage.getItem("aes")))
                 })
-                    .catch(err=>{
+                    .catch(err => {
                         Message({
-                            message:err.message,
-                            type:"error"
+                            message: err.message,
+                            type: "error"
                         })
                     })
             },

@@ -2,16 +2,18 @@ server:
   port: 9000
 
 spring:
+  application:
+    name: dormitory
   datasource:
     url: jdbc:mysql://localhost:3306/wh_dormitory?serverTimezone=GMT
     username: root
     password: a1471689575
     driver-class-name: com.mysql.cj.jdbc.Driver
-#    连接池配置
+    #    连接池配置
     hikari:
-#      最小空闲数
+      #      最小空闲数
       minimum-idle: 0
-#      最大连接数
+      #      最大连接数
       maximum-pool-size: 10
       idle-timeout: 180000
   resources:
@@ -39,3 +41,30 @@ redis:
   database:
     login: 1
     token: 2
+
+
+### producer
+# 该应用是否启动生产者
+#rocketmq.producer.isOnOff=on
+rocketmq:
+  producer:
+    isOnOff: on
+    # 发送同一类消息的设置为同一个group,保证唯一,默认不需要设置,rocketmq会使用ip@pid(pid代表jvn名字)作为唯一的标识
+    groupName: ${spring.application.name}
+    namesrvAddr: 127.0.0.1:9876
+    #    消息的最大长度,默认是1024*4
+    maxMessageSize: 4096
+    sendMsgTimeout: 3000
+    #     发送消息失败的重试次数,默认2
+    retryTimesWhenSendFailed: 2
+  consumer:
+    isOnOff: on
+    groupName: ${spring.application.name}
+#    mq的nameserver地址
+    namesrvAddr: 127.0.0.1:9876
+#    该消费者订阅的主题和tags("*"号表示订阅该主题下的tags),格式: topic~tag1||tag2||tag3;topic2~*;
+    topic: DemoTopics~*
+    consumeThreadMin: 20
+    consumeThreadMax: 64
+#    设置一次消息的条数,默认为一条
+    consumeMessageBatchMaxSize: 1

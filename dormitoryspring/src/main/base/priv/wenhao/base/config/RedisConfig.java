@@ -42,6 +42,20 @@ public class RedisConfig {
 	private long timeout;
 
 	/***
+	* ClassName:RedisConfig
+	* Description:防止表单重复提交
+	* param:[]
+	* return:io.lettuce.core.api.sync.RedisCommands<java.lang.String,java.lang.String>
+	* Author:yu wenhao
+	* date:2019/12/31
+	*/
+//	@Bean(name = "zeroTemplate")
+//	public RedisCommands<String,String> getZeroTemplate(){
+//
+//	}
+
+
+	/***
 	* Description:用于存放登录的token
 	* param:[]
 	* return:io.lettuce.core.api.sync.RedisCommands<java.lang.String,java.lang.String>
@@ -65,6 +79,14 @@ public class RedisConfig {
 		return connection.sync();
 	}
 
+	/***
+	* ClassName:RedisConfig
+	* Description:用于存放权限,obj为list
+	* param:[]
+	* return:io.lettuce.core.api.sync.RedisCommands<java.lang.String,java.lang.Object>
+	* Author:yu wenhao
+	* date:2019/12/31
+	*/
 	@Bean(name = "secondTemplate")
 	public RedisCommands<String, Object> getSecondTemplate() {
 		RedisURI redisURI = RedisURI.builder()

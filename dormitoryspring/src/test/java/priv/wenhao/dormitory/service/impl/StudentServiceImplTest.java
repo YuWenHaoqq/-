@@ -36,7 +36,7 @@ public void testLogin() throws Exception {
 * 
 */ 
 @Test
-public void testSignIn() throws Exception { 
+public void testSignIn() throws Exception {
 	ResultVo resultVo=new ResultVo();
 	studentService.signIn("173067113",resultVo);
 } 

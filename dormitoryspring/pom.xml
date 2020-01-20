@@ -152,6 +152,14 @@
             <artifactId>fastjson</artifactId>
             <version>1.2.62</version>
         </dependency>
+<!--        实现rocketMQ-->
+        <!-- https://mvnrepository.com/artifact/org.apache.rocketmq/rocketmq-client -->
+        <dependency>
+            <groupId>org.apache.rocketmq</groupId>
+            <artifactId>rocketmq-client</artifactId>
+            <version>4.5.2</version>
+        </dependency>
+
 
 
 

@@ -20,9 +20,6 @@ public class MyFilter implements Filter {
 //		解决中文乱码问题
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
-
-
-
 		filterChain.doFilter(servletRequest, servletResponse);
 	}
 

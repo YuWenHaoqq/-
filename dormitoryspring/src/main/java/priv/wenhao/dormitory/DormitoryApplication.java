@@ -14,7 +14,12 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 public class DormitoryApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(DormitoryApplication.class, args);
+//		SpringApplication springApplication = new SpringApplication(DormitoryApplication.class);
+//		ConfigurableApplicationContext configurableApplicationContext = springApplication.run(args);
 		System.out.println("Ready Perfectly!");
+//		RocketMQProperties rocketMQProperties=configurableApplicationContext
+//				.getBean(RocketMQProperties.class);
+//		System.out.println(rocketMQProperties.getSubscribe().get(0));
 	}
 
 }

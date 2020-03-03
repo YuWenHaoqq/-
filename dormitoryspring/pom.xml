@@ -139,7 +139,7 @@
             <version>2.6</version>
         </dependency>
 
-<!--        实现json和对象互转-->
+        <!--        实现json和对象互转-->
         <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
         <dependency>
             <groupId>com.google.code.gson</groupId>
@@ -152,16 +152,29 @@
             <artifactId>fastjson</artifactId>
             <version>1.2.62</version>
         </dependency>
-<!--        实现rocketMQ-->
+        <!--        实现rocketMQ-->
         <!-- https://mvnrepository.com/artifact/org.apache.rocketmq/rocketmq-client -->
         <dependency>
             <groupId>org.apache.rocketmq</groupId>
             <artifactId>rocketmq-client</artifactId>
             <version>4.5.2</version>
         </dependency>
-
-
-
+        <!--PropertySource注解解析properties文件-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.springframework.boot</groupId>-->
+        <!--            <artifactId>spring-boot-configuration-processor</artifactId>-->
+        <!--            <optional>true</optional>-->
+        <!--        </dependency>-->
+        <!--        解决:出现spring boot Configuration Annotation Proessor not found in classpath的提示是在用了@ConfigurationProperties这个注解时，所以问题出现在ConfigurationProperties注解。
+        根据提示的not found in classpath,查询此注解的使用关于怎么指定classpath,进而查询location，spring boot1.5以上版本@ConfigurationProperties取消location注解
+        ————————————————
+        版权声明：本文为CSDN博主「福尔摩帅」的原创文章，遵循 CC 4.0 BY-SA 版权协议，转载请附上原文出处链接及本声明。
+        原文链接：https://blog.csdn.net/w05980598/article/details/79167826-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
 
     </dependencies>
 

@@ -2,9 +2,9 @@
     <div class="patch">
         <el-row class="tac">
             <el-col :span="24">
-                <h5>宿舍签到系统</h5>
+                <h5>宿舍签到系统{{$route.name}}</h5>
                 <el-menu router
-                        default-active="$route.path"
+                        :default-active="$route.name"
                         class="el-menu-vertical-demo"
                         @open="handleOpen"
                         @close="handleClose">

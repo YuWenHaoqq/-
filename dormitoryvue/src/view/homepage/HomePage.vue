@@ -27,13 +27,14 @@
                 </div>
             </el-col>
         </el-row>
-        <br>
+        <div class="interval"></div>
         <el-row>
             <el-col :offset="16" :span="8">
                 <el-pagination small layout="prev, pager, next"
                                :total="50"></el-pagination>
             </el-col>
         </el-row>
+        <div class="interval"></div>
         <under></under>
         <div>
         </div>

@@ -27,17 +27,17 @@ export default new Router({
         },
         {
             path: '/index',
-            name: 'page',
+            name: 'index',
             component: resolve => require(['@/view/index/index'], resolve),
             children:[
                 {
                     path: 'homepage',
-                    name: 'page',
+                    name: 'homepage',
                     component: resolve => require(['@/view/homepage/HomePage'], resolve)
                 },
                 {
                     path: 'stuSignin',
-                    name: 'signin',
+                    name: 'stuSignin',
                     component: resolve => require(['@/view/stu/SignIn'], resolve)
                 }
             ]

@@ -35,7 +35,6 @@
 <script>
     import {aesPost} from "@/util/HttpUtil";
     import {Message} from "element-ui";
-    import {getRSAKey, rsaEncryption} from "@/util/RSAUtil";
 
     export default {
         name: "Login",
@@ -83,11 +82,11 @@
                     })
                     sessionStorage.setItem('token', res.data.token)
                     sessionStorage.setItem('stuId', res.data.stuId)
-                    window.console.log("token:",sessionStorage.getItem('token'))
-                    window.console.log("token:", rsaEncryption(sessionStorage.getItem('token')))
-                    window.console.log("stuid:", sessionStorage.getItem('stuId'))
-                    window.console.log("stuid:", rsaEncryption(sessionStorage.getItem('stuId')))
-                    window.console.log("aes:", rsaEncryption(sessionStorage.getItem("aes")))
+                    // window.console.log("token:",sessionStorage.getItem('token'))
+                    // window.console.log("token:", rsaEncryption(sessionStorage.getItem('token')))
+                    // window.console.log("stuid:", sessionStorage.getItem('stuId'))
+                    // window.console.log("stuid:", rsaEncryption(sessionStorage.getItem('stuId')))
+                    // window.console.log("aes:", rsaEncryption(sessionStorage.getItem("aes")))
                 })
                     .catch(err => {
                         Message({
@@ -136,9 +135,8 @@
         align-items: center;
         justify-content: center;
 
-        transition: 1s;
-        opacity: 0;
-        /*transform: translateX(10%);*/
+        /*transition: 1s;*/
+        /*opacity: 0;*/
     }
 
     .home-slider {

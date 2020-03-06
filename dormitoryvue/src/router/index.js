@@ -8,12 +8,12 @@ export default new Router({
     routes: [
         {
             path: '/',
-            name: 'index',
+            name: 'login',
             component: resolve => require(['@/view/login/Login'], resolve)
         }, {
             path: '/test',
             name: 'test',
-            component: resolve => require(['@/components/LoginView'], resolve)
+            component: resolve => require(['@/components/NoticeTemplate'], resolve)
         },
         {
             path:'/tt',
@@ -24,6 +24,23 @@ export default new Router({
             path: '*',
             name: '404',
             component: resolve => require(['@/view/404/404'], resolve)
+        },
+        {
+            path: '/index',
+            name: 'page',
+            component: resolve => require(['@/view/index/index'], resolve),
+            children:[
+                {
+                    path: 'homepage',
+                    name: 'page',
+                    component: resolve => require(['@/view/homepage/HomePage'], resolve)
+                },
+                {
+                    path: 'stuSignin',
+                    name: 'signin',
+                    component: resolve => require(['@/view/stu/SignIn'], resolve)
+                }
+            ]
         }
     ]
 })

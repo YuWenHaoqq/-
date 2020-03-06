@@ -1,0 +1,26 @@
+<template>
+<div>
+    <el-row>
+        <el-col :span="3">
+            <navigation></navigation>
+        </el-col>
+        <el-col :span="21">
+            <router-view></router-view>
+        </el-col>
+    </el-row>
+</div>
+</template>
+
+<script>
+    import navigation from '@/components/NavigationBar'
+    export default {
+        name: "index",
+        components: {
+            "navigation": navigation
+        }
+    }
+</script>
+
+<style scoped>
+
+</style>

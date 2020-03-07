@@ -39,6 +39,33 @@ export default new Router({
                     path: 'stuSignin',
                     name: 'stuSignin',
                     component: resolve => require(['@/view/stu/SignIn'], resolve)
+                },
+                {
+                    path: 'leave',
+                    name: 'leave',
+                    component: resolve => require(['@/view/stu/Leave'], resolve)
+                },
+                {
+                    path: 'journal',
+                    name: 'journal',
+                    component: resolve => require(['@/view/stu/Journal'], resolve)
+                },
+                {
+                    path: 'addStu',
+                    name: 'addStu',
+                    component: resolve => require(['@/view/add/AddStu'], resolve)
+                },{
+                    path: 'approval',
+                    name: 'approval',
+                    component: resolve => require(['@/view/tea/Approval'], resolve)
+                },{
+                    path: 'checkSign',
+                    name: 'checkSign',
+                    component: resolve => require(['@/view/tea/CheckSign'], resolve)
+                },{
+                    path: 'updateNotice',
+                    name: 'updateNotice',
+                    component: resolve => require(['@/view/tea/UpdateNotice'], resolve)
                 }
             ]
         }

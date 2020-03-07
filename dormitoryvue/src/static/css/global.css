@@ -1,0 +1,13 @@
+/*.foot{*/
+/*    height: 145;*/
+/*    !*position: fixed;*!*/
+/*    !*bottom: 0px;*!*/
+/*    !*width: 100%*!*/
+/*}*/
+.content{
+    min-height: calc(100vh - 145px);
+}
+.interval{
+    height: 85px;
+
+}

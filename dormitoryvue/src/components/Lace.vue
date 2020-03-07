@@ -1,11 +1,9 @@
 <template>
     <div class="bg">
         <el-row class="title">
-            <el-col :span="22" :offset='2'>
-<!--                <div style="border: 1px solid red">-->
+            <el-col :span="15" :offset='2'>
                     <h1 class="font">{{message}}</h1>
                     <p>{{des}}</p>
-<!--                </div>-->
 
             </el-col>
         </el-row>
@@ -36,12 +34,12 @@
         align-items: center;
         background: url("../assets/image/tour-bg.png") repeat-x;
         height: 155px;
+        margin-bottom: 85px;
     }
 
     .font {
         color: #404040;
         font-weight: 300;
-        /*line-height: 155px;*/
     }
     .title{
         width: 100%;

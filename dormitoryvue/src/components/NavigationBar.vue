@@ -2,7 +2,7 @@
     <div class="patch">
         <el-row class="tac">
             <el-col :span="24">
-                <h5>宿舍签到系统{{$route.name}}</h5>
+                <h5>宿舍签到系统</h5>
                 <el-menu router
                         :default-active="$route.name"
                         class="el-menu-vertical-demo"
@@ -19,25 +19,25 @@
                         </template>
                         <el-menu-item-group>
                             <el-menu-item index="stuSignin">签到</el-menu-item>
-                            <el-menu-item index="2-2">请假</el-menu-item>
-                            <el-menu-item index="2-3">日志表</el-menu-item>
+                            <el-menu-item index="leave">请假</el-menu-item>
+                            <el-menu-item index="journal">日志表</el-menu-item>
                         </el-menu-item-group>
                     </el-submenu>
 
                     <el-submenu index="3">
                         <template slot="title">
                         <i class="el-icon-user-solid"></i>
-                        <span slot="title">教师</span>
+                        <span>教师</span>
                         </template>
                         <el-menu-item-group>
-                            <el-menu-item index="3-1">审批请假</el-menu-item>
-                            <el-menu-item index="3-2">查看签到状态</el-menu-item>
-                            <el-menu-item index="3-3">更新公告</el-menu-item>
+                            <el-menu-item index="approval">审批请假</el-menu-item>
+                            <el-menu-item index="checkSign">查看签到状态</el-menu-item>
+                            <el-menu-item index="updateNotice">更新公告</el-menu-item>
                         </el-menu-item-group>
                     </el-submenu>
-                    <el-menu-item index="4">
+                    <el-menu-item index="addStu">
                         <i class="el-icon-setting"></i>
-                        <span slot="title">导航四</span>
+                        <span slot="title">人员录入</span>
                     </el-menu-item>
                 </el-menu>
             </el-col>

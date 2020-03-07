@@ -1,7 +1,7 @@
 <template>
     <div>
         <el-row>
-            <el-col :span="20" :offset="2">
+            <el-col :span="24">
                 <div class="bg"></div>
             </el-col>
         </el-row>
@@ -22,8 +22,6 @@
 <style scoped>
     .bg {
         height: 145px;
-        /*text-align: ce;*/
-        background: url("../assets/image/under.png") center no-repeat;
-
+        background: url("../assets/image/under.png") center repeat-x;
     }
 </style>

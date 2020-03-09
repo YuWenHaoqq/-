@@ -29,6 +29,9 @@ public class RedisConfig {
 	@Value(("${redis.database.token}"))
 	private int tokenDataBase;
 
+	@Value(("${redis.database.third}"))
+	private int thirdDataBase;
+
 	@Value("${spring.redis.host}")
 	private String host;
 
@@ -78,7 +81,30 @@ public class RedisConfig {
 //		创建同步命令
 		return connection.sync();
 	}
+	/***
+	* ClassName:RedisConfig
+	* Description: 放在第三个redis库中
+	* param:[]
+	* return:io.lettuce.core.api.sync.RedisCommands<java.lang.String,java.lang.String>
+	* Author:yu wenhao
+	* date:2020/3/9
+	*/
+	@Bean(name = "thirdTemplate")
+	public RedisCommands<String, String> getThirdTemplate() {
+		RedisURI redisURI = RedisURI.builder()
+				.withHost(host)
+				.withPort(port)
+				.withPassword(password)
+				.withDatabase(thirdDataBase)
+				.withTimeout(Duration.of(timeout, ChronoUnit.SECONDS))
+				.build();
 
+//		创建客户端
+		RedisClient redisClient = RedisClient.create(redisURI);
+		StatefulRedisConnection<String, String> connection = redisClient.connect();;
+//		创建同步命令
+		return connection.sync();
+	}
 	/***
 	* ClassName:RedisConfig
 	* Description:用于存放权限,obj为list

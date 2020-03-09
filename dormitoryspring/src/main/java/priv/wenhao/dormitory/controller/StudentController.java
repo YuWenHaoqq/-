@@ -3,17 +3,19 @@ package priv.wenhao.dormitory.controller;
 import com.google.common.base.Strings;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import priv.wenhao.base.advice.SecurityParameter;
 import priv.wenhao.base.aop.StuLoginCheckAop;
 import priv.wenhao.base.exception.BussinessException;
 import priv.wenhao.base.pojo.vo.ResultVo;
 import priv.wenhao.dormitory.pojo.query.LoginQuery;
 import priv.wenhao.dormitory.service.StudentService;
+import priv.wenhao.dormitory.service.TeacherService;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 @Api(tags = "学生端接口")
@@ -24,8 +26,11 @@ public class StudentController {
 	@Autowired
 	private StudentService studentService;
 
+	@Autowired
+	private TeacherService teacherService;
+
 	/***
-	 * Description:学生端登录
+	 * Description:学生端/教师端 登录
 	 * param:[]
 	 * return:priv.wenhao.base.pojo.vo.ResultVo
 	 * Author:yu wenhao
@@ -39,7 +44,11 @@ public class StudentController {
 			throw new BussinessException(3, "请输入账号或密码");
 		}
 		ResultVo resultVo = new ResultVo();
-		studentService.login(loginQuery, request, resultVo);
+		if (loginQuery.getIdentity()==1) {
+			studentService.login(loginQuery, request, resultVo);
+		} else if (loginQuery.getIdentity()==2){
+			teacherService.login(loginQuery,request,resultVo);
+		}
 		return resultVo;
 	}
 

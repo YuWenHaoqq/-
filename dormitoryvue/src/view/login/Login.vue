@@ -20,7 +20,12 @@
                         <el-form-item class="input" label="密码" prop="password">
                             <el-input placeholder="请输入密码" v-model='form.password' show-password clearable></el-input>
                         </el-form-item>
-                        <br>
+                        <el-form-item class="input" prop="type">
+                            <el-radio-group v-model="form.identity">
+                                <el-radio :label="1">学生</el-radio>
+                                <el-radio :label="2">教师</el-radio>
+                            </el-radio-group>
+                        </el-form-item>
                         <div class="submit">
                             <el-button type="primary" @click="submit">登录</el-button>
                             <el-button type="warning" @click="reset">清空</el-button>
@@ -43,7 +48,8 @@
             return {
                 form: {
                     account: '',
-                    password: ''
+                    password: '',
+                    identity: 1
                 }
             }
         },
@@ -75,6 +81,7 @@
                 }, 0)
             },
             submit() {
+                let  that=this
                 aesPost('/api/student/login', this.form, {ase: true}).then(res => {
                     Message({
                         type: "success",
@@ -82,6 +89,7 @@
                     })
                     sessionStorage.setItem('token', res.data.token)
                     sessionStorage.setItem('stuId', res.data.stuId)
+                    that.$router.push({path:'/index/homepage'})
                     // window.console.log("token:",sessionStorage.getItem('token'))
                     // window.console.log("token:", rsaEncryption(sessionStorage.getItem('token')))
                     // window.console.log("stuid:", sessionStorage.getItem('stuId'))

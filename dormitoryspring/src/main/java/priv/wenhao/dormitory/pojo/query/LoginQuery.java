@@ -9,4 +9,6 @@ public class LoginQuery {
 	private String account;
 	@ApiModelProperty(value = "密码")
 	private String password;
+	@ApiModelProperty(value = "类型")
+	private Integer identity;
 }

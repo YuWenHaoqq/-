@@ -8,7 +8,7 @@ import CryptoJS from 'crypto-js'
 */
 export function AseEncryption(text) {
     let key=CryptoJS.enc.Utf8.parse(getAesKey())
-    let encryptedData = CryptoJS.AES.encrypt(text, key, {
+    let encryptedData = CryptoJS.AES.encrypt(text+"", key, {
         mode: CryptoJS.mode.ECB,
         padding: CryptoJS.pad.Pkcs7
     });
@@ -47,6 +47,7 @@ function randomKey() {
 export function aesValue(map) {
     let obj=new Object()
     Object.keys(map).forEach(function (key) {
+        window.console.log(key)
         eval("obj."+key+"='"+AseEncryption(map[key])+"'")
     })
     return obj

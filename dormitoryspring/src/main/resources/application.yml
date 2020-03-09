@@ -41,7 +41,7 @@ redis:
   database:
     login: 1
     token: 2
-
+    third: 3
 
 #### producer
 ## 该应用是否启动生产者
@@ -94,3 +94,12 @@ redis:
 #    consumeThreadMax: 64
 ##    设置一次消息的条数,默认为一条
 #    consumeMessageBatchMaxSize: 1
+
+#pagehelper:
+##  数据库语言
+  helper-dialect: mysql
+#  判断合理性比如负数和超过最大值
+  reasonable: true
+  #  支持方言参数
+  support-methods-arguments: true
+  rowBoundsWithCount: true

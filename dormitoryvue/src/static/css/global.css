@@ -1,13 +1,13 @@
-/*.foot{*/
-/*    height: 145;*/
-/*    !*position: fixed;*!*/
-/*    !*bottom: 0px;*!*/
-/*    !*width: 100%*!*/
-/*}*/
 .content{
     min-height: calc(100vh - 145px);
 }
-.interval{
-    height: 85px;
+/*.interval{*/
+/*    height: 85px;*/
 
+/*}*/
+.smallinterval{
+    padding-bottom: 10px;
+}
+.bigInterval{
+    padding-bottom: 20px;
 }

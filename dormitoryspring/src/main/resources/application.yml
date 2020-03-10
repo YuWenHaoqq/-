@@ -5,7 +5,7 @@ spring:
   application:
     name: dormitory
   datasource:
-    url: jdbc:mysql://localhost:3306/wh_dormitory?serverTimezone=GMT
+    url: jdbc:mysql://localhost:3306/wh_dormitory?serverTimezone=GMT%2B8
     username: root
     password: a1471689575
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -95,11 +95,11 @@ redis:
 ##    设置一次消息的条数,默认为一条
 #    consumeMessageBatchMaxSize: 1
 
-#pagehelper:
+pagehelper:
 ##  数据库语言
-  helper-dialect: mysql
-#  判断合理性比如负数和超过最大值
+  helperDialect: mysql
+##  判断合理性比如负数和超过最大值
   reasonable: true
-  #  支持方言参数
-  support-methods-arguments: true
+#  #  支持方言参数
+  supportMethodsArguments: true
   rowBoundsWithCount: true

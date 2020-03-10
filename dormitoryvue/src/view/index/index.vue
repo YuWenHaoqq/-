@@ -13,10 +13,22 @@
 
 <script>
     import navigation from '@/components/NavigationBar'
+
     export default {
         name: "index",
         components: {
             "navigation": navigation
+        },
+        created(){
+            this.checkLogin()
+
+        },
+        methods:{
+            checkLogin(){
+                if (sessionStorage.getItem('token')===null){
+                    this.$router.push({path:'/'})
+                }
+            }
         }
     }
 </script>

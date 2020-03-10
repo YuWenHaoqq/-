@@ -88,13 +88,12 @@
                         message: res.message
                     })
                     sessionStorage.setItem('token', res.data.token)
-                    sessionStorage.setItem('stuId', res.data.stuId)
+                    if(this.form.identity===1){
+                        sessionStorage.setItem('stuId', res.data.stuId)
+                    }else if(this.form.identity===2){
+                        sessionStorage.setItem('teaId',res.data.stuId)
+                    }
                     that.$router.push({path:'/index/homepage'})
-                    // window.console.log("token:",sessionStorage.getItem('token'))
-                    // window.console.log("token:", rsaEncryption(sessionStorage.getItem('token')))
-                    // window.console.log("stuid:", sessionStorage.getItem('stuId'))
-                    // window.console.log("stuid:", rsaEncryption(sessionStorage.getItem('stuId')))
-                    // window.console.log("aes:", rsaEncryption(sessionStorage.getItem("aes")))
                 })
                     .catch(err => {
                         Message({
@@ -106,6 +105,7 @@
             reset() {
                 this.form.account = ''
                 this.form.password = ''
+                this.form.identity=1
             }
         }
     }

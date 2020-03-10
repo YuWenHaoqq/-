@@ -18,7 +18,7 @@
             </el-row>
             <el-row>
                 <el-col :span="2" :offset="18">
-                    <el-button class="btn">打卡</el-button>
+                    <el-button class="btn" @click="signin">打卡</el-button>
                 </el-col>
             </el-row>
         </div>
@@ -33,6 +33,7 @@
     import lace from '@/components/Lace'
     import under from '@/components/Under'
     import '@/static/css/global.css'
+    import {paramsPost} from "@/util/HttpUtil";
 
     export default {
         name: "SignIn",
@@ -40,16 +41,40 @@
             'lace': lace,
             'under': under
         },
+        created(){
+            this.signMouth()
+        },
         data() {
             return {
                 // value: new Date(),
                 message: '签到页面',
-                signRanage: ['3-1', '3-2', '3-3', '3-4', '3-6']
+                signRanage: ["3-9", "3-10", "3-10", "3-10"]
             }
         },
         methods: {
             getMessage() {
                 return this.message
+            },
+            signin(){
+                let stuId=sessionStorage.getItem('stuId')
+                paramsPost('/api/student/signin',{stuId:stuId}).then(res=>{
+                    this.$message({
+                        message: res.message,
+                        type: 'success'
+                    });
+                }).catch(err=>{
+                    this.$message(err.message);
+                })
+            },
+            signMouth(){
+                let stuId=sessionStorage.getItem('stuId')
+                paramsPost('/api/student/signMonth',{stuId:stuId}).then(res=>{
+                    this.signRanage=res.data
+                })
+                    .catch(err=>{
+                    this.$message(err.message);
+                })
+
             }
         }
     }

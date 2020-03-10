@@ -96,3 +96,18 @@ export function post(url, data, config = {}) {
     })
 
 }
+//统一封装post请求,参数使用param
+export function paramsPost(url, params, config = {}) {
+    return instance({
+        method: 'post',
+        url: url,
+        params: params,
+        ...config
+    }).then(res => {
+        return Promise.resolve(res)
+    }).catch(err => {
+        return Promise.reject(err)
+    })
+
+}
+

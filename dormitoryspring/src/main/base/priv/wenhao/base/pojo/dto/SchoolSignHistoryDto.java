@@ -11,7 +11,7 @@ import java.util.Date;
 
 @Data
 @TableName("school_sign_history")
-public class SchoolSignHistory {
+public class SchoolSignHistoryDto {
 	@ApiModelProperty("学生签到表id")
 	@TableId(value = "sign_history_id",type = IdType.AUTO )
 	private Integer signHistoryId;
@@ -29,6 +29,7 @@ public class SchoolSignHistory {
 	private Integer continueSignMonth;
 	@ApiModelProperty("创建时间")
 	@TableField("sign_history_create")
+//	@JsonFormat(pattern="MM-dd")
 	private Date createTime;
 	@ApiModelProperty("修改时间")
 	@TableField("sign_history_modify")

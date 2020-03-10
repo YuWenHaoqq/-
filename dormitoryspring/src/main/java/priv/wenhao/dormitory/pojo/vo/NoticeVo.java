@@ -19,6 +19,8 @@ public class NoticeVo {
 	private String content;
 	@ApiModelProperty("文章描述")
 	private String noticeDes;
+	@ApiModelProperty("文章标题")
+	private String noticeTitle;
 //	@ApiModelProperty("总页数")
 //	private Integer pageNumber;
 }

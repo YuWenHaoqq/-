@@ -1,11 +1,11 @@
 package priv.wenhao.dormitory.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import priv.wenhao.base.pojo.dto.SchoolSignHistory;
+import priv.wenhao.base.pojo.dto.SchoolSignHistoryDto;
 
 import java.util.List;
 
-public interface SchoolSignHistoryMapper extends BaseMapper<SchoolSignHistory> {
+public interface SchoolSignHistoryMapper extends BaseMapper<SchoolSignHistoryDto> {
 	/***
 	* ClassName:SchoolSignHistoryMapper
 	* Description:获得登录日志表需要的信息
@@ -14,5 +14,5 @@ public interface SchoolSignHistoryMapper extends BaseMapper<SchoolSignHistory> {
 	* Author:yu wenhao
 	* date:2019/12/31
 	*/
-	List<SchoolSignHistory> getSignMessageByStuId(String stuId);
+	List<SchoolSignHistoryDto> getSignMessageByStuId(String stuId);
 }

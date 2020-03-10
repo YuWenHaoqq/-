@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="priv.wenhao.dormitory.mapper.SchoolNoticeMapper">
     <select id="getNoticeDes" resultType="priv.wenhao.dormitory.pojo.vo.NoticeVo">
-        select id,img_url,notice_des from school_notice
+        select id,img_url,notice_des,notice_title from school_notice
         where is_deleted= 0 order by release_time
     </select>
 </mapper>

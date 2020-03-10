@@ -1,6 +1,7 @@
 package priv.wenhao.dormitory.service.impl;
 
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import priv.wenhao.base.pojo.vo.ResultVo;
@@ -34,9 +35,12 @@ public class SchoolNoticeServiceImpl implements SchoolNoticeService {
 	*/
 	@Override
 	public void getNotice(int page, ResultVo resultVo) {
-		PageHelper.startPage(1,2);
+		int pageSize=6;
+		PageHelper.startPage(page,pageSize);
 		List<NoticeVo> list=schoolNoticeMapper.getNoticeDes();
+		PageInfo<NoticeVo>pageInfo=new PageInfo<>(list);
 		NoticeDesVo noticeDesVo=new NoticeDesVo();
+		noticeDesVo.setPageNumber((int)pageInfo.getTotal());
 		noticeDesVo.setNoticeVos(list);
 		resultVo.setCode(0);
 		resultVo.setMessage("查询成功");

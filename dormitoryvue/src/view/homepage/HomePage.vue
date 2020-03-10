@@ -2,78 +2,16 @@
     <div>
         <div class="content">
             <lace ref="lace"></lace>
+
             <el-row class="rowInterval">
                 <el-col :offset="2" :span="20">
                     <div>
-                        <el-row type="flex" justify="space-around">
-                            <el-col :span="8">
+                        <el-row  v-for="item1 in noticeShwoList">
+                            <el-col :span="8" :offset="2" v-for="item of item1">
                                 <div class="notice" @click="dialogshow=true">
-                                    <img :src='this.imageurl1'>
-                                    <h4>我校新冠肺炎心理服务心理服务心理服务心理服务心理服务心理服务上线</h4>
-                                    <p>
-                                        新型冠状病毒感染的疫情正冲击着我们，很多人会感到害怕、担忧、恐慌、焦虑，还有些人会有身体上的不适感，如胸闷、头痛、失眠、食欲差、不明原因的身体疼痛等，请大家不要担心，这是人们遭遇重大危机事件时的应激反应，是正常的反应。</p>
-                                </div>
-                            </el-col>
-
-
-                            <el-col :span="8">
-                                <div class="notice">
-                                    <img :src='this.imageurl1'>
-                                    <h4>我校新冠肺炎心理服务上线</h4>
-                                    <p>
-                                        新型冠状病毒感染的疫情正冲击着我们，很多人会感到害怕、担忧、恐慌、焦虑，还有些人会有身体上的不适感，如胸闷、头痛、失眠、食欲差、不明原因的身体疼痛等，请大家不要担心，这是人们遭遇重大危机事件时的应激反应，是正常的反应。</p>
-                                </div>
-                            </el-col>
-                        </el-row>
-                    </div>
-                </el-col>
-            </el-row>
-            <el-row>
-                <el-col :offset="2" :span="20">
-                    <div>
-                        <el-row type="flex" justify="space-around">
-                            <el-col :span="8">
-                                <div class="notice" @click="dialogshow=true">
-                                    <img :src='this.imageurl1'>
-                                    <h4>我校新冠肺炎心理服务上线</h4>
-                                    <p>
-                                        新型冠状病毒感染的疫情正冲击着我们，很多人会感到害怕、担忧、恐慌、焦虑，还有些人会有身体上的不适感，如胸闷、头痛、失眠、食欲差、不明原因的身体疼痛等，请大家不要担心，这是人们遭遇重大危机事件时的应激反应，是正常的反应。</p>
-                                </div>
-                            </el-col>
-
-
-                            <el-col :span="8">
-                                <div class="notice">
-                                    <img :src='this.imageurl1'>
-                                    <h4>我校新冠肺炎心理服务上线</h4>
-                                    <p>
-                                        新型冠状病毒感染的疫情正冲击着我们，很多人会感到害怕、担忧、恐慌、焦虑，还有些人会有身体上的不适感，如胸闷、头痛、失眠、食欲差、不明原因的身体疼痛等，请大家不要担心，这是人们遭遇重大危机事件时的应激反应，是正常的反应。</p>
-                                </div>
-                            </el-col>
-                        </el-row>
-                    </div>
-                </el-col>
-            </el-row>
-            <el-row>
-                <el-col :offset="2" :span="20">
-                    <div>
-                        <el-row type="flex" justify="space-around">
-                            <el-col :span="8">
-                                <div class="notice" @click="dialogshow=true">
-                                    <img :src='this.imageurl1'>
-                                    <h4>我校新冠肺炎心理服务上线</h4>
-                                    <p>
-                                        新型冠状病毒感染的疫情正冲击着我们，很多人会感到害怕、担忧、恐慌、焦虑，还有些人会有身体上的不适感，如胸闷、头痛、失眠、食欲差、不明原因的身体疼痛等，请大家不要担心，这是人们遭遇重大危机事件时的应激反应，是正常的反应。</p>
-                                </div>
-                            </el-col>
-
-
-                            <el-col :span="8">
-                                <div class="notice">
-                                    <img :src='this.imageurl1'>
-                                    <h4>我校新冠肺炎心理服务上线</h4>
-                                    <p>
-                                        新型冠状病毒感染的疫情正冲击着我们，很多人会感到害怕、担忧、恐慌、焦虑，还有些人会有身体上的不适感，如胸闷、头痛、失眠、食欲差、不明原因的身体疼痛等，请大家不要担心，这是人们遭遇重大危机事件时的应激反应，是正常的反应。</p>
+                                    <img :src='item.imgUrl'>
+                                    <h4>{{item.noticeTitle}}</h4>
+                                    <p>{{item.noticeDes}}</p>
                                 </div>
                             </el-col>
                         </el-row>
@@ -88,13 +26,17 @@
         <div>
             <el-row>
                 <el-col :offset="16" :span="8">
-                    <el-pagination small layout="prev, pager, next"
-                                   :total="50"></el-pagination>
+                    <el-pagination
+                            layout="prev, pager, next"
+                            :current-page.sync="obj.page"
+                            :page-size="6"
+                            @current-change="getNotice"
+                            :total="this.noticeTotal">
+                    </el-pagination>
                 </el-col>
             </el-row>
             <under></under>
         </div>
-
 
 
     </div>
@@ -105,6 +47,7 @@
     import under from '@/components/Under'
     import notice from '@/components/NoticeTemplate'
     import '@/static/css/global.css'
+    import {paramsPost} from "@/util/HttpUtil";
 
     export default {
         name: "HomePage",
@@ -113,7 +56,13 @@
                 message: '宿舍公告',
                 imageurl1: 'http://www.jxvtc.edu.cn/UserFiles/Image/20200202/20200202131747_52.png',
                 dialogshow: false,
-                dialogTableVisible:false
+                dialogTableVisible: false,
+                noticeTotal: 0,
+                obj: {
+                    page: 1
+                },
+                noticeList: [],
+                noticeShwoList: []
             }
         },
         components: {
@@ -122,10 +71,28 @@
             'notice': notice
         },
         created() {
+            this.getNotice()
+
         },
         methods: {
             getMessage() {
                 return this.message;
+            },
+            getNotice(){
+                paramsPost('/api/notice/getNotice', this.obj).then(res => {
+
+                    this.noticeTotal = res.data.pageNumber
+                    this.noticeList = res.data.noticeVos
+                    this.noticeShwoList=[]
+                    for (let i =0;i<this.noticeList.length;i=i+2){
+                        if ((i+1)<this.noticeList.length) {
+                            this.noticeShwoList[i] = [this.noticeList[i], this.noticeList[i + 1]]
+                        }else{
+                            this.noticeShwoList[i] = [this.noticeList[i]]
+                        }
+                    }
+                })
+
             }
         }
 
@@ -137,10 +104,12 @@
         width: 100%;
         cursor: pointer;
     }
-    .notice img{
+
+    .notice img {
         width: 100%;
     }
-    .notice h4{
+
+    .notice h4 {
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;

@@ -4,10 +4,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import priv.wenhao.base.aop.TeacherLoginCheckAop;
 import priv.wenhao.base.pojo.vo.ResultVo;
 import priv.wenhao.dormitory.service.SchoolNoticeService;
 
@@ -26,11 +24,18 @@ public class NoticeController {
 	* Author:yu wenhao
 	* date:2020/3/9
 	*/
-	@ApiOperation(value = "获取公告",httpMethod = "GET")
-	@GetMapping("/getNotice")
+	@ApiOperation(value = "获取公告",httpMethod = "POST")
+	@PostMapping("/getNotice")
 	public ResultVo getNotice(@ApiParam(value = "页数",required = true) @RequestParam(required = true) int page) throws Exception{
 		ResultVo resultVo=new ResultVo();
 		schoolNoticeService.getNotice(page,resultVo);
+		return resultVo;
+	}
+	@ApiOperation(value = "推送公告",httpMethod = "POST")
+	@PostMapping("/pushNotice")
+	@TeacherLoginCheckAop
+	public ResultVo pushNotice(){
+		ResultVo resultVo=new ResultVo();
 		return resultVo;
 	}
 }

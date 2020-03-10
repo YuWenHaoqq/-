@@ -3,7 +3,7 @@
 <mapper namespace="priv.wenhao.dormitory.mapper.SchoolSignHistoryMapper">
 
 <!--    获得登录日志表需要的信息-->
-    <select id="getSignMessageByStuId" resultType="priv.wenhao.base.pojo.dto.SchoolSignHistory">
+    <select id="getSignMessageByStuId" resultType="priv.wenhao.base.pojo.dto.SchoolSignHistoryDto">
         select ss.stu_name as stuName,st.teacher_id as teacherId,ifnull(ssh.continue_sign_month,0)+1 as continueSignMonth
         from school_student as ss
         left join school_teacher as st on ss.pk_teacher_id=st.teacher_id

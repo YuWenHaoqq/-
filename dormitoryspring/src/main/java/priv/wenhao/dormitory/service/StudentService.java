@@ -30,4 +30,13 @@ public interface StudentService {
 	* date:2019/12/31
 	*/
 	public void signIn(String stuId,ResultVo resultVo);
+	/***
+	* ClassName:StudentService
+	* Description: 获得本月的所有签到
+	* param:[stuId, resultVo]
+	* return:void
+	* Author:yu wenhao
+	* date:2020/3/10
+	*/
+	public void signMonth(String stuId,ResultVo resultVo);
 }

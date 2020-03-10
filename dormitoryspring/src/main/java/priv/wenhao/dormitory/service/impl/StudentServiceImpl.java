@@ -5,7 +5,7 @@ import io.lettuce.core.SetArgs;
 import io.lettuce.core.api.sync.RedisCommands;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import priv.wenhao.base.pojo.dto.SchoolSignHistory;
+import priv.wenhao.base.pojo.dto.SchoolSignHistoryDto;
 import priv.wenhao.base.pojo.dto.SchoolStudentDto;
 import priv.wenhao.base.pojo.vo.ResultVo;
 import priv.wenhao.base.util.UUIDUtil;
@@ -16,6 +16,8 @@ import priv.wenhao.dormitory.pojo.vo.UserVo;
 import priv.wenhao.dormitory.service.StudentService;
 
 import javax.servlet.http.HttpServletRequest;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -79,8 +81,21 @@ public class StudentServiceImpl implements StudentService {
 	*/
 	@Override
 	public void signIn(String stuId, ResultVo resultVo) {
+		Date currentTime = new Date();
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		String dateString = formatter.format(currentTime);
+		QueryWrapper<SchoolSignHistoryDto> queryWrapper=new QueryWrapper<SchoolSignHistoryDto>()
+				.eq("pk_stu_id",stuId)
+				.eq("date_format(sign_history_create,'%Y-%m-%d')",dateString)
+				.eq("is_deleted",0);
+		List isSign=schoolSignHistoryMapper.selectList(queryWrapper);
+		if (isSign.size()!=0){
+			resultVo.setCode(2);
+			resultVo.setMessage("亲,今天已经签到过了");
+			return;
+		}
 
-		List<SchoolSignHistory> list = schoolSignHistoryMapper.getSignMessageByStuId(stuId);
+		List<SchoolSignHistoryDto> list = schoolSignHistoryMapper.getSignMessageByStuId(stuId);
 		if (list.size() == 0) {
 			resultVo.setCode(-1);
 			resultVo.setMessage("学生信息缺失,请联系教师添加");
@@ -90,7 +105,7 @@ public class StudentServiceImpl implements StudentService {
 			resultVo.setMessage("学生信息异常,请联系教师");
 			return;
 		}
-		System.out.println(list.get(0).getContinueSignMonth());
+//		System.out.println(list.get(0).getContinueSignMonth());
 		list.get(0).setStuId(stuId);
 		list.get(0).setCreateTime(new Date());
 		list.get(0).setDeleted(0);
@@ -101,5 +116,32 @@ public class StudentServiceImpl implements StudentService {
 			resultVo.setCode(-1);
 			resultVo.setMessage("签到异常");
 		}
+	}
+
+	@Override
+	public void signMonth(String stuId, ResultVo resultVo) {
+//		获得本月月份并查找签到的数据
+		Date currentTime = new Date();
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM");
+		String dateString = formatter.format(currentTime);
+		QueryWrapper<SchoolSignHistoryDto> queryWrapper=new QueryWrapper<SchoolSignHistoryDto>()
+				.eq("pk_stu_id",stuId)
+				.eq("date_format(sign_history_create,'%Y-%m')",dateString)
+				.eq("is_deleted",0);
+		List<SchoolSignHistoryDto> isSign=schoolSignHistoryMapper.selectList(queryWrapper);
+//		将查到的数据的签到日期正例成list传给前端
+		ArrayList<String> arrayList=new ArrayList<>();
+		SimpleDateFormat sdf = new SimpleDateFormat("MM-dd");
+//		String startTime = sdf.format(startTime);
+		for (SchoolSignHistoryDto schoolSignHistoryDto:isSign){
+//			arrayList.add(sdf.format(schoolSignHistoryDto.getCreateTime()));
+//			System.out.println("=="+sdf.format(schoolSignHistoryDto.getCreateTime()));
+//			System.out.println(schoolSignHistoryDto.getCreateTime().getMonth()+"-"+schoolSignHistoryDto.getCreateTime().getDate());
+			arrayList.add((schoolSignHistoryDto.getCreateTime().getMonth()+1)+"-"+schoolSignHistoryDto.getCreateTime().getDate());
+
+		}
+		resultVo.setCode(0);
+		resultVo.setMessage("查询成功");
+		resultVo.setData(arrayList);
 	}
 }

@@ -60,4 +60,12 @@ public class StudentController {
 		studentService.signIn(stuId,resultVo);
 		return resultVo;
 	}
+	@ApiOperation(value = "返回本月学生签到的数目",httpMethod = "POST")
+	@PostMapping("/signMonth")
+	@StuLoginCheckAop
+	public ResultVo signMonth(String stuId){
+		ResultVo resultVo=new ResultVo();
+		studentService.signMonth(stuId,resultVo);
+		return resultVo;
+	}
 }

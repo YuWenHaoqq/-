@@ -12,6 +12,7 @@ import priv.wenhao.base.advice.SecurityParameter;
 import priv.wenhao.base.aop.StuLoginCheckAop;
 import priv.wenhao.base.exception.BussinessException;
 import priv.wenhao.base.pojo.vo.ResultVo;
+import priv.wenhao.dormitory.pojo.query.LeaveQuery;
 import priv.wenhao.dormitory.pojo.query.LoginQuery;
 import priv.wenhao.dormitory.service.StudentService;
 import priv.wenhao.dormitory.service.TeacherService;
@@ -66,6 +67,15 @@ public class StudentController {
 	public ResultVo signMonth(String stuId){
 		ResultVo resultVo=new ResultVo();
 		studentService.signMonth(stuId,resultVo);
+		return resultVo;
+	}
+	@ApiOperation(value = "学生请假",httpMethod = "POST")
+	@PostMapping("/stuLeave")
+	@StuLoginCheckAop
+	public ResultVo stuLeave(@RequestBody LeaveQuery leaveQuery){
+		ResultVo resultVo=new ResultVo();
+//		System.out.println(leaveQuery.getLeaveDes());
+		studentService.stuLeave(leaveQuery,resultVo);
 		return resultVo;
 	}
 }

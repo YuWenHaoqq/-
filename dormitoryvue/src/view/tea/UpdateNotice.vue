@@ -13,7 +13,7 @@
                             <el-input style="width: 300px;" v-model="noticeForm.imgurl"></el-input>
                         </el-form-item>
                         <el-form-item label="公告描述" prop="noticeDes">
-                            <el-input type="textarea" style="width: 70%;" maxlength="100" show-word-limit v-model="noticeForm.noticeDes"></el-input>
+                            <el-input class="solveView" type="textarea" style="width: 70%;" maxlength="100" show-word-limit v-model="noticeForm.noticeDes"></el-input>
                         </el-form-item>
                         <el-form-item label="文章内容" prop="noticeContent">
                             <el-input class="solveView" type="textarea" autosize style="width: 70%;" maxlength="3000" show-word-limit v-model="noticeForm.noticeContent"></el-input>
@@ -38,6 +38,7 @@
     import lace from '@/components/Lace'
     import under from '@/components/Under'
     import '@/static/css/global.css'
+    import {post} from "@/util/HttpUtil";
 
     export default {
         name: "UpdateNotice",
@@ -56,6 +57,9 @@
                 },
                 rules: {
                     title: [{required: true, message: '请输入标题', trigger: 'blur'}],
+                    imgurl: [{required: false, message: '确定不输入封面理解', trigger: 'blur'}],
+                    noticeDes: [{required: true, message: '请输入公告描述', trigger: 'blur'}],
+                    noticeContent: [{required: true, message: '请输入文章内容', trigger: 'blur'}],
                 }
             }
         },
@@ -64,14 +68,7 @@
                 return this.message
             },
             submitForm(formName) {
-                // this.$refs[formName].validate((valid) => {
-                //     if (valid) {
-                //         alert('submit!');
-                //     } else {
-                //         console.log('error submit!!');
-                //         return false;
-                //     }
-                // });
+                post()
             },
             resetForm(formName) {
                 this.$refs[formName].resetFields();

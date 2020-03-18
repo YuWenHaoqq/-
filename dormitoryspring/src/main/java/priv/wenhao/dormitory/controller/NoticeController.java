@@ -31,6 +31,14 @@ public class NoticeController {
 		schoolNoticeService.getNotice(page,resultVo);
 		return resultVo;
 	}
+	/***
+	* ClassName:NoticeController
+	* Description: 推送公告
+	* param:[]
+	* return:priv.wenhao.base.pojo.vo.ResultVo
+	* Author:yu wenhao
+	* date:2020/3/11
+	*/
 	@ApiOperation(value = "推送公告",httpMethod = "POST")
 	@PostMapping("/pushNotice")
 	@TeacherLoginCheckAop

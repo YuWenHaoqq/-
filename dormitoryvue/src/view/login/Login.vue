@@ -40,6 +40,7 @@
 <script>
     import {aesPost} from "@/util/HttpUtil";
     import {Message} from "element-ui";
+    import {getRSAKey} from "@/util/RSAUtil";
 
     export default {
         name: "Login",
@@ -54,7 +55,7 @@
             }
         },
         created() {
-            // getRSAKey()
+            getRSAKey()
         },
         mounted() {
             this.animation()

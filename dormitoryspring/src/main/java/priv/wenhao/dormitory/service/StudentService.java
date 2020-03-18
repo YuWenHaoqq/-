@@ -1,6 +1,7 @@
 package priv.wenhao.dormitory.service;
 
 import priv.wenhao.base.pojo.vo.ResultVo;
+import priv.wenhao.dormitory.pojo.query.LeaveQuery;
 import priv.wenhao.dormitory.pojo.query.LoginQuery;
 
 import javax.servlet.http.HttpServletRequest;
@@ -39,4 +40,13 @@ public interface StudentService {
 	* date:2020/3/10
 	*/
 	public void signMonth(String stuId,ResultVo resultVo);
+	/***
+	* ClassName:StudentService
+	* Description: 提交请假
+	* param:[]
+	* return:void
+	* Author:yu wenhao
+	* date:2020/3/11
+	*/
+	public void stuLeave(LeaveQuery leaveQuery,ResultVo resultVo);
 }

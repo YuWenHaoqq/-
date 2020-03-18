@@ -5,12 +5,15 @@ import io.lettuce.core.SetArgs;
 import io.lettuce.core.api.sync.RedisCommands;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import priv.wenhao.base.pojo.dto.SchoolLeaveHistoryDto;
 import priv.wenhao.base.pojo.dto.SchoolSignHistoryDto;
 import priv.wenhao.base.pojo.dto.SchoolStudentDto;
 import priv.wenhao.base.pojo.vo.ResultVo;
 import priv.wenhao.base.util.UUIDUtil;
+import priv.wenhao.dormitory.mapper.SchoolLeaveHistoryMapper;
 import priv.wenhao.dormitory.mapper.SchoolSignHistoryMapper;
 import priv.wenhao.dormitory.mapper.SchoolStudentMapper;
+import priv.wenhao.dormitory.pojo.query.LeaveQuery;
 import priv.wenhao.dormitory.pojo.query.LoginQuery;
 import priv.wenhao.dormitory.pojo.vo.UserVo;
 import priv.wenhao.dormitory.service.StudentService;
@@ -35,6 +38,9 @@ public class StudentServiceImpl implements StudentService {
 
 	@Autowired
 	private SchoolSignHistoryMapper schoolSignHistoryMapper;
+
+	@Autowired
+	private SchoolLeaveHistoryMapper schoolLeaveHistoryMapper;
 
 	@Autowired
 	private RedisCommands<String, String> firstTemplate;
@@ -132,16 +138,51 @@ public class StudentServiceImpl implements StudentService {
 //		将查到的数据的签到日期正例成list传给前端
 		ArrayList<String> arrayList=new ArrayList<>();
 		SimpleDateFormat sdf = new SimpleDateFormat("MM-dd");
-//		String startTime = sdf.format(startTime);
 		for (SchoolSignHistoryDto schoolSignHistoryDto:isSign){
-//			arrayList.add(sdf.format(schoolSignHistoryDto.getCreateTime()));
-//			System.out.println("=="+sdf.format(schoolSignHistoryDto.getCreateTime()));
-//			System.out.println(schoolSignHistoryDto.getCreateTime().getMonth()+"-"+schoolSignHistoryDto.getCreateTime().getDate());
 			arrayList.add((schoolSignHistoryDto.getCreateTime().getMonth()+1)+"-"+schoolSignHistoryDto.getCreateTime().getDate());
-
 		}
 		resultVo.setCode(0);
 		resultVo.setMessage("查询成功");
 		resultVo.setData(arrayList);
+	}
+
+	@Override
+	public void stuLeave(LeaveQuery leaveQuery, ResultVo resultVo) {
+//		获得学生的老师教工号
+		QueryWrapper<SchoolStudentDto> stuQuery=new QueryWrapper<SchoolStudentDto>()
+				.eq("stu_id",leaveQuery.getStuNumber())
+				.eq("is_deleted",0);
+		List<SchoolStudentDto> stuList=schoolStudentMapper.selectList(stuQuery);
+		if (stuList.size()!=1){
+			resultVo.setCode(1);
+			resultVo.setMessage("数据库数据错误,请老师查看");
+			return;
+		}
+//		向请假表中新增的记录
+		SchoolLeaveHistoryDto schoolLeaveHistoryDto=new SchoolLeaveHistoryDto();
+		schoolLeaveHistoryDto.setStuId(leaveQuery.getStuNumber());
+		schoolLeaveHistoryDto.setTeaId(stuList.get(0).getTeacherId());
+		schoolLeaveHistoryDto.setSuccess(0);
+		schoolLeaveHistoryDto.setCreateTime(new Date());
+		schoolLeaveHistoryDto.setStartTime(leaveQuery.getLeaveDate().get(0));
+		schoolLeaveHistoryDto.setEndTime(leaveQuery.getLeaveDate().get(1));
+		schoolLeaveHistoryDto.setLeaveTime(leaveQuery.getLeaveTime());
+		schoolLeaveHistoryDto.setLeaveType(leaveQuery.getLeaveType());
+		schoolLeaveHistoryDto.setLeaveDes(leaveQuery.getLeaveDes());
+		schoolLeaveHistoryDto.setDeleted(0);
+
+		int row= schoolLeaveHistoryMapper.insert(schoolLeaveHistoryDto);
+		if (row==0){
+			resultVo.setCode(1);
+			resultVo.setMessage("请求失败,请重新填写");
+		}else if(row==1){
+			resultVo.setCode(0);
+			resultVo.setMessage("请假提交成功,等待审批");
+		}else{
+			resultVo.setCode(2);
+			resultVo.setMessage("未知异常,请尝试重新填写");
+		}
+
+
 	}
 }

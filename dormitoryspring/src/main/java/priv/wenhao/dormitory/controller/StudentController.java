@@ -4,13 +4,11 @@ import com.google.common.base.Strings;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import priv.wenhao.base.advice.SecurityParameter;
 import priv.wenhao.base.aop.StuLoginCheckAop;
 import priv.wenhao.base.exception.BussinessException;
+import priv.wenhao.base.pojo.query.BaseQuery;
 import priv.wenhao.base.pojo.vo.ResultVo;
 import priv.wenhao.dormitory.pojo.query.LeaveQuery;
 import priv.wenhao.dormitory.pojo.query.LoginQuery;
@@ -53,6 +51,14 @@ public class StudentController {
 		return resultVo;
 	}
 
+	/***
+	* ClassName:StudentController
+	* Description: 学生签到
+	* param:[stuId]
+	* return:priv.wenhao.base.pojo.vo.ResultVo
+	* Author:yu wenhao
+	* date:2020/3/18
+	*/
 	@ApiOperation(value = "学生签到", httpMethod = "POST")
 	@PostMapping("/signin")
 	@StuLoginCheckAop
@@ -61,6 +67,15 @@ public class StudentController {
 		studentService.signIn(stuId,resultVo);
 		return resultVo;
 	}
+
+	/***
+	* ClassName:StudentController
+	* Description: 返回本月学生签到的数目
+	* param:[stuId]
+	* return:priv.wenhao.base.pojo.vo.ResultVo
+	* Author:yu wenhao
+	* date:2020/3/18
+	*/
 	@ApiOperation(value = "返回本月学生签到的数目",httpMethod = "POST")
 	@PostMapping("/signMonth")
 	@StuLoginCheckAop
@@ -69,6 +84,14 @@ public class StudentController {
 		studentService.signMonth(stuId,resultVo);
 		return resultVo;
 	}
+	/***
+	* ClassName:StudentController
+	* Description: 实现学生请假
+	* param:[leaveQuery]
+	* return:priv.wenhao.base.pojo.vo.ResultVo
+	* Author:yu wenhao
+	* date:2020/3/18
+	*/
 	@ApiOperation(value = "学生请假",httpMethod = "POST")
 	@PostMapping("/stuLeave")
 	@StuLoginCheckAop
@@ -76,6 +99,49 @@ public class StudentController {
 		ResultVo resultVo=new ResultVo();
 //		System.out.println(leaveQuery.getLeaveDes());
 		studentService.stuLeave(leaveQuery,resultVo);
+		return resultVo;
+	}
+
+
+	/***
+	* ClassName:StudentController
+	* Description: 通过学生id获得签到的记录
+	* param:[stuId, baseQuery]
+	* return:priv.wenhao.base.pojo.vo.ResultVo
+	* Author:yu wenhao
+	* date:2020/3/18
+	*/
+	@ApiOperation(value = "获得学生签到记录",httpMethod = "GET")
+	@GetMapping("/getSignMessage")
+	@StuLoginCheckAop
+	public ResultVo getSignMessage(String stuId, @ModelAttribute BaseQuery baseQuery)throws Exception{
+		ResultVo resultVo=new ResultVo();
+		studentService.getSignMessage(baseQuery,stuId,resultVo);
+		return resultVo;
+
+	}
+	/***
+	* ClassName:StudentController
+	* Description: 获得学生未签到的记录
+	* param:[stuId, baseQuery]
+	* return:priv.wenhao.base.pojo.vo.ResultVo
+	* Author:yu wenhao
+	* date:2020/3/18
+	*/
+	@ApiOperation(value = "获得学生未签到的记录",httpMethod = "GET")
+	@GetMapping("/getUnSignMessage")
+	@StuLoginCheckAop
+	public ResultVo getUnsignMessage(String stuId, @ModelAttribute BaseQuery baseQuery)throws Exception{
+		ResultVo resultVo=new ResultVo();
+		studentService.getUnsignMessage(baseQuery,stuId,resultVo);
+		return resultVo;
+	}
+	@ApiOperation(value = "获得学生请假记录",httpMethod = "GET")
+	@GetMapping("/getLeave")
+	@StuLoginCheckAop
+	public ResultVo getLeave(String stuId,@ModelAttribute BaseQuery baseQuery)throws Exception{
+		ResultVo resultVo=new ResultVo();
+		studentService.getLeave(baseQuery,stuId,resultVo);
 		return resultVo;
 	}
 }

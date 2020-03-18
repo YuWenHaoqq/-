@@ -18,7 +18,7 @@
                         </el-form-item>
                         <br>
                         <el-form-item class="input" label="密码" prop="password">
-                            <el-input placeholder="请输入密码" v-model='form.password' show-password clearable></el-input>
+                            <el-input placeholder="请输入密码" v-model='form.password' @keyup.enter.native="submit" show-password clearable></el-input>
                         </el-form-item>
                         <el-form-item class="input" prop="type">
                             <el-radio-group v-model="form.identity">

@@ -8,9 +8,9 @@
                     <el-form :model="leaveForm" ref="leaveForm" :rules="rules">
                         <el-form-item label="请假类型" prop="leaveType" >
                             <el-select v-model="leaveForm.leaveType" placeholder="请选择请假的类型">
-                                <el-option label="事假" value="事假"></el-option>
-                                <el-option label="病假" value="病假"></el-option>
-                                <el-option label="公假" value="公假"></el-option>
+                                <el-option label="事假" value="1"></el-option>
+                                <el-option label="病假" value="2"></el-option>
+                                <el-option label="公假" value="3"></el-option>
                             </el-select>
                         </el-form-item>
                         <el-form-item label="请假时间" prop="leaveDate" >
@@ -29,7 +29,7 @@
                         </el-form-item>
                         <el-form-item>
                             <el-row >
-                                <el-col :span="4" :offset="2"><el-button class="btn" type="primary" @click="submitForm('leaveForm')">确认</el-button></el-col>
+                                <el-col :span="4" :offset="2"><el-button class="btn" type="primary" @click="submitForm">确认</el-button></el-col>
                                 <el-col :span="4" :offset="2"><el-button class="btn" @click="resetForm('leaveForm')">清空</el-button></el-col>
                             </el-row>
 
@@ -46,6 +46,7 @@
     import lace from '@/components/Lace'
     import under from '@/components/Under'
     import '@/static/css/global.css'
+    import {post} from "@/util/HttpUtil";
 
     export default {
         name: "Leave",
@@ -60,7 +61,8 @@
                     leaveType: '',
                     leaveDate: [],
                     leaveTime:'',
-                    leaveDes:''
+                    leaveDes:'',
+                    stuNumber:sessionStorage.getItem('stuId')
                 },
                 rules:{
                     leaveType:[
@@ -82,8 +84,16 @@
             getMessage() {
                 return this.message;
             },
-            submitForm(leaveForm){
-                window.console.log(leaveForm)
+            submitForm(){
+                post('/api//student/stuLeave',this.leaveForm).then(res=>{
+                    this.$message({
+                        message: res.message,
+                        type: 'success'
+                    });
+
+                }).catch(err=>{
+                    this.$message.error(err.message)
+                })
 
             },
             resetForm(leaveForm){

@@ -1,6 +1,8 @@
 package priv.wenhao.dormitory.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import io.lettuce.core.SetArgs;
 import io.lettuce.core.api.sync.RedisCommands;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,13 +10,19 @@ import org.springframework.stereotype.Service;
 import priv.wenhao.base.pojo.dto.SchoolLeaveHistoryDto;
 import priv.wenhao.base.pojo.dto.SchoolSignHistoryDto;
 import priv.wenhao.base.pojo.dto.SchoolStudentDto;
+import priv.wenhao.base.pojo.dto.UnsignHistoryDto;
+import priv.wenhao.base.pojo.query.BaseQuery;
 import priv.wenhao.base.pojo.vo.ResultVo;
 import priv.wenhao.base.util.UUIDUtil;
 import priv.wenhao.dormitory.mapper.SchoolLeaveHistoryMapper;
 import priv.wenhao.dormitory.mapper.SchoolSignHistoryMapper;
 import priv.wenhao.dormitory.mapper.SchoolStudentMapper;
+import priv.wenhao.dormitory.mapper.UnsignHistoryMapper;
 import priv.wenhao.dormitory.pojo.query.LeaveQuery;
 import priv.wenhao.dormitory.pojo.query.LoginQuery;
+import priv.wenhao.dormitory.pojo.vo.LeaveMessageVo;
+import priv.wenhao.dormitory.pojo.vo.SignMessageVo;
+import priv.wenhao.dormitory.pojo.vo.UnsignMessageVo;
 import priv.wenhao.dormitory.pojo.vo.UserVo;
 import priv.wenhao.dormitory.service.StudentService;
 
@@ -41,6 +49,9 @@ public class StudentServiceImpl implements StudentService {
 
 	@Autowired
 	private SchoolLeaveHistoryMapper schoolLeaveHistoryMapper;
+
+	@Autowired
+	private UnsignHistoryMapper unsignHistoryMapper;
 
 	@Autowired
 	private RedisCommands<String, String> firstTemplate;
@@ -124,6 +135,14 @@ public class StudentServiceImpl implements StudentService {
 		}
 	}
 
+	/***
+	* ClassName:StudentServiceImpl
+	* Description: 获得本月的所有签到
+	* param:[stuId, resultVo]
+	* return:void
+	* Author:yu wenhao
+	* date:2020/3/18
+	*/
 	@Override
 	public void signMonth(String stuId, ResultVo resultVo) {
 //		获得本月月份并查找签到的数据
@@ -146,6 +165,14 @@ public class StudentServiceImpl implements StudentService {
 		resultVo.setData(arrayList);
 	}
 
+	/***
+	* ClassName:StudentServiceImpl
+	* Description: 提交请假
+	* param:[leaveQuery, resultVo]
+	* return:void
+	* Author:yu wenhao
+	* date:2020/3/18
+	*/
 	@Override
 	public void stuLeave(LeaveQuery leaveQuery, ResultVo resultVo) {
 //		获得学生的老师教工号
@@ -161,6 +188,7 @@ public class StudentServiceImpl implements StudentService {
 //		向请假表中新增的记录
 		SchoolLeaveHistoryDto schoolLeaveHistoryDto=new SchoolLeaveHistoryDto();
 		schoolLeaveHistoryDto.setStuId(leaveQuery.getStuNumber());
+		schoolLeaveHistoryDto.setStuName(stuList.get(0).getStuName());
 		schoolLeaveHistoryDto.setTeaId(stuList.get(0).getTeacherId());
 		schoolLeaveHistoryDto.setSuccess(0);
 		schoolLeaveHistoryDto.setCreateTime(new Date());
@@ -183,6 +211,70 @@ public class StudentServiceImpl implements StudentService {
 			resultVo.setMessage("未知异常,请尝试重新填写");
 		}
 
+
+	}
+
+	/***
+	* ClassName:StudentServiceImpl
+	* Description: 获得自己的签到记录
+	* param:[baseQuery, stuId, resultVo]
+	* return:void
+	* Author:yu wenhao
+	* date:2020/3/18
+	*/
+	@Override
+	public void getSignMessage(BaseQuery baseQuery, String stuId, ResultVo resultVo) {
+		QueryWrapper<SchoolSignHistoryDto> queryWrapper=new QueryWrapper<SchoolSignHistoryDto>()
+				.eq("pk_stu_id",stuId)
+				.eq("is_deleted",0);
+		PageHelper.startPage(baseQuery.getPage(),baseQuery.getSize());
+		List<SchoolSignHistoryDto>list=schoolSignHistoryMapper.selectList(queryWrapper);
+		PageInfo<SchoolSignHistoryDto> pageInfo=new PageInfo<>(list);
+		resultVo.setMessage("查询成功");
+		SignMessageVo signMessageVo=new SignMessageVo();
+		signMessageVo.setTotal((int)pageInfo.getTotal());
+		signMessageVo.setList(list);
+		resultVo.setData(signMessageVo);
+
+	}
+
+	/***
+	* ClassName:StudentServiceImpl
+	* Description: 获得自己未签到的记录
+	* param:[baseQuery, stuId, resultVo]
+	* return:void
+	* Author:yu wenhao
+	* date:2020/3/18
+	*/
+	@Override
+	public void getUnsignMessage(BaseQuery baseQuery, String stuId, ResultVo resultVo) {
+		PageHelper.startPage(baseQuery.getPage(),baseQuery.getSize());
+		QueryWrapper<UnsignHistoryDto> queryWrapper=new QueryWrapper<UnsignHistoryDto>()
+				.eq("pk_stu_id",stuId)
+				.eq("is_deleted",0);
+		List<UnsignHistoryDto> list=
+		unsignHistoryMapper.selectList(queryWrapper);
+		PageInfo<UnsignHistoryDto> pageInfo=new PageInfo<>(list);
+		UnsignMessageVo unsignMessageVo=new UnsignMessageVo();
+		unsignMessageVo.setTotal((int)pageInfo.getTotal());
+		unsignMessageVo.setList(list);
+		resultVo.setMessage("查询成功");
+		resultVo.setData(unsignMessageVo);
+	}
+
+	@Override
+	public void getLeave(BaseQuery baseQuery, String stuId, ResultVo resultVo) {
+		PageHelper.startPage(baseQuery.getPage(),baseQuery.getSize());
+		QueryWrapper<SchoolLeaveHistoryDto> queryWrapper=new QueryWrapper<SchoolLeaveHistoryDto>()
+				.eq("pk_stu_id",stuId)
+				.eq("is_deleted",0);
+		List<SchoolLeaveHistoryDto> list=schoolLeaveHistoryMapper.selectList(queryWrapper);
+		PageInfo<SchoolLeaveHistoryDto> pageInfo=new PageInfo<>(list);
+		LeaveMessageVo leaveMessageVo=new LeaveMessageVo();
+		leaveMessageVo.setTotal((int)pageInfo.getTotal());
+		leaveMessageVo.setList(list);
+		resultVo.setMessage("查询成功");
+		resultVo.setData(leaveMessageVo);
 
 	}
 }

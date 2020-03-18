@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -18,6 +20,7 @@ public class UnsignHistoryDto {
 	@TableField("pk_stu_id")
 	@ApiModelProperty("关联学生表学号")
 	private String stuId;
+	@JsonIgnore
 	@TableField("pk_teacher_id")
 	@ApiModelProperty("teaId")
 	private String teaId;
@@ -29,10 +32,13 @@ public class UnsignHistoryDto {
 	private Integer checked;
 	@TableField("unsign_history_create")
 	@ApiModelProperty("创建时间")
+	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date createTime;
 	@TableField("unsign_history_modify")
 	@ApiModelProperty("修改时间")
+	@JsonIgnore
 	private Date modifyTime;
+	@JsonIgnore
 	@TableField("is_deleted")
 	@ApiModelProperty("是否删除")
 	private Integer deleted;

@@ -1,5 +1,6 @@
 package priv.wenhao.dormitory.service;
 
+import priv.wenhao.base.pojo.query.BaseQuery;
 import priv.wenhao.base.pojo.vo.ResultVo;
 import priv.wenhao.dormitory.pojo.query.LeaveQuery;
 import priv.wenhao.dormitory.pojo.query.LoginQuery;
@@ -49,4 +50,34 @@ public interface StudentService {
 	* date:2020/3/11
 	*/
 	public void stuLeave(LeaveQuery leaveQuery,ResultVo resultVo);
+
+	/***
+	* ClassName:StudentService
+	* Description: 获得自己的签到记录
+	* param:[page]
+	* return:void
+	* Author:yu wenhao
+	* date:2020/3/18
+	*/
+	public void getSignMessage(BaseQuery baseQuery, String stuId, ResultVo resultVo);
+
+	/***
+	* ClassName:StudentService
+	* Description: 获得自己未签到的记录
+	* param:[baseQuery, stuId, resultVo]
+	* return:void
+	* Author:yu wenhao
+	* date:2020/3/18
+	*/
+	public void getUnsignMessage(BaseQuery baseQuery,String stuId,ResultVo resultVo);
+
+	/***
+	* ClassName:StudentService
+	* Description: 获得请假记录
+	* param:[baseQuery, stuId, resultVo]
+	* return:void
+	* Author:yu wenhao
+	* date:2020/3/18
+	*/
+	public void getLeave(BaseQuery baseQuery,String stuId,ResultVo resultVo);
 }

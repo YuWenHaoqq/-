@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import priv.wenhao.base.advice.SecurityParameter;
+import priv.wenhao.base.aop.CheckTimeAop;
 import priv.wenhao.base.aop.StuLoginCheckAop;
 import priv.wenhao.base.exception.BussinessException;
 import priv.wenhao.base.pojo.query.BaseQuery;
@@ -62,6 +63,7 @@ public class StudentController {
 	@ApiOperation(value = "学生签到", httpMethod = "POST")
 	@PostMapping("/signin")
 	@StuLoginCheckAop
+	@CheckTimeAop
 	public ResultVo singIn(String stuId) {
 		ResultVo resultVo = new ResultVo();
 		studentService.signIn(stuId,resultVo);

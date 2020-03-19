@@ -1,7 +1,10 @@
 package priv.wenhao.dormitory.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Param;
 import priv.wenhao.base.pojo.dto.SchoolLeaveHistoryDto;
+
+import java.util.List;
 
 /**
  * ClassName: SchoolLeaveHistoryMApper
@@ -12,5 +15,5 @@ import priv.wenhao.base.pojo.dto.SchoolLeaveHistoryDto;
 
 
 public interface SchoolLeaveHistoryMapper extends BaseMapper<SchoolLeaveHistoryDto> {
-
+	public Integer updateLeave(@Param("list") List<Integer> list,@Param("type") Integer type);
 }

@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 public class BaseQuery {
 	@ApiModelProperty("第几页")
-	private Integer page;
+	private Integer page=1;
 	@ApiModelProperty("一页中获得的数据数")
-	private Integer size;
+	private Integer size=10;
 }

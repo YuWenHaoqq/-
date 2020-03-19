@@ -140,24 +140,7 @@
                 unsignData:[],
                 leaveTotal:0,
                 leaveCurrent:1,
-                leaveData:[],
-                tableData: [{
-                    date: '2016-05-02',
-                    name: '王小虎',
-                    issuccess: '0'
-                }, {
-                    date: '2016-05-02',
-                    name: '王小虎',
-                    issuccess: '1'
-                }, {
-                    date: '2016-05-02',
-                    name: '王小虎',
-                    issuccess: '2'
-                }, {
-                    date: '2016-05-02',
-                    name: '王小虎',
-                    issuccess: '1'
-                }]
+                leaveData:[]
             }
         },methods:{
             getSignMessage(){

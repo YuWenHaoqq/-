@@ -1,5 +1,17 @@
 // 实现代理
 module.exports = {
+    // css:{
+    //     loaderOptions:{
+    //         postcss:{
+    //         //    这是rem适配的配置 注意:remUnit在这里要根据lib_flexible的规则来配置
+    //             plugin:[
+    //                 require("postcss-px2rem")({
+    //                     remUnit:200
+    //                 })
+    //             ]
+    //         }
+    //     }
+    // },
 //    build输出目录
     outputDir: 'dist',
     //静态资源目录(js,css,image)

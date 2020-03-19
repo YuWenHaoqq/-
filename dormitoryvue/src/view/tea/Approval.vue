@@ -9,47 +9,57 @@
         </el-row>
         <el-row>
             <el-col :offset="2" :span="20">
-                <el-table :data="tableData"
+                <el-table :data="approvalLeaveData"
                           stripe
+                          @selection-change="selectChange"
                           class="smallinterval"
                           style="width: 100%">
-                    <el-table-column prop="date"
-                                     label="请假时间"
+                    <el-table-column prop="startTime"
+                                     label="开始时间"
                                      width="180"></el-table-column>
-                    <el-table-column prop="time"
+                    <el-table-column prop="endTime"
+                                     label="结束时间"
+                                     width="180"></el-table-column>
+                    <el-table-column prop="leaveTime"
                                      label="请假时长"
                                      width="180"></el-table-column>
-                    <el-table-column prop="name"
+                    <el-table-column prop="stuName"
                                      label="名字"
                                      width="180"></el-table-column>
-                    <el-table-column prop="des"
+                    <el-table-column prop="leaveDes"
                                      label="请假理由"
                                      width="180"></el-table-column>
                     <el-table-column :formatter="approvalLeave"
                                      label="状态"
                                      width="180"></el-table-column>
-                    <el-table-column label="操作"
-                                     fixed="left"
-                                     width="180">
-                        <template slot-scope="scope">
-                            <el-button
-                                    size="mini"
-                                    @click="handleEdit(scope.$index, scope.row)">同意</el-button>
-                            <el-button
-                                    size="mini"
-                                    type="danger"
-                                    @click="handleDelete(scope.$index, scope.row)">不同意</el-button>
+                    <el-table-column fixed="left"
+                                     width="55"
+                                     type="selection"></el-table-column>
+<!--                    <el-table-column label="操作"-->
+<!--                                     fixed="left"-->
+<!--                                     width="180">-->
+<!--                        <template slot-scope="scope">-->
+<!--                            <el-button-->
+<!--                                    size="mini"-->
+<!--                                    @click="handleEdit(scope.$index, scope.row)">同意</el-button>-->
+<!--                            <el-button-->
+<!--                                    size="mini"-->
+<!--                                    type="danger"-->
+<!--                                    @click="handleDelete(scope.$index, scope.row)">不同意</el-button>-->
 
-                        </template>
-                    </el-table-column>
+<!--                        </template>-->
+<!--                    </el-table-column>-->
                 </el-table>
             </el-col>
         </el-row>
-        <el-row class="bigInterval">
-            <el-col :offset="16" :span="8">
-                <el-pagination small layout="prev, pager, next"
-                               :total="50"></el-pagination>
+        <el-row>
+            <el-col :offset="17" :span="2">
+                <el-button type="success" class="btn" @click="updateLeave(1)">同意</el-button>
             </el-col>
+            <el-col :offset="1" :span="2">
+                <el-button type="danger" class="btn" @click="updateLeave(2)">不同意</el-button>
+            </el-col>
+
         </el-row>
     </div>
     <div>
@@ -63,6 +73,8 @@
     import lace from '@/components/Lace'
     import under from '@/components/Under'
     import '@/static/css/global.css'
+    import {get} from "@/util/HttpUtil";
+    import {post} from "@/util/HttpUtil";
 
     export default {
         name: "Approval",
@@ -70,31 +82,26 @@
             'lace':lace,
             'under':under
         },
+        created(){
+            this.getApprovalLeave()
+        },
         data(){
             return{
                 message:'请假审批',
-                tableData: [{
-                    date: '2016-05-02 12:12:12 至 2016-05-02 12:12:12',
-                    name: '王小虎',
-                    time: '3天',
-                    issuccess: '0',
-                    des:'撒娇后发酵课后发送娇后发酵课后发送娇后发酵课后发送娇后发酵课后发送娇后发酵课后发送='
-                }, {
-                    date: '2016-05-02',
-                    name: '王小虎',
-                    issuccess: '1'
-                }, {
-                    date: '2016-05-02',
-                    name: '王小虎',
-                    issuccess: '2'
-                }, {
-                    date: '2016-05-02',
-                    name: '王小虎',
-                    issuccess: '1'
-                }]
+                page:1,
+                total:0,
+                approvalLeaveData:[],
+                multipleSelection:[]
             }
         },
         methods:{
+            selectChange(val){
+                this.multipleSelection=[]
+                let that=this
+                val.forEach(function (item) {
+                    that.multipleSelection.push(item.leaveHistoryId)
+                })
+            },
             getMessage(){
                 return this.message
             },
@@ -106,11 +113,36 @@
             },
             handleDelete(index, row) {
                 window.console.log(index, row);
+            },
+            getApprovalLeave(){
+                get("/api/teacher/leaveByTea",{teaId:sessionStorage.getItem("teaId")})
+                .then(res=>{
+                    this.approvalLeaveData=res.data
+                })
+            },
+            updateLeave(type){
+                post("/api/teacher/approvalLeave",{historyId:this.multipleSelection,type:type})
+                .then(res=>{
+                    this.$notify({
+                        title:"消息",
+                        message:res.message
+                    })
+                    this.getApprovalLeave()
+                }).catch(err=>{
+                    this.$notify({
+                        title:"消息",
+                        message:err.message
+                    })
+                })
             }
         }
     }
 </script>
 
 <style scoped>
+    .btn{
+        width: 100%;
+        text-align: center;
+    }
 
 </style>

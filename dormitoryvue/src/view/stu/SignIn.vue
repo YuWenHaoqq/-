@@ -56,19 +56,18 @@
                 return this.message
             },
             signin(){
-                let stuId=sessionStorage.getItem('stuId')
-                paramsPost('/api/student/signin',{stuId:stuId}).then(res=>{
+                paramsPost('/api/student/signin',{stuId:sessionStorage.getItem('stuId')}).then(res=>{
                     this.$message({
                         message: res.message,
                         type: 'success'
                     });
+                    this.signMouth()
                 }).catch(err=>{
                     this.$message(err.message);
                 })
             },
             signMouth(){
-                let stuId=sessionStorage.getItem('stuId')
-                paramsPost('/api/student/signMonth',{stuId:stuId}).then(res=>{
+                paramsPost('/api/student/signMonth',{stuId:sessionStorage.getItem('stuId')}).then(res=>{
                     this.signRanage=res.data
                 })
                     .catch(err=>{

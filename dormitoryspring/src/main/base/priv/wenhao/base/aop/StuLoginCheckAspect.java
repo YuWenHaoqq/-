@@ -42,6 +42,7 @@ public class StuLoginCheckAspect {
 //		System.out.println(RsaUtil.decryptHeader(token));
 
 		String trueToken = firstTemplate.get(RsaUtil.decryptHeader(stuId));
+//		System.out.println(RsaUtil.decryptHeader(token));
 //		System.out.println("trueToken:"+trueToken);
 		if (!RsaUtil.decryptHeader(token).equals(trueToken)) {
 			throw new BussinessException(4, "凭证错误,请重新登录");

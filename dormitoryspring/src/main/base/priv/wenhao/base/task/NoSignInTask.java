@@ -27,11 +27,13 @@ public class NoSignInTask {
 //	@Scheduled(fixedDelay = 6000)
 	private void createNoSignJistory()throws Exception{
 		log.info("开始添加未签到记录");
-		List<UnsignHistoryDto> list=
-		unsignHistoryMapper.selectUnsign();
+		List<UnsignHistoryDto> list= unsignHistoryMapper.selectUnsign();
 		log.info("共有"+list.size()+"行未签到记录");
-		int row=
-		unsignHistoryMapper.insertUnsign(list);
+		if (list.size()==0){
+			log.info("全部签到成功");
+			return;
+		}
+		int row= unsignHistoryMapper.insertUnsign(list);
 		log.info("成功插入"+row+"行数据");
 
 	}

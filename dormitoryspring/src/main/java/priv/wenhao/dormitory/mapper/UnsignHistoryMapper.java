@@ -24,5 +24,13 @@ public interface UnsignHistoryMapper extends BaseMapper<UnsignHistoryDto> {
 	*/
 	public List<UnsignHistoryDto> selectUnsign();
 
+	/***
+	* ClassName:UnsignHistoryMapper
+	* Description: 新增未签到的记录
+	* param:[list]
+	* return:java.lang.Integer
+	* Author:yu wenhao
+	* date:2020/3/21
+	*/
 	public Integer insertUnsign(@Param(value = "list")List<UnsignHistoryDto> list);
 }

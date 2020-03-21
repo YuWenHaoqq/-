@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import priv.wenhao.base.aop.TeacherLoginCheckAop;
 import priv.wenhao.base.pojo.query.BaseQuery;
 import priv.wenhao.base.pojo.vo.ResultVo;
+import priv.wenhao.dormitory.pojo.query.NoticeFormQuery;
 import priv.wenhao.dormitory.pojo.query.UpdateLeaveQuery;
 import priv.wenhao.dormitory.service.TeacherService;
 
@@ -57,5 +58,72 @@ public class TeacherController {
 		}
 		teacherService.updateLeave(updateLeaveQuery,resultVo);
 		return resultVo;
+	}
+
+	/***
+	* ClassName:TeacherController
+	* Description: 教师推送公告
+	* param:[noticeFormQuery]
+	* return:priv.wenhao.base.pojo.vo.ResultVo
+	* Author:yu wenhao
+	* date:2020/3/21
+	*/
+	@ApiOperation(value = "教师推送公告",httpMethod = "POST")
+	@PostMapping("/pushNotice")
+	@TeacherLoginCheckAop
+	public ResultVo pushNotice(@RequestBody NoticeFormQuery noticeFormQuery) throws Exception {
+		ResultVo resultVo=new ResultVo();
+		teacherService.pushNotice(resultVo,noticeFormQuery);
+		return  resultVo;
+	}
+
+	/***
+	* ClassName:TeacherController
+	* Description: 教师查询请假记录
+	* param:[baseQuery]
+	* return:priv.wenhao.base.pojo.vo.ResultVo
+	* Author:yu wenhao
+	* date:2020/3/21
+	*/
+	@ApiOperation(value = "教师查询请假记录",httpMethod = "POST")
+	@PostMapping("/getLeaveByTeacher")
+	@TeacherLoginCheckAop
+	public ResultVo getLeaveByTeacher(@RequestBody BaseQuery baseQuery){
+		ResultVo resultVo=new ResultVo();
+		return resultVo;
+
+	}
+
+	/***
+	* ClassName:TeacherController
+	* Description: 教师查询签到记录
+	* param:[]
+	* return:priv.wenhao.base.pojo.vo.ResultVo
+	* Author:yu wenhao
+	* date:2020/3/21
+	*/
+	@ApiOperation(value = "教师查询签到记录",httpMethod = "POST")
+	@PostMapping("/getSignByTeacher")
+	@TeacherLoginCheckAop
+	public ResultVo getSignByTeacher(@RequestBody BaseQuery baseQuery){
+		ResultVo resultVo =new ResultVo();
+		return resultVo;
+	}
+
+	/***
+	* ClassName:TeacherController
+	* Description: 教师查询未签到记录
+	* param:[baseQuery]
+	* return:priv.wenhao.base.pojo.vo.ResultVo
+	* Author:yu wenhao
+	* date:2020/3/21
+	*/
+	@ApiOperation(value = "教师查询未签到记录",httpMethod = "POST")
+	@PostMapping("/getUnSignByTeacher")
+	@TeacherLoginCheckAop
+	public ResultVo getUnsignByTeacher(@RequestBody BaseQuery baseQuery){
+		ResultVo resultVo=new ResultVo();
+		return resultVo;
+
 	}
 }

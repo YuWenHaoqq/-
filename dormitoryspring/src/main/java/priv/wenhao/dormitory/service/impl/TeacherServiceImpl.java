@@ -6,17 +6,23 @@ import io.lettuce.core.api.sync.RedisCommands;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import priv.wenhao.base.pojo.dto.SchoolLeaveHistoryDto;
+import priv.wenhao.base.pojo.dto.SchoolNoticeDto;
 import priv.wenhao.base.pojo.dto.SchoolTeacherDto;
+import priv.wenhao.base.pojo.query.BaseQuery;
 import priv.wenhao.base.pojo.vo.ResultVo;
 import priv.wenhao.base.util.UUIDUtil;
 import priv.wenhao.dormitory.mapper.SchoolLeaveHistoryMapper;
+import priv.wenhao.dormitory.mapper.SchoolNoticeMapper;
 import priv.wenhao.dormitory.mapper.SchoolTeacherMapper;
 import priv.wenhao.dormitory.pojo.query.LoginQuery;
+import priv.wenhao.dormitory.pojo.query.NoticeFormQuery;
 import priv.wenhao.dormitory.pojo.query.UpdateLeaveQuery;
 import priv.wenhao.dormitory.pojo.vo.UserVo;
 import priv.wenhao.dormitory.service.TeacherService;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -35,6 +41,9 @@ public class TeacherServiceImpl implements TeacherService {
 	private SchoolLeaveHistoryMapper schoolLeaveHistoryMapper;
 
 	@Autowired
+	private SchoolNoticeMapper schoolNoticeMapper;
+
+	@Resource(name = "thirdTemplate")
 	private RedisCommands<String, String> thirdTemplate;
 
 	/***
@@ -55,6 +64,10 @@ public class TeacherServiceImpl implements TeacherService {
 		if (list.size() == 1) {
 			UserVo userVo = new UserVo();
 			userVo.setStuId(list.get(0).getTeacherId());
+			//			删除原本的token 因为设置时间后不能直接使用set进行更改
+			if (thirdTemplate.exists(userVo.getStuId())!=0){
+				thirdTemplate.del(userVo.getStuId());
+			}
 			//			生成token
 			userVo.setToken(UUIDUtil.getUUID32());
 			userVo.setUserName(list.get(0).getTeacherName());
@@ -115,6 +128,35 @@ public class TeacherServiceImpl implements TeacherService {
 			resultVo.setMessage("总共"+updateLeaveQuery.getHistoryId().size()+"条,"+"已成功"+rows+"条");
 		}
 
+
+	}
+
+	/***
+	* ClassName:TeacherServiceImpl
+	* Description: 教師推送公告
+	* param:[resultVo, noticeFormQuery]
+	* return:void
+	* Author:yu wenhao
+	* date:2020/3/21
+	*/
+	@Override
+	public void pushNotice(ResultVo resultVo, NoticeFormQuery noticeFormQuery) throws Exception {
+		SchoolNoticeDto schoolNoticeDto=noticeFormQuery.getDto();
+//		schoolNoticeDto.setTeaId();
+		schoolNoticeDto.setReleaseTime(new Date());
+		schoolNoticeDto.setDeleted(0);
+		Integer row=
+		schoolNoticeMapper.insert(schoolNoticeDto);
+		if (row==1){
+			resultVo.setMessage("推送成功");
+		}else{
+			resultVo.setMessage("推送失败,清尝试重新推送");
+			resultVo.setData(noticeFormQuery);
+		}
+	}
+
+	@Override
+	public void getLeaveByTeacher(ResultVo resultVo, BaseQuery baseQuery) {
 
 	}
 }

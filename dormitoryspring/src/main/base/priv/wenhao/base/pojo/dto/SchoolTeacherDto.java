@@ -1,6 +1,7 @@
 package priv.wenhao.base.pojo.dto;
 
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -11,7 +12,7 @@ import java.util.Date;
 @TableName("school_teacher")
 public class SchoolTeacherDto {
 	@ApiModelProperty("教师编号")
-	@TableField("teacher_id")
+	@TableId("teacher_id")
 	private String teacherId;
 	@ApiModelProperty("班级编号")
 	@TableField("pk_class_id")

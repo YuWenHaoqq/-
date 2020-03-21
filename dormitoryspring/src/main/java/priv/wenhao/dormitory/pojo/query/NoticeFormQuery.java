@@ -1,7 +1,9 @@
 package priv.wenhao.dormitory.pojo.query;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import priv.wenhao.base.pojo.dto.SchoolNoticeDto;
 
 @Data
 public class NoticeFormQuery {
@@ -13,4 +15,16 @@ public class NoticeFormQuery {
 	private String noticeDes;
 	@ApiModelProperty("公告内容")
 	private String noticeContent;
+	@ApiModelProperty("教师id")
+	private String teaId;
+	@JsonIgnore
+	public SchoolNoticeDto getDto(){
+		SchoolNoticeDto schoolNoticeDto=new SchoolNoticeDto();
+		schoolNoticeDto.setContent(noticeContent);
+		schoolNoticeDto.setNoticeDes(noticeDes);
+		schoolNoticeDto.setImgUrl(imgurl);
+		schoolNoticeDto.setNoticeTitle(title);
+		schoolNoticeDto.setTeaId(teaId);
+		return schoolNoticeDto;
+	}
 }

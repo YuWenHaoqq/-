@@ -4,6 +4,9 @@
             <lace></lace>
         </div>
         <div>
+            <el-table :data="leaveData"></el-table>
+        </div>
+        <div>
             <under></under>
         </div>
     </div>
@@ -21,7 +24,8 @@
         },
         data(){
             return{
-                message:'查询签到状况'
+                message:'查询签到状况',
+                leaveData:[]
             }
         },
         methods:{

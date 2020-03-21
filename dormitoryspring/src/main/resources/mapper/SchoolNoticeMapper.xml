@@ -3,6 +3,6 @@
 <mapper namespace="priv.wenhao.dormitory.mapper.SchoolNoticeMapper">
     <select id="getNoticeDes" resultType="priv.wenhao.dormitory.pojo.vo.NoticeVo">
         select id,img_url,notice_des,notice_title from school_notice
-        where is_deleted= 0 order by release_time
+        where is_deleted= 0 order by release_time desc
     </select>
 </mapper>

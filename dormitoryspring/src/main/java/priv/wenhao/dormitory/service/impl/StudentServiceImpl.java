@@ -26,6 +26,7 @@ import priv.wenhao.dormitory.pojo.vo.UnsignMessageVo;
 import priv.wenhao.dormitory.pojo.vo.UserVo;
 import priv.wenhao.dormitory.service.StudentService;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -53,8 +54,10 @@ public class StudentServiceImpl implements StudentService {
 	@Autowired
 	private UnsignHistoryMapper unsignHistoryMapper;
 
-	@Autowired
+	@Resource(name = "firstTemplate")
 	private RedisCommands<String, String> firstTemplate;
+//	@Autowired
+//	private RedisCommands<String,String> testTemplate;
 
 	/***
 	 * Description:学生端登录
@@ -65,6 +68,8 @@ public class StudentServiceImpl implements StudentService {
 	 */
 	@Override
 	public void login(LoginQuery loginQuery, HttpServletRequest request, ResultVo resultVo) {
+//		testTemplate.set
+
 		QueryWrapper<SchoolStudentDto> wrapper = new QueryWrapper<SchoolStudentDto>()
 				.eq("stu_id", loginQuery.getAccount())
 				.eq("stu_password", loginQuery.getPassword())
@@ -73,6 +78,10 @@ public class StudentServiceImpl implements StudentService {
 		if (list.size() == 1) {
 			UserVo userVo = new UserVo();
 			userVo.setStuId(list.get(0).getStuId());
+//			删除原本的token 因为设置时间后不能直接使用set进行更改
+			if (firstTemplate.exists(userVo.getStuId())!=0){
+				firstTemplate.del(userVo.getStuId());
+			}
 			//			生成token
 			userVo.setToken(UUIDUtil.getUUID32());
 			userVo.setUserName(list.get(0).getStuName());

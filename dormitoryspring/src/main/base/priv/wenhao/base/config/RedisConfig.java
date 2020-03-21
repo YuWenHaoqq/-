@@ -6,6 +6,7 @@ import io.lettuce.core.api.StatefulRedisConnection;
 import io.lettuce.core.api.sync.RedisCommands;
 import io.lettuce.core.codec.CompressionCodec;
 import io.lettuce.core.codec.RedisCodec;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
@@ -22,6 +23,7 @@ import java.time.temporal.ChronoUnit;
 
 @Configuration
 @EnableAutoConfiguration
+@Slf4j
 public class RedisConfig {
 	@Value("${redis.database.login}")
 	private int loginDataBase;
@@ -67,6 +69,7 @@ public class RedisConfig {
 	*/
 	@Bean(name = "firstTemplate")
 	public RedisCommands<String, String> getFirstTemplate() {
+
 		RedisURI redisURI = RedisURI.builder()
 				.withHost(host)
 				.withPort(port)
@@ -78,6 +81,8 @@ public class RedisConfig {
 //		创建客户端
 		RedisClient redisClient = RedisClient.create(redisURI);
 		StatefulRedisConnection<String, String> connection = redisClient.connect();;
+		log.info("redis数据库1连接成功");
+
 //		创建同步命令
 		return connection.sync();
 	}
@@ -102,6 +107,8 @@ public class RedisConfig {
 //		创建客户端
 		RedisClient redisClient = RedisClient.create(redisURI);
 		StatefulRedisConnection<String, String> connection = redisClient.connect();;
+		log.info("redis数据库3连接成功");
+
 //		创建同步命令
 		return connection.sync();
 	}
@@ -126,6 +133,8 @@ public class RedisConfig {
 		RedisClient redisClient = RedisClient.create(redisURI);
 		StatefulRedisConnection<String, Object> connection = redisClient.connect(CompressionCodec.valueCompressor(
 				new SerializedObjectCodec(),CompressionCodec.CompressionType.GZIP));
+		log.info("redis数据库2连接成功");
+
 //		创建线程安全的连接
 		return connection.sync();
 	}

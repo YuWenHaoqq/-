@@ -1,7 +1,9 @@
 package priv.wenhao.dormitory.service;
 
+import priv.wenhao.base.pojo.query.BaseQuery;
 import priv.wenhao.base.pojo.vo.ResultVo;
 import priv.wenhao.dormitory.pojo.query.LoginQuery;
+import priv.wenhao.dormitory.pojo.query.NoticeFormQuery;
 import priv.wenhao.dormitory.pojo.query.UpdateLeaveQuery;
 
 import javax.servlet.http.HttpServletRequest;
@@ -42,4 +44,24 @@ public interface TeacherService {
 	* date:2020/3/19
 	*/
 	public void updateLeave(UpdateLeaveQuery updateLeaveQuery,ResultVo resultVo);
+
+	/***
+	* ClassName:TeacherService
+	* Description: 推送公告的接口
+	* param:[]
+	* return:void
+	* Author:yu wenhao
+	* date:2020/3/21
+	*/
+	public void pushNotice(ResultVo resultVo, NoticeFormQuery noticeFormQuery)throws Exception;
+
+	/***
+	* ClassName:TeacherService
+	* Description: 教师查询请假记录
+	* param:[resultVo, baseQuery]
+	* return:void
+	* Author:yu wenhao
+	* date:2020/3/21
+	*/
+	public void getLeaveByTeacher(ResultVo resultVo, BaseQuery baseQuery);
 }

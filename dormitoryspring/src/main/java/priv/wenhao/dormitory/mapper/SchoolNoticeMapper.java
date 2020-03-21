@@ -1,10 +1,12 @@
 package priv.wenhao.dormitory.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import priv.wenhao.base.pojo.dto.SchoolNoticeDto;
 import priv.wenhao.dormitory.pojo.vo.NoticeVo;
 
 import java.util.List;
 
-public interface SchoolNoticeMapper {
+public interface SchoolNoticeMapper extends BaseMapper<SchoolNoticeDto> {
 	/***
 	* ClassName:SchoolNoticeMapper
 	* Description: 按照时间进行公告排序

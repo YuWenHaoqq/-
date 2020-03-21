@@ -13,10 +13,10 @@
                             <el-input style="width: 300px;" v-model="noticeForm.imgurl"></el-input>
                         </el-form-item>
                         <el-form-item label="公告描述" prop="noticeDes">
-                            <el-input class="solveView" type="textarea" style="width: 70%;" maxlength="100" show-word-limit v-model="noticeForm.noticeDes"></el-input>
+                            <el-input class="solveView" type="textarea" maxlength="100" show-word-limit v-model="noticeForm.noticeDes"></el-input>
                         </el-form-item>
                         <el-form-item label="文章内容" prop="noticeContent">
-                            <el-input class="solveView" type="textarea" autosize style="width: 70%;" maxlength="3000" show-word-limit v-model="noticeForm.noticeContent"></el-input>
+                            <el-input class="solveView" type="textarea" :autosize="{minRows: 4}"  maxlength="3000" show-word-limit v-model="noticeForm.noticeContent"></el-input>
                         </el-form-item>
                         <el-form-item>
                             <el-button type="primary" @click="submitForm('noticeForm')">推送</el-button>
@@ -53,7 +53,8 @@
                     title: '',
                     imgurl: '',
                     noticeDes:'',
-                    noticeContent:''
+                    noticeContent:'',
+                    teaId:sessionStorage.getItem("teaId")
                 },
                 rules: {
                     title: [{required: true, message: '请输入标题', trigger: 'blur'}],
@@ -68,7 +69,18 @@
                 return this.message
             },
             submitForm(formName) {
-                post()
+                post('/api/teacher/pushNotice',this.noticeForm).then(res=>{
+                    this.$refs[formName].resetFields();
+                    this.$message({
+                        message:res.message,
+                        type:'success'
+                    })
+                }).catch(err=>{
+                    this.$message({
+                        message:err.message,
+                        type:'warning'
+                    })
+                })
             },
             resetForm(formName) {
                 this.$refs[formName].resetFields();
@@ -80,6 +92,7 @@
 <style scoped>
     .solveView{
         padding-bottom: 20px;
+        width: 70%
     }
 
 </style>

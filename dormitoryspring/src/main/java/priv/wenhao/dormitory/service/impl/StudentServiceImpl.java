@@ -235,7 +235,8 @@ public class StudentServiceImpl implements StudentService {
 	public void getSignMessage(BaseQuery baseQuery, String stuId, ResultVo resultVo) {
 		QueryWrapper<SchoolSignHistoryDto> queryWrapper=new QueryWrapper<SchoolSignHistoryDto>()
 				.eq("pk_stu_id",stuId)
-				.eq("is_deleted",0);
+				.eq("is_deleted",0)
+				.orderByDesc("sign_history_id");
 		PageHelper.startPage(baseQuery.getPage(),baseQuery.getSize());
 		List<SchoolSignHistoryDto>list=schoolSignHistoryMapper.selectList(queryWrapper);
 		PageInfo<SchoolSignHistoryDto> pageInfo=new PageInfo<>(list);
@@ -260,7 +261,8 @@ public class StudentServiceImpl implements StudentService {
 		PageHelper.startPage(baseQuery.getPage(),baseQuery.getSize());
 		QueryWrapper<UnsignHistoryDto> queryWrapper=new QueryWrapper<UnsignHistoryDto>()
 				.eq("pk_stu_id",stuId)
-				.eq("is_deleted",0);
+				.eq("is_deleted",0)
+				.orderByDesc("unsign_history_id");
 		List<UnsignHistoryDto> list=
 		unsignHistoryMapper.selectList(queryWrapper);
 		PageInfo<UnsignHistoryDto> pageInfo=new PageInfo<>(list);
@@ -271,12 +273,21 @@ public class StudentServiceImpl implements StudentService {
 		resultVo.setData(unsignMessageVo);
 	}
 
+	/***
+	* ClassName:StudentServiceImpl
+	* Description:获得请假记录
+	* param:[baseQuery, stuId, resultVo]
+	* return:void
+	* Author:yu wenhao
+	* date:2020/3/23
+	*/
 	@Override
 	public void getLeave(BaseQuery baseQuery, String stuId, ResultVo resultVo) {
 		PageHelper.startPage(baseQuery.getPage(),baseQuery.getSize());
 		QueryWrapper<SchoolLeaveHistoryDto> queryWrapper=new QueryWrapper<SchoolLeaveHistoryDto>()
 				.eq("pk_stu_id",stuId)
-				.eq("is_deleted",0);
+				.eq("is_deleted",0)
+				.orderByDesc("leave_history_id");
 		List<SchoolLeaveHistoryDto> list=schoolLeaveHistoryMapper.selectList(queryWrapper);
 		PageInfo<SchoolLeaveHistoryDto> pageInfo=new PageInfo<>(list);
 		LeaveMessageVo leaveMessageVo=new LeaveMessageVo();

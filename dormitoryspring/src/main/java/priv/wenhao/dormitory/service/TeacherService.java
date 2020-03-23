@@ -64,4 +64,24 @@ public interface TeacherService {
 	* date:2020/3/21
 	*/
 	public void getLeaveByTeacher(ResultVo resultVo, BaseQuery baseQuery);
+
+	/***
+	* ClassName:TeacherService
+	* Description: 教师查询签到记录
+	* param:[resultVo, baseQuery]
+	* return:void
+	* Author:yu wenhao
+	* date:2020/3/23
+	*/
+	public void getSignByTeacher(ResultVo resultVo,BaseQuery baseQuery);
+
+	/***
+	* ClassName:TeacherService
+	* Description: 教师查询未签到记录
+	* param:[resultVo, baseQuery]
+	* return:void
+	* Author:yu wenhao
+	* date:2020/3/23
+	*/
+	public void getUnsignByTeacher(ResultVo resultVo,BaseQuery baseQuery);
 }

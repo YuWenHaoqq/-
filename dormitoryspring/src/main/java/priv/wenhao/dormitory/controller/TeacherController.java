@@ -85,11 +85,12 @@ public class TeacherController {
 	* Author:yu wenhao
 	* date:2020/3/21
 	*/
-	@ApiOperation(value = "教师查询请假记录",httpMethod = "POST")
-	@PostMapping("/getLeaveByTeacher")
-	@TeacherLoginCheckAop
-	public ResultVo getLeaveByTeacher(@RequestBody BaseQuery baseQuery){
+	@ApiOperation(value = "教师查询请假记录",httpMethod = "GET")
+	@GetMapping("/getLeaveByTeacher")
+//	@TeacherLoginCheckAop
+	public ResultVo getLeaveByTeacher(@ModelAttribute BaseQuery baseQuery){
 		ResultVo resultVo=new ResultVo();
+		teacherService.getLeaveByTeacher(resultVo,baseQuery);
 		return resultVo;
 
 	}
@@ -102,11 +103,12 @@ public class TeacherController {
 	* Author:yu wenhao
 	* date:2020/3/21
 	*/
-	@ApiOperation(value = "教师查询签到记录",httpMethod = "POST")
-	@PostMapping("/getSignByTeacher")
-	@TeacherLoginCheckAop
-	public ResultVo getSignByTeacher(@RequestBody BaseQuery baseQuery){
+	@ApiOperation(value = "教师查询签到记录",httpMethod = "GET")
+	@GetMapping("/getSignByTeacher")
+//	@TeacherLoginCheckAop
+	public ResultVo getSignByTeacher(@ModelAttribute BaseQuery baseQuery){
 		ResultVo resultVo =new ResultVo();
+		teacherService.getSignByTeacher(resultVo,baseQuery);
 		return resultVo;
 	}
 
@@ -118,11 +120,12 @@ public class TeacherController {
 	* Author:yu wenhao
 	* date:2020/3/21
 	*/
-	@ApiOperation(value = "教师查询未签到记录",httpMethod = "POST")
-	@PostMapping("/getUnSignByTeacher")
-	@TeacherLoginCheckAop
-	public ResultVo getUnsignByTeacher(@RequestBody BaseQuery baseQuery){
+	@ApiOperation(value = "教师查询未签到记录",httpMethod = "GET")
+	@GetMapping("/getUnSignByTeacher")
+//	@TeacherLoginCheckAop
+	public ResultVo getUnsignByTeacher(@ModelAttribute BaseQuery baseQuery){
 		ResultVo resultVo=new ResultVo();
+		teacherService.getUnsignByTeacher(resultVo,baseQuery);
 		return resultVo;
 
 	}

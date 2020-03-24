@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -15,6 +16,7 @@ public class SchoolNoticeDto {
 	@ApiModelProperty("")
 	@TableId(value = "id",type = IdType.AUTO)
 	private Integer id;
+	@JsonIgnore
 	@ApiModelProperty("关联教师表id")
 	@TableField("pk_tea")
 	private String teaId;
@@ -33,12 +35,15 @@ public class SchoolNoticeDto {
 	@ApiModelProperty("文章描述")
 	@TableField("notice_des")
 	private String noticeDes;
+	@JsonIgnore
 	@ApiModelProperty("创建时间")
 	@TableField("notice_create")
 	private Date noticeCreate;
+	@JsonIgnore
 	@ApiModelProperty("修改时间")
 	@TableField("notice_modify")
 	private Date notice_modify;
+	@JsonIgnore
 	@ApiModelProperty("是否删除")
 	@TableField("is_deleted")
 	private Integer deleted;

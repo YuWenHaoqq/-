@@ -4,8 +4,10 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-import priv.wenhao.base.aop.TeacherLoginCheckAop;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import priv.wenhao.base.pojo.vo.ResultVo;
 import priv.wenhao.dormitory.service.SchoolNoticeService;
 
@@ -39,11 +41,16 @@ public class NoticeController {
 	* Author:yu wenhao
 	* date:2020/3/11
 	*/
-	@ApiOperation(value = "推送公告",httpMethod = "POST")
-	@PostMapping("/pushNotice")
-	@TeacherLoginCheckAop
-	public ResultVo pushNotice(){
+	@ApiOperation(value = "获取完整公告",httpMethod = "POST")
+	@PostMapping("/getNoticeContent")
+	public ResultVo getNoticeContent(@ApiParam("公告id")@RequestParam Integer id){
 		ResultVo resultVo=new ResultVo();
+		if (id==null || id==0 ){
+			resultVo.setCode(1);
+			resultVo.setMessage("参数错误");
+			return resultVo;
+		}
+		schoolNoticeService.getNoticeContent(resultVo,id);
 		return resultVo;
 	}
 }

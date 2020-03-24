@@ -5,14 +5,12 @@
                 <h5>宿舍签到系统</h5>
                 <el-menu router
                         :default-active="$route.name"
-                        class="el-menu-vertical-demo"
-                        @open="handleOpen"
-                        @close="handleClose">
+                        class="el-menu-vertical-demo">
                     <el-menu-item index="homepage">
                         <i class="el-icon-menu"></i>
                         <span slot="title">首页</span>
                     </el-menu-item>
-                    <el-submenu index="2">
+                    <el-submenu index="2" ref="stu" :disabled="isStu()">
                         <template slot="title">
                             <i class="el-icon-user"></i>
                             <span>学生</span>
@@ -24,7 +22,7 @@
                         </el-menu-item-group>
                     </el-submenu>
 
-                    <el-submenu index="3">
+                    <el-submenu index="3" ref="tea" :disabled="isTea()">
                         <template slot="title">
                         <i class="el-icon-user-solid"></i>
                         <span>教师</span>
@@ -52,14 +50,22 @@
             return {
                 index: 'home'
             }
+        },created(){
         },
         methods: {
-            handleOpen(key, keyPath) {
-                window.console.log(key, keyPath);
+            isStu(){
+                if (sessionStorage.getItem("stuId")===null){
+                    return true
+                }
+                return false
             },
-            handleClose(key, keyPath) {
-                window.console.log(key, keyPath);
-            }
+            isTea(){
+                if (sessionStorage.getItem("teaId")===null){
+                    return true
+                }
+                return false
+            },
+
         }
     }
 </script>

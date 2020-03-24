@@ -20,6 +20,12 @@
             }
         },
         methods: {
+            setMessage(val){
+                this.message=val
+            },
+            setDes(val){
+                this.des=val
+            }
         },
         created() {
             this.message=this.$parent.getMessage();
@@ -39,9 +45,12 @@
 
     .font {
         color: #404040;
-        font-weight: 300;
+        font-weight: 600;
     }
     .title{
         width: 100%;
          }
+    p{
+        margin-top: 10px;
+    }
 </style>

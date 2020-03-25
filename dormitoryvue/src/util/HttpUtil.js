@@ -111,3 +111,29 @@ export function paramsPost(url, params, config = {}) {
 
 }
 
+export function postFile(url,data) {
+    return axios({
+        method:"post",
+        url:url,
+        data:data,
+        responseType:"blob"
+    }).then(res=>{
+            let blob = new Blob([res.data], {type: 'application/ms-excel;charset=utf-8'});
+            let href = window.URL.createObjectURL(blob); //创建下载的链接
+            let fileName=res.headers['content-disposition'].substring(21)
+        if (window.navigator.msSaveBlob){
+            window.navigator.msSaveBlob(blob, fileName);
+        }else {
+            let downloadElement = document.createElement('a');
+            downloadElement.href = href;
+            downloadElement.download = fileName; //下载后文件名
+            document.body.appendChild(downloadElement);
+            downloadElement.click(); //点击下载
+            document.body.removeChild(downloadElement); //下载完成移除元素
+            window.URL.revokeObjectURL(href); //释放掉blob对象
+        }
+
+    })
+
+}
+

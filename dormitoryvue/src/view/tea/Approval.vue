@@ -35,25 +35,11 @@
                     <el-table-column fixed="left"
                                      width="55"
                                      type="selection"></el-table-column>
-<!--                    <el-table-column label="操作"-->
-<!--                                     fixed="left"-->
-<!--                                     width="180">-->
-<!--                        <template slot-scope="scope">-->
-<!--                            <el-button-->
-<!--                                    size="mini"-->
-<!--                                    @click="handleEdit(scope.$index, scope.row)">同意</el-button>-->
-<!--                            <el-button-->
-<!--                                    size="mini"-->
-<!--                                    type="danger"-->
-<!--                                    @click="handleDelete(scope.$index, scope.row)">不同意</el-button>-->
-
-<!--                        </template>-->
-<!--                    </el-table-column>-->
                 </el-table>
             </el-col>
         </el-row>
         <el-row>
-            <el-col :offset="17" :span="2">
+            <el-col :offset="2" :span="2">
                 <el-button type="success" class="btn" @click="updateLeave(1)">同意</el-button>
             </el-col>
             <el-col :offset="1" :span="2">

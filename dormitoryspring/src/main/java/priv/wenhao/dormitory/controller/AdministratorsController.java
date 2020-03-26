@@ -3,15 +3,21 @@ package priv.wenhao.dormitory.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import priv.wenhao.base.exception.BussinessException;
+import org.springframework.web.multipart.MultipartFile;
+import priv.wenhao.base.aop.AdminLogingAop;
+import priv.wenhao.base.configvalue.TemplateValue;
+import priv.wenhao.base.pojo.vo.ResultVo;
 import priv.wenhao.base.util.FileUtil;
+import priv.wenhao.dormitory.service.AdministratorsService;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,54 +27,54 @@ import java.io.IOException;
 @RestController
 @Slf4j
 public class AdministratorsController {
-	@ApiOperation(value = "获得学生录入模板",httpMethod = "POST")
+	@Autowired
+	private TemplateValue templateValue;
+	@Autowired
+	private AdministratorsService administratorsService;
+
+	/***
+	 * ClassName:AdministratorsController
+	 * Description: 获得学生/教师录入模板文件
+	 * param:[type]
+	 * return:org.springframework.http.ResponseEntity<org.springframework.core.io.FileSystemResource>
+	 * Author:yu wenhao
+	 * date:2020/3/26
+	 */
+	@ApiOperation(value = "获得学生录入模板", httpMethod = "POST")
 	@PostMapping("/stuFile")
-	public ResponseEntity<FileSystemResource> stuFile() throws Exception {
-		Resource resource=new ClassPathResource("template"+"/嘉职院学生录入模板.xlsx");
+	@AdminLogingAop
+	public ResponseEntity<FileSystemResource> stuFile(Integer type) throws Exception {
+		String router;
+		switch (type) {
+			case 1:
+				router = templateValue.getStuTemplate();
+				break;
+			case 2:
+				router = templateValue.getTeaTemplate();
+				break;
+			default:
+				return null;
+		}
+		Resource resource = new ClassPathResource(router);
 		try {
-			File file=resource.getFile();
-//			System.out.println(new String(file.getName().getBytes("utf-8"),"ISO-8859-1"));
+			File file = resource.getFile();
 			return FileUtil.exportFile(file);
 		} catch (IOException e) {
-			log.info("学生模板下载错误");
-			throw new BussinessException(2,"服务器错误,请联系管理员");
+			log.info(type + "模板下载错误");
+//			throw new BussinessException(2,"服务器错误,请联系管理员");
 		}
-
-	}
-//	public void stuFile(HttpServletRequest request, HttpServletResponse response)throws Exception{
-//		response.setCharacterEncoding(request.getCharacterEncoding());
-//		response.setContentType("application/octet-stream");
-//		FileInputStream fis=null;
-//		OutputStream os=null;
-//
-//		try{
-//			File file=new ClassPathResource("template"+"/嘉职院学生录入模板.xlsx").getFile();
-//			fis=new FileInputStream(file);
-//			response.setHeader("Content-Disposition", "attachment; filename="+file.getName());
-//			int len=0;
-//			byte[]buffer=new byte[1024];
-//			os=response.getOutputStream();
-//			while ((len=fis.read(buffer))>0){
-//				os.write(buffer,0,len);
-//			}
-//		}catch (Exception e){
-//			log.info("学生模板下载错误");
-//			e.printStackTrace();
-//		}finally {
-//			if (fis!=null) {
-//				fis.close();
-//			}
-//			if (os!=null){
-//				os.close();
-//			}
-//		}
-//
-//	}
-
-	@ApiOperation(value = "获得教师录入模板",httpMethod = "POST")
-	@PostMapping("/teaFile")
-	public ResponseEntity<FileSystemResource> teaFile() throws Exception {
 		return null;
+
 	}
-	
+
+
+	@ApiOperation(value = "添加学生",httpMethod = "POST")
+	@PostMapping("/addStu")
+	@AdminLogingAop
+	public ResultVo addStu(@RequestParam("file")MultipartFile multipartFile){
+		ResultVo resultVo=new ResultVo();
+		administratorsService.addStu(resultVo,multipartFile);
+		return resultVo;
+	}
+
 }

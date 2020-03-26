@@ -12,7 +12,7 @@
         name: "AddStu",
         methods:{
             getStuTemplate(){
-                postFile("/api/admin/stuFile")
+                postFile("/api/admin/stuFile",{type:1})
             }
         }
     }

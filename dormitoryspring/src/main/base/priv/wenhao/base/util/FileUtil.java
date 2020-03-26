@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 
 import java.io.File;
 import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.Date;
 
 public class FileUtil {
@@ -16,9 +17,10 @@ public class FileUtil {
 		}
 //		String fileName=file.getName().substring(0,file.getName().lastIndexOf("."));
 		String fileName=new String(file.getName().getBytes("UTF-8"),"iso-8859-1");
+		System.out.println(fileName);
 		HttpHeaders headers=new HttpHeaders();
 		headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
-		headers.add("Content-Disposition", "attachment;filename="+ fileName);
+		headers.add("Content-Disposition", "attachment;filename="+ URLEncoder.encode(file.getName(),"utf-8"));
 		headers.add("Pragma", "no-cache");
 		headers.add("Expires", "0");
 		headers.add("Last-Modified", new Date().toString());

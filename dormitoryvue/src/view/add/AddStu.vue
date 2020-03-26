@@ -7,8 +7,6 @@
 
 <script>
     import {postFile} from "@/util/HttpUtil";
-    // import {sav}
-    import { saveAs } from 'file-saver';
 
     export default {
         name: "AddStu",

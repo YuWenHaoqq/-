@@ -29,8 +29,9 @@
                         </el-form-item>
                         <el-form-item>
                             <el-row >
-                                <el-col :span="4" :offset="2"><el-button class="btn" type="primary" @click="submitForm">确认</el-button></el-col>
-                                <el-col :span="4" :offset="2"><el-button class="btn" @click="resetForm('leaveForm')">清空</el-button></el-col>
+                                <el-col :xs="10" :sm="6" :md="4" :lg="3" :xl="2"><el-button class="btn" type="primary" @click="submitForm">确认</el-button></el-col>
+                                <el-col :xs="{span: 10, offset: 2}" :sm="{span: 6, offset: 2}" :md="{span: 4, offset: 1}" :lg="{span: 3, offset: 1}" :xl="{span: 2, offset: 1}">
+                                    <el-button class="btn" @click="resetForm('leaveForm')">清空</el-button></el-col>
                             </el-row>
 
                         </el-form-item>

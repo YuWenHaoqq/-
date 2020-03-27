@@ -225,14 +225,14 @@ public class TeacherServiceImpl implements TeacherService {
 	@Override
 	public void getUnsignByTeacher(ResultVo resultVo, BaseQuery baseQuery) {
 		PageHelper.startPage(baseQuery.getPage(),baseQuery.getSize());
-		QueryWrapper<UnsignHistoryDto> queryWrapper=new QueryWrapper<UnsignHistoryDto>()
+		QueryWrapper<SchoolUnsignHistoryDto> queryWrapper=new QueryWrapper<SchoolUnsignHistoryDto>()
 				.eq("pk_teacher_id",baseQuery.getTeaId())
 				.like(StringUtils.isNotBlank(baseQuery.getStuId()),"stu_name",baseQuery.getStuId())
 				.eq("is_deleted",0)
 				.orderByDesc("unsign_history_id");
-		List<UnsignHistoryDto> list=
+		List<SchoolUnsignHistoryDto> list=
 				unsignHistoryMapper.selectList(queryWrapper);
-		PageInfo<UnsignHistoryDto> pageInfo=new PageInfo<>(list);
+		PageInfo<SchoolUnsignHistoryDto> pageInfo=new PageInfo<>(list);
 		UnsignMessageVo unsignMessageVo=new UnsignMessageVo();
 		unsignMessageVo.setTotal((int)pageInfo.getTotal());
 		unsignMessageVo.setList(list);

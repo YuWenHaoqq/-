@@ -33,10 +33,18 @@
                             <el-menu-item index="updateNotice">更新公告</el-menu-item>
                         </el-menu-item-group>
                     </el-submenu>
-                    <el-menu-item index="addStu">
-                        <i class="el-icon-setting"></i>
-                        <span slot="title">人员录入</span>
-                    </el-menu-item>
+
+                    <el-submenu index="4" ref="admin">
+                        <template slot="title">
+                            <i class="el-icon-user-solid"></i>
+                            <span>管理员</span>
+                        </template>
+                        <el-menu-item-group>
+                            <el-menu-item index="addStu">添加学生和教师</el-menu-item>
+                            <el-menu-item index="modifyStu">教师表</el-menu-item>
+                            <el-menu-item index="modifyTea">学生表</el-menu-item>
+                        </el-menu-item-group>
+                    </el-submenu>
                 </el-menu>
             </el-col>
         </el-row>

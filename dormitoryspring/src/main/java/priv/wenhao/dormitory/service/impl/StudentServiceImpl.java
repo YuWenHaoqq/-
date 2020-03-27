@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import priv.wenhao.base.pojo.dto.SchoolLeaveHistoryDto;
 import priv.wenhao.base.pojo.dto.SchoolSignHistoryDto;
 import priv.wenhao.base.pojo.dto.SchoolStudentDto;
-import priv.wenhao.base.pojo.dto.UnsignHistoryDto;
+import priv.wenhao.base.pojo.dto.SchoolUnsignHistoryDto;
 import priv.wenhao.base.pojo.query.BaseQuery;
 import priv.wenhao.base.pojo.vo.ResultVo;
 import priv.wenhao.base.util.UUIDUtil;
@@ -259,13 +259,13 @@ public class StudentServiceImpl implements StudentService {
 	@Override
 	public void getUnsignMessage(BaseQuery baseQuery, String stuId, ResultVo resultVo) {
 		PageHelper.startPage(baseQuery.getPage(),baseQuery.getSize());
-		QueryWrapper<UnsignHistoryDto> queryWrapper=new QueryWrapper<UnsignHistoryDto>()
+		QueryWrapper<SchoolUnsignHistoryDto> queryWrapper=new QueryWrapper<SchoolUnsignHistoryDto>()
 				.eq("pk_stu_id",stuId)
 				.eq("is_deleted",0)
 				.orderByDesc("unsign_history_id");
-		List<UnsignHistoryDto> list=
+		List<SchoolUnsignHistoryDto> list=
 		unsignHistoryMapper.selectList(queryWrapper);
-		PageInfo<UnsignHistoryDto> pageInfo=new PageInfo<>(list);
+		PageInfo<SchoolUnsignHistoryDto> pageInfo=new PageInfo<>(list);
 		UnsignMessageVo unsignMessageVo=new UnsignMessageVo();
 		unsignMessageVo.setTotal((int)pageInfo.getTotal());
 		unsignMessageVo.setList(list);

@@ -13,7 +13,7 @@ import java.util.Date;
 
 @Data
 @TableName("school_unsign_history")
-public class UnsignHistoryDto {
+public class SchoolUnsignHistoryDto {
 	@TableId(value = "unsign_history_id",type = IdType.AUTO)
 	@ApiModelProperty("学生未签到表自增id")
 	private Integer id;

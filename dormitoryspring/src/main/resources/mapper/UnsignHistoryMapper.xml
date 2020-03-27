@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="priv.wenhao.dormitory.mapper.UnsignHistoryMapper">
-    <insert id="insertUnsign" parameterType="priv.wenhao.base.pojo.dto.UnsignHistoryDto">
+    <insert id="insertUnsign" parameterType="priv.wenhao.base.pojo.dto.SchoolUnsignHistoryDto">
         insert into school_unsign_history(pk_stu_id,pk_teacher_id,stu_name,is_checked,unsign_history_create,is_deleted)
         values 
         <foreach collection="list" item="item" index="index" separator=",">
@@ -9,12 +9,12 @@
         </foreach>
     </insert>
 
-    <select id="selectUnsign" resultType="priv.wenhao.base.pojo.dto.UnsignHistoryDto">
+    <select id="selectUnsign" resultType="priv.wenhao.dormitory.pojo.dto.UnSigndto">
         select ss.stu_id as stuId,ss.pk_teacher_id as teaId,ss.stu_name as stuName,
-        0 as checked,now() as createTime,0 as is_deleted
+        0 as checked,now() as createTime,0 as is_deleted,slh.is_success as success,ssh.pk_stu_id as pkStuId
         from school_student ss
-        left join school_sign_history ssh on ssh.pk_stu_id!=ss.stu_id and datediff(ssh.sign_history_create,now())=0
-		left join school_leave_history slh on ss.stu_id!=slh.pk_stu_id and slh.end_time>now() and now()>slh.start_time
-        where ss.is_deleted=0 and slh.is_success=1 and slh.is_deleted=0
+        left join school_sign_history ssh on ssh.pk_stu_id=ss.stu_id and datediff(ssh.sign_history_create,now())=0
+		left join school_leave_history slh on slh.pk_stu_id = ss.stu_id and (slh.end_time>now() and now()>slh.start_time) and slh.is_success=1 and slh.is_deleted=0
+        where ss.is_deleted=0
     </select>
 </mapper>

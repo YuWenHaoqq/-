@@ -1,23 +1,73 @@
 <template>
-    <div>模块正在开发
-        <el-button @click="getStuTemplate">下载学生模板</el-button>
+    <div>
+        <div class="content">
+            <lace></lace>
+            <el-row>
+                <el-col :offset="2" :xs="8" :sm="6" :md="4" :lg="3" :xl="2">
+                    <el-button @click="getStuTemplate(1)" class="btn">下载学生模板</el-button>
+                </el-col>
+                <el-col :offset="1" :xs="8" :sm="6" :md="4" :lg="3" :xl="2">
+                    <el-button @click="getStuTemplate(2)" class="btn">下载教师模板</el-button>
+                </el-col>
+            </el-row>
+
+            <el-row>
+                <el-col :offset="2" :xs="8" :sm="6" :md="4" :lg="3" :xl="2">
+                    <el-upload
+                            :limit="2"
+                            class="upload-demo"
+                            action="/api/admin/addStu">
+                        <el-button size="small" type="primary">点击上传</el-button>
+                        <div slot="tip" class="el-upload__tip">只能上传excel文件</div>
+                    </el-upload>
+                </el-col>
+            </el-row>
+        </div>
+        <div>
+            <under></under>
+        </div>
+
     </div>
 
 </template>
 
 <script>
     import {postFile} from "@/util/HttpUtil";
+    import lace from '@/components/Lace'
+    import under from '@/components/Under'
+    import '@/static/css/global.css'
+
 
     export default {
         name: "AddStu",
-        methods:{
-            getStuTemplate(){
-                postFile("/api/admin/stuFile",{type:1})
+        components: {
+            'lace': lace,
+            'under': under
+        },
+        data() {
+            return {
+                message: '学生教师录入'
+            }
+        },
+        methods: {
+            getMessage() {
+                return this.message
+            },
+            getStuTemplate(type) {
+                postFile("/api/admin/stuFile", {type: type})
             }
         }
     }
 </script>
 
 <style scoped>
+    .btn {
+        /*border: 1px solid red;*/
+        /*font-size: 13px;*/
+
+        width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
 
 </style>

@@ -17,7 +17,7 @@
                 </el-col>
             </el-row>
             <el-row>
-                <el-col :span="2" :offset="18">
+                <el-col :xs="{span: 6, offset: 14}" :sm="{span: 5, offset: 17}" :md="{span: 3, offset: 17}" :lg="{span: 2, offset: 18}" :xl="{span: 2, offset: 18}">
                     <el-button class="btn" @click="signin">打卡</el-button>
                 </el-col>
             </el-row>

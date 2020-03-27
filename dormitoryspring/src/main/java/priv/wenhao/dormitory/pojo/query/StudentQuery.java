@@ -42,7 +42,7 @@ public class StudentQuery {
 		schoolStudentDto.setStuPassword(this.stuPassword);
 		schoolStudentDto.setStuBirthday(this.stuBirthday);
 		schoolStudentDto.setTeacherId(this.teacherId);
-		schoolStudentDto.setDormId(this.dormId);
+		schoolStudentDto.setDormName(this.dormId);
 		return schoolStudentDto;
 	}
 }

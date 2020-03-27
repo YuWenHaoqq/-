@@ -68,11 +68,20 @@ public class AdministratorsController {
 	}
 
 
+	/***
+	* ClassName:AdministratorsController
+	* Description: 添加学生
+	* param:[multipartFile]
+	* return:priv.wenhao.base.pojo.vo.ResultVo
+	* Author:yu wenhao
+	* date:2020/3/26
+	*/
 	@ApiOperation(value = "添加学生",httpMethod = "POST")
 	@PostMapping("/addStu")
 	@AdminLogingAop
 	public ResultVo addStu(@RequestParam("file")MultipartFile multipartFile){
 		ResultVo resultVo=new ResultVo();
+		System.out.println(123);
 		administratorsService.addStu(resultVo,multipartFile);
 		return resultVo;
 	}

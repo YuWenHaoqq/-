@@ -25,7 +25,7 @@ public class AdministratorsServiceImpl implements AdministratorsService {
 	private SchoolTeacherMapper schoolTeacherMapper;
 	/***
 	* ClassName:AdministratorsServiceImpl
-	* Description: 添加学生
+	* Description: 使用excel添加学生
 	* param:[resultVo, file]
 	* return:void
 	* Author:yu wenhao

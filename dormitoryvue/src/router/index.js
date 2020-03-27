@@ -66,6 +66,15 @@ export default new Router({
                     path: 'updateNotice',
                     name: 'updateNotice',
                     component: resolve => require(['@/view/tea/UpdateNotice'], resolve)
+                },{
+                    path: 'modifyStu',
+                    name: 'modifyStu',
+                    component: resolve => require(['@/view/add/modifyStu'], resolve)
+                },
+                {
+                    path: 'modifyTea',
+                    name: 'modifyTea',
+                    component: resolve => require(['@/view/add/modifyTea'], resolve)
                 }
             ]
         }

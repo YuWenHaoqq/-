@@ -41,8 +41,8 @@
                         </template>
                         <el-menu-item-group>
                             <el-menu-item index="addStu">添加学生和教师</el-menu-item>
-                            <el-menu-item index="modifyStu">教师表</el-menu-item>
-                            <el-menu-item index="modifyTea">学生表</el-menu-item>
+                            <el-menu-item index="modifyStu">学生表</el-menu-item>
+                            <el-menu-item index="modifyTea">教师表</el-menu-item>
                         </el-menu-item-group>
                     </el-submenu>
                 </el-menu>
@@ -56,7 +56,7 @@
         name: "NavigationBar",
         data(){
             return {
-                index: 'home'
+                index: 'home',
             }
         },created(){
         },

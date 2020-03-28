@@ -2,4 +2,19 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="priv.wenhao.dormitory.mapper.SchoolStudentMapper">
 
+    <insert id="addStuList" parameterType="arraylist">
+        insert ignore into school_student (stu_id,pk_class_id,stu_name,stu_sex,stu_password,stu_birthday,pk_teacher_id,dorm_name,stu_create,is_deleted)values
+        <foreach collection="list" separator="," item="item">
+        (#{item.stuId},#{item.classId},#{item.stuName},#{item.stuSex},#{item.stuPassword},#{item.stuBirthday},#{item.teacherId},#{item.dormName},now(),0)
+        </foreach>
+
+    </insert>
+    <select id="getAllStu" resultType="priv.wenhao.dormitory.pojo.vo.StudentVo">
+        select ss.stu_id as stuId,ss.stu_name as stuName,ss.stu_sex as stuSex,ss.stu_password as password,ss.stu_birthday as birthday,
+        ss.dorm_name as dormName,st.teacher_name as teacherName,sc.class_name as className from school_student ss
+        left join school_teacher st on ss.pk_teacher_id=st.teacher_id and st.is_deleted=0
+        left join school_class sc on ss.pk_class_id=sc.class_id and sc.is_deleted=0
+        where ss.is_deleted=0;
+    </select>
+
 </mapper>

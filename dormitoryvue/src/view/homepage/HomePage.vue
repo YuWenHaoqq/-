@@ -20,7 +20,7 @@
             </el-row>
 
         </div>
-        <el-dialog title="" :visible.sync="dialogshow" @open="openDialog">
+        <el-dialog title="" :visible.sync="dialogshow" v-if="dialogshow">
             <notice ref="notice"></notice>
         </el-dialog>
         <div>
@@ -74,15 +74,12 @@
 
         },
         methods: {
-            openDialog(){
-              this.$refs.notice.initNotice()
-            },
             getSelectNotice(){
               return this.selectNotice
             },
             clickNotice(id){
                 this.selectNotice=id
-                window.console.log(this.selectNotice)
+                // window.console.log(this.selectNotice)
                 this.dialogshow=true
             },
             getMessage() {

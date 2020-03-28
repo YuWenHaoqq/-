@@ -3,6 +3,7 @@ package priv.wenhao.base.pojo.dto;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -19,6 +20,7 @@ public class SchoolStudentDto {
 	private Integer classId;
 	@ApiModelProperty(value = "关联角色表")
 	@TableField("pk_role_id")
+	@JsonIgnore
 	private Integer roleId=4;
 	@ApiModelProperty("学生姓名")
 	@TableField(value = "stu_name")

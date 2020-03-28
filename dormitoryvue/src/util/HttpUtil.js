@@ -136,3 +136,23 @@ export function postFile(url,data) {
 
 }
 
+export function beforeUpload(file,url) {
+    let fd=new FormData()
+    fd.append('files',file)
+    return axios({
+        method:'post',
+        data:fd,
+        url:url
+    }).then(res => {
+            return Promise.resolve(res)
+        }).catch(err => {
+            return Promise.reject(err)
+        })
+    // axios.post(url,fd).then(res => {
+    //     return Promise.resolve(res)
+    // }).catch(err => {
+    //     return Promise.reject(err)
+    // })
+
+}
+

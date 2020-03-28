@@ -31,7 +31,7 @@ public class StudentQuery {
 	@ApiModelProperty(value = "教师工号",required = true)
 	private String teacherId;
 	@ApiModelProperty(value = "寝室表id",required = true)
-	private String dormId;
+	private String dormName;
 
 	public SchoolStudentDto getSchoolStudentDto(){
 		SchoolStudentDto schoolStudentDto=new SchoolStudentDto();
@@ -42,7 +42,7 @@ public class StudentQuery {
 		schoolStudentDto.setStuPassword(this.stuPassword);
 		schoolStudentDto.setStuBirthday(this.stuBirthday);
 		schoolStudentDto.setTeacherId(this.teacherId);
-		schoolStudentDto.setDormName(this.dormId);
+		schoolStudentDto.setDormName(this.dormName);
 		return schoolStudentDto;
 	}
 }

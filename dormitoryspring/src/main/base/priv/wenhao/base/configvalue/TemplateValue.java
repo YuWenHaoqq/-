@@ -18,6 +18,10 @@ import org.springframework.context.annotation.PropertySource;
 public class TemplateValue {
 	@Value("${template.stu}")
 	private String stuTemplate;
+	@Value("${template.stu.title}")
+	private String stuTitle;
 	@Value("${template.tea}")
 	private String teaTemplate;
+	@Value("${template.tea.title}")
+	private String teaTitle;
 }

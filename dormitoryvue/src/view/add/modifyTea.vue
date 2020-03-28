@@ -19,7 +19,7 @@
         },
         data(){
             return{
-                message:'学生表'
+                message:'教师表'
             }
         },
         methods:{

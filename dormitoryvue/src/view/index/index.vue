@@ -1,11 +1,13 @@
 <template>
 <div>
     <el-row>
-        <el-col :xs="8" :sm="6" :md="5" :lg="4" :xl="3">
+        <el-col :sm="5" :md="4" :lg="4" :xl="3">
             <navigation></navigation>
         </el-col>
-        <el-col :xs="16" :sm="18" :md="19" :lg="20" :xl="21">
+        <el-col :sm="19" :md="20" :lg="20" :xl="21">
+            <div class="hid">
             <router-view></router-view>
+            </div>
         </el-col>
     </el-row>
 </div>
@@ -35,4 +37,7 @@
 
 <style scoped>
 
+    .hid{
+        overflow: hidden;
+    }
 </style>

@@ -8,15 +8,14 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import priv.wenhao.base.aop.AdminLogingAop;
 import priv.wenhao.base.configvalue.TemplateValue;
+import priv.wenhao.base.exception.BussinessException;
 import priv.wenhao.base.pojo.vo.ResultVo;
 import priv.wenhao.base.util.FileUtil;
+import priv.wenhao.dormitory.pojo.query.StudentQuery;
 import priv.wenhao.dormitory.service.AdministratorsService;
 
 import java.io.File;
@@ -79,11 +78,45 @@ public class AdministratorsController {
 	@ApiOperation(value = "添加学生",httpMethod = "POST")
 	@PostMapping("/addStu")
 	@AdminLogingAop
-	public ResultVo addStu(@RequestParam("file")MultipartFile multipartFile){
+	public ResultVo addStu(@RequestParam("file")MultipartFile multipartFile) throws BussinessException {
 		ResultVo resultVo=new ResultVo();
-		System.out.println(123);
 		administratorsService.addStu(resultVo,multipartFile);
 		return resultVo;
 	}
 
+	/***
+	* ClassName:AdministratorsController
+	* Description: 修改学生信息
+	* param:[studentQuery]
+	* return:priv.wenhao.base.pojo.vo.ResultVo
+	* Author:yu wenhao
+	* date:2020/3/27
+	*/
+	@ApiOperation(value = "修改学生",httpMethod = "POST")
+	@PostMapping("/modifyStu")
+	@AdminLogingAop
+	public ResultVo modifyStu(@RequestBody StudentQuery studentQuery){
+		ResultVo resultVo=new ResultVo();
+
+		return resultVo;
+
+	}
+
+	/***
+	* ClassName:AdministratorsController
+	* Description: 获得所有学生的信息
+	* param:[]
+	* return:priv.wenhao.base.pojo.vo.ResultVo
+	* Author:yu wenhao
+	* date:2020/3/27
+	*/
+	@ApiOperation(value = "获得所有学生信息",httpMethod = "POST")
+	@PostMapping("/getAllStu")
+	@AdminLogingAop
+	public ResultVo getAllStu(){
+		ResultVo resultVo=new ResultVo();
+		administratorsService.getAllStu(resultVo);
+		return resultVo;
+
+	}
 }

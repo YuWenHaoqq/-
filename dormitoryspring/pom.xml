@@ -200,22 +200,52 @@
 <!--        对excel进行操作-->
 
         <!-- https://mvnrepository.com/artifact/org.apache.poi/poi -->
+<!--        <dependency>-->
+<!--            <groupId>org.apache.poi</groupId>-->
+<!--            <artifactId>poi</artifactId>-->
+<!--            <version>4.0.0</version>-->
+<!--        </dependency>-->
+
+<!--        &lt;!&ndash;        <dependency>&ndash;&gt;-->
+<!--        &lt;!&ndash;            <groupId>org.apache.poi</groupId>&ndash;&gt;-->
+<!--        &lt;!&ndash;            <artifactId>poi</artifactId>&ndash;&gt;-->
+<!--        &lt;!&ndash;            <version>4.0.0</version>&ndash;&gt;-->
+<!--        &lt;!&ndash;        </dependency>&ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>org.apache.poi</groupId>-->
+<!--            <artifactId>poi-ooxml</artifactId>-->
+<!--            <version>4.0.0</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.apache.poi</groupId>-->
+<!--            <artifactId>poi-ooxml-schemas</artifactId>-->
+<!--            <version>4.0.0</version>-->
+<!--        </dependency>-->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>4.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml-schemas</artifactId>
+            <version>4.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>4.0.0</version>
+        </dependency>
         <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi</artifactId>
             <version>4.0.0</version>
         </dependency>
 
-        <!--        <dependency>-->
-        <!--            <groupId>org.apache.poi</groupId>-->
-        <!--            <artifactId>poi</artifactId>-->
-        <!--            <version>4.0.0</version>-->
-        <!--        </dependency>-->
-        <dependency>
-            <groupId>org.apache.poi</groupId>
-            <artifactId>poi-ooxml</artifactId>
-            <version>4.0.0</version>
-        </dependency>
+<!--        作者：我是你的酱-->
+<!--        链接：https://juejin.im/post/5c30579a518825255f0f2eb8-->
+<!--        来源：掘金-->
+<!--        著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。-->
 
 
     </dependencies>

@@ -14,8 +14,12 @@
             <el-row>
                 <el-col :offset="2" :xs="8" :sm="6" :md="4" :lg="3" :xl="2">
                     <el-upload
-                            :limit="2"
+                            ref="stuExcel"
+                            :limit="1"
                             class="upload-demo"
+                            accept="xlsx,xls"
+                            :on-error="errUpload"
+                            :on-success='successUpload'
                             action="/api/admin/addStu">
                         <el-button size="small" type="primary">点击上传</el-button>
                         <div slot="tip" class="el-upload__tip">只能上传excel文件</div>
@@ -50,12 +54,44 @@
             }
         },
         methods: {
+            ff(){
+                return false;
+            },
             getMessage() {
                 return this.message
             },
             getStuTemplate(type) {
                 postFile("/api/admin/stuFile", {type: type})
+            },
+            successUpload(res){
+                let that=this
+
+                    if (res.code===0) {
+                        this.$message({
+                            type: 'success',
+                            message: '上传成功'
+                        })
+
+                    }else{
+                        this.$notify({
+                            title:'警告',
+                            message:res.message,
+                            duration: 0
+                        })
+                    }
+                setTimeout(function () {
+                    that.$refs.stuExcel.clearFiles()
+                },1000)
+            },
+            errUpload(){
+                this.$message({
+                    type:'error',
+                    message:'上传失败,请重新上传'
+                    }
+
+                )
             }
+
         }
     }
 </script>

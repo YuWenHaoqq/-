@@ -7,9 +7,11 @@ import VueAxios from 'vue-axios'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import Vuex from 'vuex'
+// import SvgIcon from '@/icons/svg'
 // import 'lib-flexible'
 
 Vue.config.productionTip = false
+// Vue.component('svg-icon',SvgIcon)
 Vue.use(VueRouter)
 Vue.use(VueAxios,axios);
 Vue.use(ElementUI)

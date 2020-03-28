@@ -4,6 +4,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import priv.wenhao.base.aop.AdminLogingAop;
 import priv.wenhao.base.pojo.vo.ResultVo;
 import priv.wenhao.dormitory.pojo.query.StudentQuery;
 import priv.wenhao.dormitory.pojo.query.UserMessageQuery;
@@ -25,6 +26,7 @@ public class ModifyStudentController {
 	 */
 	@ApiOperation(value = "新增学生", httpMethod = "POST")
 	@PostMapping("/addStudent")
+	@AdminLogingAop
 	public ResultVo addStudent(@ModelAttribute StudentQuery studentQuery,
 							   @ModelAttribute UserMessageQuery userMessageQuery) throws Exception {
 		ResultVo resultVo = new ResultVo();

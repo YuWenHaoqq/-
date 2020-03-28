@@ -42,4 +42,14 @@ public interface AdministratorsService {
 	* date:2020/3/27
 	*/
 	public void getAllStu(ResultVo resultVo);
+
+//	/***
+//	* ClassName:AdministratorsService
+//	* Description: 修改学生信息
+//	* param:[resultVo, studentVo]
+//	* return:void
+//	* Author:yu wenhao
+//	* date:2020/3/28
+//	*/
+//	public void modifyStu(ResultVo resultVo, StudentVo studentVo);
 }

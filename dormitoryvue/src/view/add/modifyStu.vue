@@ -78,7 +78,7 @@
             </el-row>
             <under></under>
         </div>
-        <el-dialog title="" :visible.sync="dialogshow" v-if="dialogshow">
+        <el-dialog title="" @close="getStuData" :visible.sync="dialogshow" v-if="dialogshow">
             <stuForm ref="stuForm"></stuForm>
         </el-dialog>
 
@@ -114,6 +114,10 @@
             }
         },
         methods: {
+            closeDialogshow(){
+                this.dialogshow=false
+
+            },
             getRowMessage(){
               return this.rowMessage
             },

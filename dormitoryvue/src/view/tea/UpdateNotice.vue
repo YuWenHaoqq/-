@@ -69,18 +69,25 @@
                 return this.message
             },
             submitForm(formName) {
-                post('/api/teacher/pushNotice',this.noticeForm).then(res=>{
-                    this.$refs[formName].resetFields();
-                    this.$message({
-                        message:res.message,
-                        type:'success'
-                    })
-                }).catch(err=>{
-                    this.$message({
-                        message:err.message,
-                        type:'warning'
-                    })
-                })
+                this.$refs[formName].validate((valid) => {
+                    if (valid) {
+                        post('/api/teacher/pushNotice',this.noticeForm).then(res=>{
+                            this.$refs[formName].resetFields();
+                            this.$message({
+                                message:res.message,
+                                type:'success'
+                            })
+                        }).catch(err=>{
+                            this.$message({
+                                message:err.message,
+                                type:'warning'
+                            })
+                        })
+                    } else {
+                        return false;
+                    }
+                });
+
             },
             resetForm(formName) {
                 this.$refs[formName].resetFields();

@@ -21,7 +21,7 @@
                             :on-error="errUpload"
                             :on-success='successUpload'
                             action="/api/admin/addStu">
-                        <el-button size="small" type="primary">点击上传</el-button>
+                        <el-button size="small" type="primary">上传学生信息</el-button>
                         <div slot="tip" class="el-upload__tip">只能上传excel文件</div>
                     </el-upload>
                 </el-col>

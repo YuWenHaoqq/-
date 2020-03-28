@@ -4,28 +4,28 @@
             <lace></lace>
             <el-row>
                 <el-col :offset="2" :span="20">
-                    <el-form ref="form" :model="studentVo" :rules="rules">
+                    <el-form ref="form" :model="studentQuery" :rules="rules">
                         <el-form-item label="学生学号" label-width="80px" prop="stuId">
-                            <el-input class="inputWidth" v-model="studentVo.stuId"></el-input>
+                            <el-input class="inputWidth" v-model="studentQuery.stuId" disabled></el-input>
                         </el-form-item>
                         <el-form-item label="班级" label-width="80px" prop="className">
-                            <el-input class="inputWidth" v-model="studentVo.className"></el-input>
+                            <el-input class="inputWidth" v-model="studentQuery.className"></el-input>
                         </el-form-item>
                         <el-form-item label="学生姓名" label-width="80px" prop="stuName">
-                            <el-input class="inputWidth" v-model="studentVo.stuName"></el-input>
+                            <el-input class="inputWidth" v-model="studentQuery.stuName"></el-input>
                         </el-form-item>
                         <el-form-item label="学生性别" label-width="80px" prop="stuSex">
-                            <el-select v-model="studentVo.stuSex" placeholder="请选择性别">
+                            <el-select v-model="studentQuery.stuSex" placeholder="请选择性别">
                                 <el-option label="男" :value="1"></el-option>
                                 <el-option label="女" :value="0"></el-option>
                             </el-select>
                         </el-form-item>
                         <el-form-item label="密码" label-width="80px" prop="password">
-                            <el-input class="inputWidth" v-model="studentVo.password"></el-input>
+                            <el-input class="inputWidth" v-model="studentQuery.password"></el-input>
                         </el-form-item>
                         <el-form-item label="出生年月" label-width="80px" prop="birthday">
                             <el-date-picker
-                                    v-model="studentVo.birthday"
+                                    v-model="studentQuery.birthday"
                                     align="right"
                                     type="date"
                                     placeholder="选择日期"
@@ -33,12 +33,12 @@
                             </el-date-picker>
                         </el-form-item>
                         <el-form-item label="教师名字" label-width="80px" prop="teacherName">
-                            <el-input class="inputWidth" v-model="studentVo.teacherName" @input="changeName"></el-input>
+                            <el-input class="inputWidth" v-model="studentQuery.teacherName" @input="changeName"></el-input>
                         </el-form-item>
                         <el-form-item label-width="80px" label="教工号" prop="teaId">
                             <el-row>
                                 <el-col>
-                                    <el-input class="inputWidth" v-model="studentVo.teaId"
+                                    <el-input class="inputWidth" v-model="studentQuery.teaId"
                                               placeholder="请输入教工号" ref="teaId" :disabled=isChange></el-input>
                                 </el-col>
                                 <el-col>
@@ -46,7 +46,7 @@
                             </el-row>
                         </el-form-item>
                         <el-form-item label="寝室编号" label-width="80px" prop="dormName">
-                            <el-input class="inputWidth" v-model="studentVo.dormName"></el-input>
+                            <el-input class="inputWidth" v-model="studentQuery.dormName"></el-input>
                         </el-form-item>
                         <el-form-item>
                             <el-button type="primary" @click="onSubmit('form')">修改</el-button>
@@ -90,7 +90,7 @@
                     teacherName: [{ required: true, message: '请输入对应的教师姓名', trigger: 'blur' }],
                     dormName: [{ required: true, message: '请输入对应的寝室编号', trigger: 'blur' }],
                 },
-                studentVo: {
+                studentQuery: {
                     stuId: '',
                     className: '',
                     stuName: '',
@@ -106,19 +106,30 @@
         }, methods: {
             getStudentVo() {
                 let stuMessage = this.$parent.$parent.getRowMessage()
-                this.studentVo.stuId = stuMessage.stuId
-                this.studentVo.className = stuMessage.className
-                this.studentVo.stuName = stuMessage.stuName
-                this.studentVo.stuSex = stuMessage.stuSex
-                this.studentVo.password = stuMessage.password
-                this.studentVo.birthday = stuMessage.birthday
-                this.studentVo.teacherName = stuMessage.teacherName
-                this.studentVo.dormName = stuMessage.dormName
+                this.studentQuery.stuId = stuMessage.stuId
+                this.studentQuery.className = stuMessage.className
+                this.studentQuery.stuName = stuMessage.stuName
+                this.studentQuery.stuSex = stuMessage.stuSex
+                this.studentQuery.password = stuMessage.password
+                this.studentQuery.birthday = stuMessage.birthday
+                this.studentQuery.teacherName = stuMessage.teacherName
+                this.studentQuery.dormName = stuMessage.dormName
             },
             onSubmit(formName) {
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
-                        window.console.log(123)
+                        post("/api/admin/modifyStu",this.studentQuery).then(res=>{
+                            this.$parent.$parent.closeDialogshow()
+                            this.$message({
+                                type:'success',
+                                message:res.message
+                            })
+                        }).catch(err=>{
+                            this.$message({
+                                type:'warning',
+                                message:err.message
+                            })
+                        })
                     } else {
                         return false;
                     }

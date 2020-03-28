@@ -97,7 +97,7 @@ public class AdministratorsController {
 	@AdminLogingAop
 	public ResultVo modifyStu(@RequestBody StudentQuery studentQuery){
 		ResultVo resultVo=new ResultVo();
-
+		administratorsService.modifyStu(resultVo,studentQuery);
 		return resultVo;
 
 	}
@@ -119,4 +119,20 @@ public class AdministratorsController {
 		return resultVo;
 
 	}
+
+//	/***
+//	* ClassName:AdministratorsController
+//	* Description: 修改学生信息接口
+//	* param:[studentVo]
+//	* return:priv.wenhao.base.pojo.vo.ResultVo
+//	* Author:yu wenhao
+//	* date:2020/3/28
+//	*/
+//	@ApiOperation(value = "修改学生信息",httpMethod = "POST")
+//	@PostMapping("/modifyStu")
+//	@AdminLogingAop
+//	public ResultVo modifyStu(@RequestBody StudentVo studentVo){
+//		ResultVo resultVo=new ResultVo();
+//		return resultVo;
+//	}
 }

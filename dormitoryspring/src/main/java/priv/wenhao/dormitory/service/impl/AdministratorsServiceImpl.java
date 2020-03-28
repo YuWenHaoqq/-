@@ -3,6 +3,7 @@ package priv.wenhao.dormitory.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.CellType;
@@ -18,6 +19,7 @@ import priv.wenhao.base.configvalue.TemplateValue;
 import priv.wenhao.base.exception.BussinessException;
 import priv.wenhao.base.pojo.dto.SchoolClassDto;
 import priv.wenhao.base.pojo.dto.SchoolStudentDto;
+import priv.wenhao.base.pojo.dto.SchoolTeacherDto;
 import priv.wenhao.base.pojo.vo.ResultVo;
 import priv.wenhao.dormitory.mapper.SchoolClassMapper;
 import priv.wenhao.dormitory.mapper.SchoolStudentMapper;
@@ -27,6 +29,7 @@ import priv.wenhao.dormitory.service.AdministratorsService;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -174,9 +177,52 @@ public class AdministratorsServiceImpl implements AdministratorsService {
 		}
 	}
 
+	/***
+	* ClassName:AdministratorsServiceImpl
+	* Description: 修改学生信息
+	* param:[resultVo, studentQuery]
+	* return:void
+	* Author:yu wenhao
+	* date:2020/3/28
+	*/
 	@Override
 	public void modifyStu(ResultVo resultVo, StudentQuery studentQuery) {
-
+		if (StringUtils.isNotBlank(studentQuery.getTeaId())) {
+//			查询教工号和教师名字是否正确
+			QueryWrapper<SchoolTeacherDto> queryWrapper=new QueryWrapper<SchoolTeacherDto>()
+					.eq("teacher_id",studentQuery.getTeaId())
+					.eq("teacher_name",studentQuery.getTeacherName())
+					.eq("is_deleted",0);
+			int size= schoolTeacherMapper.selectCount(queryWrapper);
+			if (size==0){
+				resultVo.setCode(1);
+				resultVo.setMessage("请输入正确的教工号和教师名字");
+				return;
+			}
+		}
+//		查询对应的班级id
+		QueryWrapper<SchoolClassDto> queryWrapper=new QueryWrapper<SchoolClassDto>()
+				.eq("class_name",studentQuery.getClassName())
+				.eq("is_deleted",0);
+		List<SchoolClassDto> list=schoolClassMapper.selectList(queryWrapper);
+		if (list.size()==0){
+			resultVo.setCode(1);
+			resultVo.setMessage("请输入正确的班级");
+			return;
+		}
+		SchoolStudentDto schoolStudentDto=studentQuery.getSchoolStudentDto();
+		schoolStudentDto.setClassId(list.get(0).getClassId());
+		schoolStudentDto.setStuModify(new Date());
+		schoolStudentDto.setStuPassword(null);
+//		更新学生数据
+		int row=
+		schoolStudentMapper.updateById(schoolStudentDto);
+		if (row==1){
+			resultVo.setMessage("修改成功");
+		}else{
+			resultVo.setCode(1);
+			resultVo.setMessage("修改失败,请确认输入学号是否正确");
+		}
 	}
 
 	/***
@@ -193,4 +239,17 @@ public class AdministratorsServiceImpl implements AdministratorsService {
 		resultVo.setMessage("查询成功");
 		resultVo.setData(schoolStudentMapper.getAllStu());
 	}
+
+//	/***
+//	* ClassName:AdministratorsServiceImpl
+//	* Description: 修改学生信息
+//	* param:[resultVo, studentVo]
+//	* return:void
+//	* Author:yu wenhao
+//	* date:2020/3/28
+//	*/
+//	@Override
+//	public void modifyStu(ResultVo resultVo, StudentVo studentVo) {
+//
+//	}
 }

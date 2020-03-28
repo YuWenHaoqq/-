@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="priv.wenhao.dormitory.mapper.SchoolTeacherMapper">
+
+    <select id="getAllTea" resultType="priv.wenhao.dormitory.pojo.vo.TeacherVo">
+        select st.teacher_id as teaId,st.teacher_name as name,sc.class_name as className,st.teacher_password as password,
+         st.teacher_sex as sex,st.teacher_birthday as birthday
+         from school_teacher st
+        left join school_class as sc on sc.class_id=st.pk_class_id and st.is_deleted=0
+        where st.is_deleted=0 order by st.teacher_id
+    </select>
+</mapper>

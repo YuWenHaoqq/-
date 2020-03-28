@@ -2,6 +2,9 @@ package priv.wenhao.dormitory.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import priv.wenhao.base.pojo.dto.SchoolTeacherDto;
+import priv.wenhao.dormitory.pojo.vo.TeacherVo;
+
+import java.util.List;
 
 /**
  * ClassName: SchoolTeacherMapper
@@ -11,4 +14,5 @@ import priv.wenhao.base.pojo.dto.SchoolTeacherDto;
  */
 
 public interface SchoolTeacherMapper extends BaseMapper<SchoolTeacherDto> {
+	public List<TeacherVo> getAllTea();
 }

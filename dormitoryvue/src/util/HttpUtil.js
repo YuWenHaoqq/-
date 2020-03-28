@@ -118,9 +118,9 @@ export function postFile(url,data) {
         params:data,
         responseType:"blob"
     }).then(res=>{
-            let blob = new Blob([res.data.data], {type: 'application/ms-excel;charset=utf-8'});
+            let blob = new Blob([res.data], {type: 'application/ms-excel;charset=utf-8'});
             let href = window.URL.createObjectURL(blob); //创建下载的链接
-            let fileName=decodeURIComponent(res.headers['content-disposition'].substring(20))
+            let fileName=decodeURIComponent(res.headers['content-disposition']).substring(20)
         if (window.navigator.msSaveBlob){
             window.navigator.msSaveBlob(blob, fileName);
         }else {

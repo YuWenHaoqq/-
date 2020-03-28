@@ -16,6 +16,7 @@ import priv.wenhao.base.exception.BussinessException;
 import priv.wenhao.base.pojo.vo.ResultVo;
 import priv.wenhao.base.util.FileUtil;
 import priv.wenhao.dormitory.pojo.query.StudentQuery;
+import priv.wenhao.dormitory.pojo.vo.TeacherVo;
 import priv.wenhao.dormitory.service.AdministratorsService;
 
 import java.io.File;
@@ -118,6 +119,76 @@ public class AdministratorsController {
 		administratorsService.getAllStu(resultVo);
 		return resultVo;
 
+	}
+
+	/***
+	* ClassName:AdministratorsController
+	* Description:
+	* param:[]
+	* return:priv.wenhao.base.pojo.vo.ResultVo
+	* Author:yu wenhao
+	* date:2020/3/28
+	*/
+	@ApiOperation(value = "获得所有的教师信息",httpMethod = "POST")
+	@PostMapping("/getAllTea")
+	@AdminLogingAop
+	public ResultVo getAllTea(){
+		ResultVo resultVo=new ResultVo();
+		administratorsService.getAllTea(resultVo);
+		return resultVo;
+	}
+
+	/***
+	* ClassName:AdministratorsController
+	* Description:修改教师信息
+	* param:[teacherVo]
+	* return:priv.wenhao.base.pojo.vo.ResultVo
+	* Author:yu wenhao
+	* date:2020/3/28
+	*/
+
+	@ApiOperation(value = "修改教师信息",httpMethod = "POST")
+	@PostMapping("/modifyTea")
+	@AdminLogingAop
+	public ResultVo modifyTea(@RequestBody TeacherVo teacherVo){
+		ResultVo resultVo=new ResultVo();
+		administratorsService.modifyTea(resultVo,teacherVo);
+		return resultVo;
+	}
+
+	/***
+	* ClassName:AdministratorsController
+	* Description: 删除学生信息
+	* param:[stuId]
+	* return:priv.wenhao.base.pojo.vo.ResultVo
+	* Author:yu wenhao
+	* date:2020/3/28
+	*/
+	@ApiOperation(value = "删除学生信息",httpMethod = "POST")
+	@PostMapping("/delStu")
+	@AdminLogingAop
+	public ResultVo delStu(String stuId){
+		ResultVo resultVo=new ResultVo();
+		administratorsService.delStu(resultVo,stuId);
+		return resultVo;
+	}
+
+	/***
+	* ClassName:AdministratorsController
+	* Description:
+	* param:[teaId]
+	* return:priv.wenhao.base.pojo.vo.ResultVo
+	* Author:yu wenhao
+	* date:2020/3/28
+	*/
+	@ApiOperation(value = "删除教师信息",httpMethod = "POST")
+	@PostMapping("/delTea")
+	@AdminLogingAop
+	public ResultVo delTea(String teaId){
+		ResultVo resultVo=new ResultVo();
+		administratorsService.delTea(resultVo,teaId);
+
+		return resultVo;
 	}
 
 //	/***

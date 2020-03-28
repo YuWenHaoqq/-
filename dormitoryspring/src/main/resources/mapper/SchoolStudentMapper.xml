@@ -14,7 +14,7 @@
         ss.dorm_name as dormName,st.teacher_name as teacherName,sc.class_name as className from school_student ss
         left join school_teacher st on ss.pk_teacher_id=st.teacher_id and st.is_deleted=0
         left join school_class sc on ss.pk_class_id=sc.class_id and sc.is_deleted=0
-        where ss.is_deleted=0;
+        where ss.is_deleted=0 order by ss.stu_id
     </select>
 
 </mapper>

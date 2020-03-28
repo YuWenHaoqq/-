@@ -25,6 +25,7 @@ import priv.wenhao.dormitory.mapper.SchoolClassMapper;
 import priv.wenhao.dormitory.mapper.SchoolStudentMapper;
 import priv.wenhao.dormitory.mapper.SchoolTeacherMapper;
 import priv.wenhao.dormitory.pojo.query.StudentQuery;
+import priv.wenhao.dormitory.pojo.vo.TeacherVo;
 import priv.wenhao.dormitory.service.AdministratorsService;
 
 import java.io.IOException;
@@ -138,7 +139,6 @@ public class AdministratorsServiceImpl implements AdministratorsService {
 				schoolStudentDto.setStuSex(row.getCell(3).getStringCellValue() == "男" ? 1 : 0);
 				row.getCell(4).setCellType(CellType.STRING);
 				schoolStudentDto.setStuPassword(row.getCell(4).getStringCellValue());
-//			row.getCell(5).setCellType(CellType.STRING);
 				if (row.getCell(5).getCellType() != CellType.STRING && HSSFDateUtil.isCellDateFormatted(row.getCell(5))) {
 					schoolStudentDto.setStuBirthday(HSSFDateUtil.getJavaDate(row.getCell(5).getNumericCellValue()));
 				} else {
@@ -213,7 +213,6 @@ public class AdministratorsServiceImpl implements AdministratorsService {
 		SchoolStudentDto schoolStudentDto=studentQuery.getSchoolStudentDto();
 		schoolStudentDto.setClassId(list.get(0).getClassId());
 		schoolStudentDto.setStuModify(new Date());
-		schoolStudentDto.setStuPassword(null);
 //		更新学生数据
 		int row=
 		schoolStudentMapper.updateById(schoolStudentDto);
@@ -227,7 +226,7 @@ public class AdministratorsServiceImpl implements AdministratorsService {
 
 	/***
 	 * ClassName:AdministratorsServiceImpl
-	 * Description: 获得所有的血神信息
+	 * Description: 获得所有的学生信息
 	 * param:[resultVo]
 	 * return:void
 	 * Author:yu wenhao
@@ -235,21 +234,112 @@ public class AdministratorsServiceImpl implements AdministratorsService {
 	 */
 	@Override
 	public void getAllStu(ResultVo resultVo) {
-		resultVo.setCode(0);
 		resultVo.setMessage("查询成功");
 		resultVo.setData(schoolStudentMapper.getAllStu());
 	}
 
-//	/***
-//	* ClassName:AdministratorsServiceImpl
-//	* Description: 修改学生信息
-//	* param:[resultVo, studentVo]
-//	* return:void
-//	* Author:yu wenhao
-//	* date:2020/3/28
-//	*/
-//	@Override
-//	public void modifyStu(ResultVo resultVo, StudentVo studentVo) {
-//
-//	}
+	/***
+	* ClassName:AdministratorsServiceImpl
+	* Description: 获得所有的教师信息
+	* param:[resultVo]
+	* return:void
+	* Author:yu wenhao
+	* date:2020/3/28
+	*/
+	@Override
+	public void getAllTea(ResultVo resultVo) {
+		resultVo.setMessage("查询成功");
+		resultVo.setData(schoolTeacherMapper.getAllTea());
+
+	}
+
+	/***
+	* ClassName:AdministratorsServiceImpl
+	* Description: 修改教师信息
+	* param:[resultVo, teacherVo]
+	* return:void
+	* Author:yu wenhao
+	* date:2020/3/28
+	*/
+	@Override
+	public void modifyTea(ResultVo resultVo, TeacherVo teacherVo) {
+//		先查询时候有对应的班级
+		QueryWrapper<SchoolClassDto> queryWrapper=new QueryWrapper<SchoolClassDto>()
+				.eq("class_name",teacherVo.getClassName())
+				.eq("is_deleted",0);
+
+		List<SchoolClassDto> list=
+		schoolClassMapper.selectList(queryWrapper);
+
+		SchoolTeacherDto schoolTeacherDto=teacherVo.getTeacherDto();
+		if (list.size()==0){
+			resultVo.setCode(1);
+			resultVo.setMessage("请输入正确的班级");
+			return;
+		}
+		schoolTeacherDto.setClassId(list.get(0).getClassId());
+		schoolTeacherDto.setTeacherModify(new Date());
+//		进行修改教师信息
+		int row=
+		schoolTeacherMapper.updateById(schoolTeacherDto);
+		if (row==1){
+			resultVo.setMessage("修改成功");
+		}else{
+			resultVo.setCode(1);
+			resultVo.setMessage("修改失败,请确认输入正确的教工号");
+		}
+
+	}
+
+	/***
+	* ClassName:AdministratorsServiceImpl
+	* Description: 删除学生信息
+	* param:[resultVo, stuId]
+	* return:void
+	* Author:yu wenhao
+	* date:2020/3/28
+	*/
+	@Override
+	public void delStu(ResultVo resultVo, String stuId) {
+		SchoolStudentDto schoolStudentDto=new SchoolStudentDto();
+		schoolStudentDto.setStuId(stuId);
+		schoolStudentDto.setDeleted(1);
+		int row=
+		schoolStudentMapper.updateById(schoolStudentDto);
+		if (row==1){
+			resultVo.setMessage("删除成功");
+		}else{
+			resultVo.setCode(1);
+			resultVo.setMessage("删除失败");
+			return;
+		}
+
+
+	}
+
+	/***
+	* ClassName:AdministratorsServiceImpl
+	* Description: 删除教师信息
+	* param:[resultVo, stuId]
+	* return:void
+	* Author:yu wenhao
+	* date:2020/3/28
+	*/
+	@Override
+	public void delTea(ResultVo resultVo, String teaId) {
+		SchoolTeacherDto schoolTeacherDto=new SchoolTeacherDto();
+		schoolTeacherDto.setTeacherId(teaId);
+		schoolTeacherDto.setDeleted(1);
+		int row =schoolTeacherMapper.updateById(schoolTeacherDto);
+		if (row==1){
+			resultVo.setMessage("删除成功");
+		}else{
+			resultVo.setCode(1);
+			resultVo.setMessage("删除失败");
+			return;
+		}
+
+
+	}
+
 }

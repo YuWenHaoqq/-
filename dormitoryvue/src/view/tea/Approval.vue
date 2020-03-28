@@ -38,12 +38,12 @@
                 </el-table>
             </el-col>
         </el-row>
-        <el-row>
+        <el-row class="btn">
             <el-col :offset="2" :span="2">
-                <el-button type="success" class="btn" @click="updateLeave(1)">同意</el-button>
+                <el-button type="success" @click="updateLeave(1)">同意</el-button>
             </el-col>
             <el-col :offset="1" :span="2">
-                <el-button type="danger" class="btn" @click="updateLeave(2)">不同意</el-button>
+                <el-button type="danger" @click="updateLeave(2)">不同意</el-button>
             </el-col>
 
         </el-row>
@@ -127,8 +127,8 @@
 
 <style scoped>
     .btn{
-        width: 100%;
-        text-align: center;
+        margin-top: 30px;
+        margin-bottom: 20px;
     }
 
 </style>

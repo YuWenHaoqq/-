@@ -3,6 +3,7 @@ package priv.wenhao.dormitory.pojo.query;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.format.annotation.DateTimeFormat;
 import priv.wenhao.base.pojo.dto.SchoolStudentDto;
 
@@ -43,7 +44,11 @@ public class StudentQuery {
 		schoolStudentDto.setStuSex(this.stuSex);
 		schoolStudentDto.setStuPassword(this.password);
 		schoolStudentDto.setStuBirthday(this.birthday);
-		schoolStudentDto.setTeacherId(this.teaId);
+		if (!StringUtils.isNotBlank(this.teaId)) {
+			schoolStudentDto.setTeacherId(null);
+		}else{
+			schoolStudentDto.setTeacherId(this.teaId);
+		}
 		schoolStudentDto.setDormName(this.dormName);
 		return schoolStudentDto;
 	}

@@ -24,6 +24,7 @@
                             <el-radio-group v-model="form.identity">
                                 <el-radio :label="1">学生</el-radio>
                                 <el-radio :label="2">教师</el-radio>
+                                <el-radio :label="3">管理员</el-radio>
                             </el-radio-group>
                         </el-form-item>
                         <div class="submit">
@@ -56,6 +57,7 @@
         },
         created() {
             getRSAKey()
+            this.isLogin()
         },
         mounted() {
             this.animation()
@@ -89,10 +91,13 @@
                         message: res.message
                     })
                     sessionStorage.setItem('token', res.data.token)
+                    sessionStorage.setItem('name',res.data.userName)
                     if(this.form.identity===1){
                         sessionStorage.setItem('stuId', res.data.stuId)
                     }else if(this.form.identity===2){
                         sessionStorage.setItem('teaId',res.data.stuId)
+                    }else if (this.form.identity===3){
+                        sessionStorage.setItem('admin',res.data.stuId)
                     }
                     that.$router.push({path:'/index/homepage'})
                 })
@@ -107,6 +112,19 @@
                 this.form.account = ''
                 this.form.password = ''
                 this.form.identity=1
+            },
+            isLogin(){
+                // window.console.log("123")
+                // window.console.log(sessionStorage.getItem('stuId'))
+                // window.console.log(sessionStorage.getItem('teaId'))
+                // window.console.log(sessionStorage.getItem('admin'))
+
+                if (sessionStorage.getItem('stuId')!==null||sessionStorage.getItem('teaId')!==null||
+                    sessionStorage.getItem('admin')!==null) {
+
+                    this.$router.push({path: '/index/homepage'})
+                }
+
             }
         }
     }

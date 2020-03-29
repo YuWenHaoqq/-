@@ -26,7 +26,11 @@
         name: "nopage",
         methods: {
             backIndex() {
+                sessionStorage.removeItem('admin')
+                sessionStorage.removeItem('teaId')
+                sessionStorage.removeItem('stuId')
                 route.push({
+
                     path: '/'
                 })
             }

@@ -86,6 +86,34 @@ public class RedisConfig {
 //		创建同步命令
 		return connection.sync();
 	}
+
+	/***
+	* ClassName:RedisConfig
+	* Description: 连接第四个redis,用于存放管理员的token
+	* param:[]
+	* return:io.lettuce.core.api.sync.RedisCommands<java.lang.String,java.lang.String>
+	* Author:yu wenhao
+	* date:2020/3/28
+	*/
+	@Bean(name = "fourthTemplate")
+	public RedisCommands<String, String> getFourthTemplate() {
+
+		RedisURI redisURI = RedisURI.builder()
+				.withHost(host)
+				.withPort(port)
+				.withPassword(password)
+				.withDatabase(4)
+				.withTimeout(Duration.of(timeout, ChronoUnit.SECONDS))
+				.build();
+
+//		创建客户端
+		RedisClient redisClient = RedisClient.create(redisURI);
+		StatefulRedisConnection<String, String> connection = redisClient.connect();;
+		log.info("redis数据库4连接成功");
+
+//		创建同步命令
+		return connection.sync();
+	}
 	/***
 	* ClassName:RedisConfig
 	* Description: 放在第三个redis库中

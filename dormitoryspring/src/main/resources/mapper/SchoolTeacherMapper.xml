@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="priv.wenhao.dormitory.mapper.SchoolTeacherMapper">
+    <insert id="insertTeaList">
+        insert into school_teacher(teacher_id,pk_class_id,teacher_name,teacher_password,teacher_sex,teacher_birthday,
+        teacher_create,is_deleted)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.teacherId},#{item.classId},#{item.teacherName},#{item.password},#{item.sex},#{item.birthday},
+            now(),0)
+        </foreach>
+    </insert>
 
     <select id="getAllTea" resultType="priv.wenhao.dormitory.pojo.vo.TeacherVo">
         select st.teacher_id as teaId,st.teacher_name as name,sc.class_name as className,st.teacher_password as password,

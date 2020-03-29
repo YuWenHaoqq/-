@@ -34,7 +34,7 @@
                         </el-menu-item-group>
                     </el-submenu>
 
-                    <el-submenu index="4" ref="admin">
+                    <el-submenu index="4" ref="admin" :disabled="isAdmin()">
                         <template slot="title">
                             <i class="el-icon-user-solid"></i>
                             <span>管理员</span>
@@ -73,6 +73,11 @@
                 }
                 return false
             },
+            isAdmin(){
+                if (sessionStorage.getItem("admin")===null){
+                    return true
+                }
+                return false            }
 
         }
     }

@@ -3,8 +3,11 @@ package priv.wenhao.dormitory.service;
 import org.springframework.web.multipart.MultipartFile;
 import priv.wenhao.base.exception.BussinessException;
 import priv.wenhao.base.pojo.vo.ResultVo;
+import priv.wenhao.dormitory.pojo.query.LoginQuery;
 import priv.wenhao.dormitory.pojo.query.StudentQuery;
 import priv.wenhao.dormitory.pojo.vo.TeacherVo;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * ClassName: AdministratorsService
@@ -24,6 +27,16 @@ public interface AdministratorsService {
 	* date:2020/3/26
 	*/
 	public void addStu(ResultVo resultVo, MultipartFile file) throws BussinessException;
+
+	/***
+	* ClassName:AdministratorsService
+	* Description: 使用excel添加学生
+	* param:[resultVo, file]
+	* return:void
+	* Author:yu wenhao
+	* date:2020/3/28
+	*/
+	public void addTeaByExcel(ResultVo resultVo,MultipartFile file) throws BussinessException;
 
 	/***
 	* ClassName:AdministratorsService
@@ -92,4 +105,14 @@ public interface AdministratorsService {
 	* date:2020/3/28
 	*/
 	public void delTea(ResultVo resultVo,String teaId);
+
+	/***
+	* ClassName:AdministratorsService
+	* Description: 管理员登录
+	* param:[resultVo, loginQuery, request]
+	* return:void
+	* Author:yu wenhao
+	* date:2020/3/28
+	*/
+	public void login(ResultVo resultVo, LoginQuery loginQuery, HttpServletRequest request);
 }

@@ -50,7 +50,7 @@
                                 <el-button
                                         size="mini"
                                         type="danger"
-                                        @click="handleDelete(scope.$index, scope.row)">删除
+                                        @click="del(scope.row)">删除
                                 </el-button>
                             </template>
                         </el-table-column>
@@ -62,8 +62,6 @@
 
         </div>
         <div>
-
-
             <el-row>
                 <el-col :offset="18">
                     <div class="block">
@@ -78,7 +76,7 @@
             </el-row>
             <under></under>
         </div>
-        <el-dialog title="" @close="getStuData" :visible.sync="dialogshow" v-if="dialogshow">
+        <el-dialog title="" :visible.sync="dialogshow" v-if="dialogshow">
             <stuForm ref="stuForm"></stuForm>
         </el-dialog>
 
@@ -114,6 +112,32 @@
             }
         },
         methods: {
+            del(row){
+                this.$confirm('此操作将永久删除该条信息, 是否继续?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    paramsPost('/api/admin/delStu',{stuId:row.stuId}).then(res=>{
+                        this.$message({
+                            type: 'success',
+                            message: res.message
+                        });
+                        this.getStuData()
+                    }).catch(err=>{
+                        this.$message({
+                            type:'error',
+                            message: err.message
+                        });
+                    })
+
+                }).catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: '已取消删除'
+                    });
+                });
+            },
             closeDialogshow(){
                 this.dialogshow=false
 
@@ -143,6 +167,7 @@
                 this.dialogshow = true
             },
             getStuData() {
+
                 paramsPost('/api/admin/getAllStu').then(res => {
                     this.tableData = res.data
                     this.total = this.tableData.length
@@ -152,6 +177,7 @@
                         message: '刷新页面重试'
                     })
                 })
+
             }
         }
     }

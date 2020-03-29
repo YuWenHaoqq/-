@@ -28,6 +28,7 @@
                                     v-model="studentQuery.birthday"
                                     align="right"
                                     type="date"
+                                    value-format="yyyy-MM-dd"
                                     placeholder="选择日期"
                                     >
                             </el-date-picker>
@@ -120,10 +121,12 @@
                     if (valid) {
                         post("/api/admin/modifyStu",this.studentQuery).then(res=>{
                             this.$parent.$parent.closeDialogshow()
+                            this.$parent.$parent.getStuData()
                             this.$message({
                                 type:'success',
                                 message:res.message
                             })
+
                         }).catch(err=>{
                             this.$message({
                                 type:'warning',

@@ -20,7 +20,7 @@ instance.defaults.headers.post['Content-Type'] = 'application/json;charset=UTF-8
 instance.interceptors.request.use(config => {
         config.headers['token'] = rsaEncryption(sessionStorage.getItem('token')) || ''
         config.headers['id'] = rsaEncryption(sessionStorage.getItem('stuId'))
-            || rsaEncryption(sessionStorage.getItem('teaId'))||''
+            || rsaEncryption(sessionStorage.getItem('teaId'))|| rsaEncryption(sessionStorage.getItem('admin'))||''
         config.headers['aes'] = rsaEncryption(sessionStorage.getItem("aes")) || ''
         loadingInstance = Loading.service({
             spinner: 'el-icon-loading',

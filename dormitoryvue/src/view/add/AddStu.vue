@@ -2,16 +2,21 @@
     <div>
         <div class="content">
             <lace></lace>
-            <el-row>
+            <el-row class="row">
                 <el-col :offset="2" :xs="8" :sm="6" :md="4" :lg="3" :xl="2">
                     <el-button @click="getStuTemplate(1)" class="btn">下载学生模板</el-button>
                 </el-col>
-                <el-col :offset="1" :xs="8" :sm="6" :md="4" :lg="3" :xl="2">
+<!--                <el-col :offset="1" :xs="8" :sm="6" :md="4" :lg="3" :xl="2">-->
+<!--                    <el-button @click="getStuTemplate(2)" class="btn">下载教师模板</el-button>-->
+<!--                </el-col>-->
+            </el-row>
+            <el-row class="row">
+                <el-col :offset="2" :xs="8" :sm="6" :md="4" :lg="3" :xl="2">
                     <el-button @click="getStuTemplate(2)" class="btn">下载教师模板</el-button>
                 </el-col>
             </el-row>
 
-            <el-row>
+            <el-row class="row">
                 <el-col :offset="2" :xs="8" :sm="6" :md="4" :lg="3" :xl="2">
                     <el-upload
                             ref="stuExcel"
@@ -22,6 +27,21 @@
                             :on-success='successUpload'
                             action="/api/admin/addStu">
                         <el-button size="small" type="primary">上传学生信息</el-button>
+                        <div slot="tip" class="el-upload__tip">只能上传excel文件</div>
+                    </el-upload>
+                </el-col>
+            </el-row>
+            <el-row class="row">
+                <el-col :offset="2" :xs="8" :sm="6" :md="4" :lg="3" :xl="2">
+                    <el-upload
+                            ref="stuExcel"
+                            :limit="1"
+                            class="upload-demo"
+                            accept="xlsx,xls"
+                            :on-error="errUpload"
+                            :on-success='successUpload'
+                            action="/api/admin/addTeaByExcel">
+                        <el-button size="small" type="primary">上传教师信息</el-button>
                         <div slot="tip" class="el-upload__tip">只能上传excel文件</div>
                     </el-upload>
                 </el-col>
@@ -65,7 +85,6 @@
             },
             successUpload(res){
                 let that=this
-
                     if (res.code===0) {
                         this.$message({
                             type: 'success',
@@ -104,6 +123,10 @@
         width: 100%;
         overflow: hidden;
         text-overflow: ellipsis;
+    }
+
+    .row{
+        margin-bottom: 50px;
     }
 
 </style>

@@ -13,6 +13,7 @@ import priv.wenhao.base.pojo.query.BaseQuery;
 import priv.wenhao.base.pojo.vo.ResultVo;
 import priv.wenhao.dormitory.pojo.query.LeaveQuery;
 import priv.wenhao.dormitory.pojo.query.LoginQuery;
+import priv.wenhao.dormitory.service.AdministratorsService;
 import priv.wenhao.dormitory.service.StudentService;
 import priv.wenhao.dormitory.service.TeacherService;
 
@@ -28,6 +29,9 @@ public class StudentController {
 
 	@Autowired
 	private TeacherService teacherService;
+
+	@Autowired
+	private AdministratorsService administratorsService;
 
 	/***
 	 * Description:学生端/教师端 登录
@@ -48,6 +52,10 @@ public class StudentController {
 			studentService.login(loginQuery, request, resultVo);
 		} else if (loginQuery.getIdentity()==2){
 			teacherService.login(loginQuery,request,resultVo);
+		}else if (loginQuery.getIdentity()==3){
+
+			administratorsService.login(resultVo,loginQuery,request);
+
 		}
 		return resultVo;
 	}

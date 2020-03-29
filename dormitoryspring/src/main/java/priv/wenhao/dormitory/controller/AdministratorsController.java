@@ -70,7 +70,7 @@ public class AdministratorsController {
 
 	/***
 	* ClassName:AdministratorsController
-	* Description: 添加学生
+	* Description: 使用excel添加学生
 	* param:[multipartFile]
 	* return:priv.wenhao.base.pojo.vo.ResultVo
 	* Author:yu wenhao
@@ -83,6 +83,24 @@ public class AdministratorsController {
 		ResultVo resultVo=new ResultVo();
 		administratorsService.addStu(resultVo,multipartFile);
 		return resultVo;
+	}
+
+	/***
+	* ClassName:AdministratorsController
+	* Description: 使用excel表增加学生信息
+	* param:[multipartFile]
+	* return:priv.wenhao.base.pojo.vo.ResultVo
+	* Author:yu wenhao
+	* date:2020/3/28
+	*/
+	@ApiOperation(value = "使用excel添加教师",httpMethod = "POST")
+	@PostMapping("/addTeaByExcel")
+	@AdminLogingAop
+	public ResultVo addTeaByExcel(@RequestParam("file")MultipartFile file) throws BussinessException {
+		ResultVo resultVo=new ResultVo();
+		administratorsService.addTeaByExcel(resultVo,file);
+		return resultVo;
+
 	}
 
 	/***
